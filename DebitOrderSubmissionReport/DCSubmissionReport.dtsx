@@ -1,0 +1,940 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/13/2021 3:01:27 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="2YNN473-NB"
+  DTS:CreatorName="HOMECHOICE\MHEYNS"
+  DTS:DTSID="{F2FA18CA-534B-4EEA-9B14-7F5C75E429BA}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.167"
+  DTS:LocaleID="7177"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="84"
+  DTS:VersionGUID="{A05A5855-E2B7-4DC6-A09E-BD30FF27FCF8}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[MySQL-Prod]"
+      DTS:CreationName="ODBC"
+      DTS:DTSID="{9F58E049-C547-456C-B208-68D55E20484D}"
+      DTS:ObjectName="MySQL-Prod">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Dsn=Prod-DebitOrder;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SQL-DEV.Omega.mheyns]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{2A78B467-EE94-4D53-A99D-5EB105877395}"
+      DTS:ObjectName="SQL-DEV.Omega.mheyns">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=SQL-DEV;User ID=brian;Initial Catalog=Omega;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAA7FNIVkAJUmFRf2Vvb1iugAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAARWlchbQyDROEBH+i25VPRAAAAAASAAACgAAAAEAAAAAhGNtcGLElE7CwZg9pEYUIYAAAA511K9Zm9/orazMeZRDiJpf3SHvwYuk8vFAAAAAVQSy4ouTATDtLPP1Yc7coXzKyc</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create Work Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{B7CE9E6B-FB7D-4424-9C21-EBC4685E418E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Work Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2A78B467-EE94-4D53-A99D-5EB105877395}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="IF OBJECT_ID(N'Omega.dbo.MySql_DebitOrder') IS NOT NULL&#xA;BEGIN&#xA;&#x9;DROP TABLE [dbo].[MySql_DebitOrder]&#xA;END&#xA;&#xA;begin&#xA;CREATE TABLE [dbo].[MySql_DebitOrder] (&#xA;[PersonNo] int NOT NULL,&#xA;[DebitOrderId] int,&#xA;[DebitOrderType] varchar(20),&#xA;[DeductionOccurrence] text NOT NULL,&#xA;[DeductionDay] int NOT NULL,&#xA;[DeductionDate] datetime2 NOT NULL,&#xA;[NowDueFlag] bit NOT NULL,&#xA;[DeductionAmount] decimal(18, 4) NOT NULL,&#xA;[CreateDate] datetime2 NOT NULL&#xA;) &#xA;end" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Sequence Container"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{B07AFAC8-2157-419D-AF95-DE30501A4490}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence Container">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Convert Deduction Occurence column"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{35023AFB-4063-4911-B727-D15CDD3A8BB5}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Convert Deduction Occurence column"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{2A78B467-EE94-4D53-A99D-5EB105877395}"
+              SQLTask:BypassPrepare="False"
+              SQLTask:SqlStatementSource="alter table dbo.MySql_DebitOrder&#xA;alter column DeductionOccurrence varchar(25)&#xA;&#xA;update dbo.MySql_DebitOrder&#xA;set DeductionOccurrence = 'Single' where DeductionOccurrence like '%S%'&#xA;&#xA;update dbo.MySql_DebitOrder&#xA;set DeductionOccurrence = 'Repeat' where DeductionOccurrence like '%R%'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:DelayValidation="True"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{184CDCAB-53B5-4D2F-8BBB-CA2E03762770}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Copy Prod Debit Orders to Omega DEV"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder"
+                  componentClassID="Microsoft.SSISODBCSrc"
+                  contactInfo="ODBC Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+                  description="ODBC Source"
+                  name="DebitOrder"
+                  usesDispositions="true"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="The name of the table to be fetched."
+                      expressionType="Notify"
+                      name="TableName"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select PersonNo,
+       DebitOrderId,
+       DebitOrderType,
+       DeductionOccurrence,
+       DeductionDay,
+       DeductionDate,
+       NowDueFlag,
+       cast(DeductionAmount as decimal(18, 4)) as DeductionAmount,
+       CreateDate
+from DebitOrder
+where Status = 'Active'
+and 1 = case
+        when DeductionOccurrence = 'Single' and DeductionDate between now() and date_add(now(), INTERVAL 31 DAY) then 1
+        when DeductionOccurrence = 'Repeat' then 1
+        else 0
+        end
+and cast(CreateDate as date) &lt; cast(current_date() as date);</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specify the number of rows fetched per batch."
+                      expressionType="Notify"
+                      name="BatchSize">1000</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Determines the chunk size allocation for LOB columns"
+                      expressionType="Notify"
+                      name="LobChunkSize">32768</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines how the component exposes CHAR columns. If False, CHAR columns are exposed as (multi-)byte strings (DT_STR), if True, CHAR columns are exposed as wide strings (DT_WSTR)"
+                      expressionType="Notify"
+                      name="ExposeCharColumnsAsUnicode">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds to wait for an SQL statement to execute before returning to the application."
+                      expressionType="Notify"
+                      name="StatementTimeout">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="The code page to use when code page information is unavailable from the data source."
+                      expressionType="Notify"
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Int32"
+                      description="The method used for fetching data."
+                      expressionType="Notify"
+                      name="FetchMethod">1</property>
+                    <property
+                      dataType="System.Int32"
+                      description="The ODBC C data type for binding numeric data."
+                      expressionType="Notify"
+                      name="BindNumericAs">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Determines how the component would bind columns of (multi)-byte string types (i.e., SQL_CHAR, SQL_VARCHAR, SQL_LONGVARCHAR). The options are: Unicode (SQL_C_WCHAR) and ANSI (SQL_C_CHAR)."
+                      expressionType="Notify"
+                      name="BindCharColumnsAs">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="The mode used to access the database."
+                      expressionType="Notify"
+                      name="AccessMode"
+                      typeConverter="AccessMode">1</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Connections[ODBCConnection]"
+                      connectionManagerID="Package.ConnectionManagers[MySQL-Prod]"
+                      connectionManagerRefId="Package.ConnectionManagers[MySQL-Prod]"
+                      description="The ODBC runtime connection used to access the database."
+                      name="ODBCConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output]"
+                      errorRowDisposition="FailComponent"
+                      name="ODBC Source Output"
+                      truncationRowDisposition="FailComponent">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[PersonNo]"
+                          dataType="i4"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[PersonNo]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[PersonNo]"
+                          name="PersonNo" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[DebitOrderId]"
+                          dataType="i4"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DebitOrderId]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[DebitOrderId]"
+                          name="DebitOrderId" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[DebitOrderType]"
+                          codePage="1252"
+                          dataType="str"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DebitOrderType]"
+                          length="20"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[DebitOrderType]"
+                          name="DebitOrderType" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionOccurrence]"
+                          codePage="1252"
+                          dataType="text"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionOccurrence]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionOccurrence]"
+                          name="DeductionOccurrence" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionDay]"
+                          dataType="i4"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionDay]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionDay]"
+                          name="DeductionDay" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionDate]"
+                          dataType="dbTimeStamp"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionDate]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionDate]"
+                          name="DeductionDate" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[NowDueFlag]"
+                          dataType="bool"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[NowDueFlag]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[NowDueFlag]"
+                          name="NowDueFlag" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionAmount]"
+                          dataType="numeric"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionAmount]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionAmount]"
+                          name="DeductionAmount"
+                          precision="18"
+                          scale="4" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[CreateDate]"
+                          dataType="dbTimeStamp"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[CreateDate]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[CreateDate]"
+                          name="CreateDate" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[PersonNo]"
+                          dataType="i4"
+                          name="PersonNo" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DebitOrderId]"
+                          dataType="i4"
+                          name="DebitOrderId" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DebitOrderType]"
+                          codePage="1252"
+                          dataType="str"
+                          length="20"
+                          name="DebitOrderType" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionOccurrence]"
+                          codePage="1252"
+                          dataType="text"
+                          name="DeductionOccurrence" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionDay]"
+                          dataType="i4"
+                          name="DeductionDay" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionDate]"
+                          dataType="dbTimeStamp"
+                          name="DeductionDate" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[NowDueFlag]"
+                          dataType="bool"
+                          name="NowDueFlag" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionAmount]"
+                          dataType="numeric"
+                          name="DeductionAmount"
+                          precision="18"
+                          scale="4" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[CreateDate]"
+                          dataType="dbTimeStamp"
+                          name="CreateDate" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output]"
+                      isErrorOut="true"
+                      name="ODBC Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[PersonNo]"
+                          dataType="i4"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[PersonNo]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[PersonNo]"
+                          name="PersonNo" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[DebitOrderId]"
+                          dataType="i4"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DebitOrderId]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[DebitOrderId]"
+                          name="DebitOrderId" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[DebitOrderType]"
+                          codePage="1252"
+                          dataType="str"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DebitOrderType]"
+                          length="20"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[DebitOrderType]"
+                          name="DebitOrderType" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[DeductionOccurrence]"
+                          codePage="1252"
+                          dataType="text"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionOccurrence]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[DeductionOccurrence]"
+                          name="DeductionOccurrence" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[DeductionDay]"
+                          dataType="i4"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionDay]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[DeductionDay]"
+                          name="DeductionDay" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[DeductionDate]"
+                          dataType="dbTimeStamp"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionDate]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[DeductionDate]"
+                          name="DeductionDate" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[NowDueFlag]"
+                          dataType="bool"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[NowDueFlag]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[NowDueFlag]"
+                          name="NowDueFlag" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[DeductionAmount]"
+                          dataType="numeric"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionAmount]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[DeductionAmount]"
+                          name="DeductionAmount"
+                          precision="18"
+                          scale="4" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[CreateDate]"
+                          dataType="dbTimeStamp"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[CreateDate]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[CreateDate]"
+                          name="CreateDate" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Omega"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[MySql_DebitOrder]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[SQL-DEV.Omega.mheyns]"
+                      connectionManagerRefId="Package.ConnectionManagers[SQL-DEV.Omega.mheyns]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].Columns[PersonNo]"
+                          cachedDataType="i4"
+                          cachedName="PersonNo"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].ExternalColumns[PersonNo]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[PersonNo]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].Columns[DebitOrderId]"
+                          cachedDataType="i4"
+                          cachedName="DebitOrderId"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].ExternalColumns[DebitOrderId]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[DebitOrderId]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].Columns[DebitOrderType]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="20"
+                          cachedName="DebitOrderType"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].ExternalColumns[DebitOrderType]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[DebitOrderType]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].Columns[DeductionOccurrence]"
+                          cachedCodepage="1252"
+                          cachedDataType="text"
+                          cachedName="DeductionOccurrence"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].ExternalColumns[DeductionOccurrence]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionOccurrence]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].Columns[DeductionDay]"
+                          cachedDataType="i4"
+                          cachedName="DeductionDay"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].ExternalColumns[DeductionDay]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionDay]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].Columns[DeductionDate]"
+                          cachedDataType="dbTimeStamp"
+                          cachedName="DeductionDate"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].ExternalColumns[DeductionDate]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionDate]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].Columns[NowDueFlag]"
+                          cachedDataType="bool"
+                          cachedName="NowDueFlag"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].ExternalColumns[NowDueFlag]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[NowDueFlag]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].Columns[DeductionAmount]"
+                          cachedDataType="numeric"
+                          cachedName="DeductionAmount"
+                          cachedPrecision="18"
+                          cachedScale="4"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].ExternalColumns[DeductionAmount]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionAmount]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].Columns[CreateDate]"
+                          cachedDataType="dbTimeStamp"
+                          cachedName="CreateDate"
+                          externalMetadataColumnId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].ExternalColumns[CreateDate]"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output].Columns[CreateDate]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].ExternalColumns[PersonNo]"
+                          dataType="i4"
+                          name="PersonNo" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].ExternalColumns[DebitOrderId]"
+                          dataType="i4"
+                          name="DebitOrderId" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].ExternalColumns[DebitOrderType]"
+                          codePage="1252"
+                          dataType="str"
+                          length="20"
+                          name="DebitOrderType" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].ExternalColumns[DeductionOccurrence]"
+                          codePage="1252"
+                          dataType="str"
+                          length="25"
+                          name="DeductionOccurrence" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].ExternalColumns[DeductionDay]"
+                          dataType="i4"
+                          name="DeductionDay" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].ExternalColumns[DeductionDate]"
+                          dataType="dbTimeStamp2"
+                          name="DeductionDate"
+                          scale="7" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].ExternalColumns[NowDueFlag]"
+                          dataType="bool"
+                          name="NowDueFlag" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].ExternalColumns[DeductionAmount]"
+                          dataType="numeric"
+                          name="DeductionAmount"
+                          precision="18"
+                          scale="4" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input].ExternalColumns[CreateDate]"
+                          dataType="dbTimeStamp2"
+                          name="CreateDate"
+                          scale="7" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV.Paths[ODBC Source Output]"
+                  endId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega.Inputs[OLE DB Destination Input]"
+                  name="ODBC Source Output"
+                  startId="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder.Outputs[ODBC Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Exclude amounts less than R10"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{F5E84198-3ADA-43E8-BD72-18D5812DBB78}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Exclude amounts less than R10"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{2A78B467-EE94-4D53-A99D-5EB105877395}"
+              SQLTask:BypassPrepare="False"
+              SQLTask:SqlStatementSource="&#x9;--Exclude amounts less than R10&#xA;&#x9;begin&#xA;&#x9;&#x9;delete dbo.MySql_DebitOrder&#xA;&#x9;&#x9;where DeductionAmount &lt; 10&#xA;&#x9;end" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Exclude repeat customers with no active balance"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{C2A79663-AFD2-4233-B4D0-DACF3FBBBE79}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Exclude repeat customers with no active balance"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{2A78B467-EE94-4D53-A99D-5EB105877395}"
+              SQLTask:BypassPrepare="False"
+              SQLTask:SqlStatementSource="&#x9;begin&#xA;&#x9;&#x9;delete do&#xA;&#x9;&#x9;from dbo.MySql_DebitOrder do&#xA;&#x9;&#x9;where cast(do.DeductionOccurrence as varchar) = 'Repeat'&#xA;&#x9;&#x9;and exists (select 1&#xA;&#x9;&#x9;&#x9;from dbo.AccountDetail ad&#xA;&#x9;&#x9;&#x9;where ad.PersonNo = do.PersonNo&#xA;&#x9;&#x9;&#x9;and ad.AcctType = 4&#xA;&#x9;&#x9;&#x9;and ad.BalOuts &lt;= 0)&#xA;&#x9;end" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Fetch now due for NowDue amount records"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{ECECE699-A928-416A-8486-5EB8B9D746D5}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Fetch now due for NowDue amount records"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{2A78B467-EE94-4D53-A99D-5EB105877395}"
+              SQLTask:BypassPrepare="False"
+              SQLTask:SqlStatementSource="&#x9;--fetch now due for applicable records&#xA;&#x9;begin&#xA;&#x9;&#x9;update do&#xA;&#x9;&#x9;set DeductionAmount = isnull((select sum(aag.Amt)&#xA;&#x9;&#x9;from dbo.AcctAgeing aag&#xA;&#x9;&#x9;where aag.PersonNo = do.PersonNo&#xA;&#x9;&#x9;&#x9;and aag.AcctType = 4&#xA;&#x9;&#x9;&#x9;and aag.AcctAgeing in (1,2)), 0)&#xA;&#x9;&#x9;&#x9;from dbo.MySql_DebitOrder do&#xA;&#x9;&#x9;&#x9;where do.NowDueFlag = 1&#xA;&#x9;end" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{1CF0A96E-BEFB-45DF-8FCA-6E6D97797936}"
+          DTS:From="Package\Sequence Container\Fetch now due for NowDue amount records"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Sequence Container\Exclude repeat customers with no active balance" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{8004D168-7E2F-4E67-81B8-D09CDCD6A0F3}"
+          DTS:From="Package\Sequence Container\Exclude repeat customers with no active balance"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Sequence Container\Exclude amounts less than R10" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{0B5856D8-011E-40BF-96A8-6903AC16A705}"
+          DTS:From="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\Sequence Container\Convert Deduction Occurence column" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{0751E64C-6BE7-440B-B7E5-D3B412BB5F03}"
+          DTS:From="Package\Sequence Container\Convert Deduction Occurence column"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 3"
+          DTS:To="Package\Sequence Container\Fetch now due for NowDue amount records" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{C7717B73-DDEB-4B80-8DE5-ECA5DC1A9895}"
+      DTS:From="Package\Create Work Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Sequence Container" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="169.333333333334,42.6666666666667"
+          Id="Package\Create Work Table"
+          TopLeft="109.958331684893,40.4956174575668" />
+        <NodeLayout
+          Size="260,42.6666666666667"
+          Id="Package\Sequence Container\Convert Deduction Occurence column"
+          TopLeft="44.1874989243227,93.0131594948981" />
+        <NodeLayout
+          Size="268,42.6666666666667"
+          Id="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV"
+          TopLeft="43.499997355044,11.7894769553663" />
+        <NodeLayout
+          Size="229.333333333334,42"
+          Id="Package\Sequence Container\Exclude amounts less than R10"
+          TopLeft="49.1770805044414,348.27632614706" />
+        <NodeLayout
+          Size="310.666666666667,42.6666666666667"
+          Id="Package\Sequence Container\Exclude repeat customers with no active balance"
+          TopLeft="12.3437484749597,259.44737706901" />
+        <NodeLayout
+          Size="285.333333333334,42.6666666666667"
+          Id="Package\Sequence Container\Fetch now due for NowDue amount records"
+          TopLeft="24.9479147551271,173.000006606704" />
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint]"
+          TopLeft="167.645831615043,215.666673273371">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43.7807037956387"
+              Start="0,0"
+              End="0,36.2807037956387">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.2807037956387" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 1]"
+          TopLeft="165.760414489701,302.114043735676">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,46.1622824113835"
+              Start="0,0"
+              End="0,38.6622824113835">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.6622824113835" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 2]"
+          TopLeft="175.843748139683,54.456143622033">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38.5570158728651"
+              Start="0,0"
+              End="0,31.0570158728651">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.0570158728651" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 3]"
+          TopLeft="170.901040173058,135.679826161565">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37.3201804451395"
+              Start="0,0"
+              End="0,29.8201804451395">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.8201804451395" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="346,396"
+          Size="346,439.333333333334"
+          Id="Package\Sequence Container"
+          TopLeft="23.5243052050159,115.372785880599" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="195.574651778288,83.1622841242338">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32.2105017563652"
+              Start="0,0"
+              End="0,24.7105017563652">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.7105017563652" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="114.666666666667,42.6666666666667"
+          Id="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega"
+          TopLeft="96.8749985564504,138.894739456454" />
+        <NodeLayout
+          Size="132,42.6666666666667"
+          Id="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder"
+          TopLeft="53.7499991990626,16.4210529406645" />
+        <EdgeLayout
+          Id="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV.Paths[ODBC Source Output]"
+          TopLeft="119.749999199063,59.0877196073312">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="34.4583326907212,79.8070198491228"
+              Start="0,0"
+              End="34.4583326907212,72.3070198491228">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.9035099245614" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,35.9035099245614"
+                    Point2="0,39.9035099245614"
+                    Point3="4,39.9035099245614" />
+                  <mssgle:LineSegment
+                    End="30.4583326907212,39.9035099245614" />
+                  <mssgle:CubicBezierSegment
+                    Point1="30.4583326907212,39.9035099245614"
+                    Point2="34.4583326907212,39.9035099245614"
+                    Point3="34.4583326907212,43.9035099245614" />
+                  <mssgle:LineSegment
+                    End="34.4583326907212,72.3070198491228" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\DebitOrder">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container\Copy Prod Debit Orders to Omega DEV\Omega">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

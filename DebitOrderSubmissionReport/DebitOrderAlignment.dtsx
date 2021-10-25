@@ -1,0 +1,2438 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="9/14/2021 2:16:49 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="2YNN473-NB"
+  DTS:CreatorName="HOMECHOICE\MHEYNS"
+  DTS:DTSID="{61FDEEFD-5DEE-4739-B9CD-FFFE4CF77CB0}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.167"
+  DTS:LocaleID="7177"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="17"
+  DTS:VersionGUID="{7221B5EC-6E4A-42AF-B8BB-2A14ABD51229}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{46D5496F-E4C5-4A1F-B213-3CAF3E485FB6}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="0"
+          DTS:ConnectRetryInterval="0"
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\MHEYNS\Downloads\210914 - BT Mandates.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Prod-DebitOrder]"
+      DTS:CreationName="ODBC"
+      DTS:DTSID="{932CA690-3EF8-482D-8CAA-0FE5A27B6BC5}"
+      DTS:ObjectName="Prod-DebitOrder">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Dsn=Prod-DebitOrder;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SQL-DEV.Omega.mheyns]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{04FB8144-8EAB-4E2B-9CFD-1BB9B59E0B08}"
+      DTS:ObjectName="SQL-DEV.Omega.mheyns">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=SQL-DEV;User ID=mheyns;Initial Catalog=Omega;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAA7FNIVkAJUmFRf2Vvb1iugAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACWcqMQ10eOixrYtNq6XU6TAAAAAASAAACgAAAAEAAAALSLnkGEoCwoKfksogMU9lMYAAAAPoFn2uMGu7pc2oEKkP0z/10nDk/xt3zJFAAAAEcYtiTroTdbh9rLoYY6kN0npSjU</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create BT table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{7EE76BC6-06CB-422C-9D23-F6EA65F123B8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create BT table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04FB8144-8EAB-4E2B-9CFD-1BB9B59E0B08}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="&#xA;IF OBJECT_ID(N'Omega.[dbo].[BT_Mandates]') IS NOT NULL&#xA;BEGIN&#xA;&#x9;DROP TABLE [dbo].[BT_Mandates]&#xA;END&#xA;&#xA;begin&#xA;CREATE TABLE [dbo].[BT_Mandates](&#xA;&#x9;[Amendment reason code] [nvarchar](255) NULL,&#xA;&#x9;[Cancellation reason code] [nvarchar](255) NULL,&#xA;&#x9;[Mandate ID] [float] NULL,&#xA;&#x9;[Mandate status] [nvarchar](255) NULL,&#xA;&#x9;[Mandate group] [nvarchar](255) NULL,&#xA;&#x9;[Contract reference] [float] NULL,&#xA;&#x9;[Start date] [datetime] NULL,&#xA;&#x9;[End date] [datetime] NULL,&#xA;&#x9;[Occurrence] [nvarchar](255) NULL,&#xA;&#x9;[Frequency] [nvarchar](255) NULL,&#xA;&#x9;[Debit day] [float] NULL,&#xA;&#x9;[Value type] [nvarchar](255) NULL,&#xA;&#x9;[Entry class] [float] NULL,&#xA;&#x9;[Amount] [float] NULL,&#xA;&#x9;[Initial collection amount] [nvarchar](255) NULL,&#xA;&#x9;[Initial collection date] [nvarchar](255) NULL,&#xA;&#x9;[Initial collection reference] [nvarchar](255) NULL,&#xA;&#x9;[First collection amount] [nvarchar](255) NULL,&#xA;&#x9;[First collection date] [nvarchar](255) NULL,&#xA;&#x9;[Max amount] [float] NULL,&#xA;&#x9;[Allow tracking] [bit] NOT NULL,&#xA;&#x9;[Date adjustable] [bit] NOT NULL,&#xA;&#x9;[Adjustment category] [nvarchar](255) NULL,&#xA;&#x9;[Adjustment amount] [float] NULL,&#xA;&#x9;[Adjustment rate] [float] NULL,&#xA;&#x9;[Preapprove collections] [nvarchar](255) NULL,&#xA;&#x9;[DebiCheck key] [nvarchar](255) NULL,&#xA;&#x9;[Preferred service] [nvarchar](255) NULL,&#xA;&#x9;[Mandate instrument] [nvarchar](255) NULL,&#xA;&#x9;[Tracking days] [float] NULL,&#xA;&#x9;[Creditor bank] [nvarchar](255) NULL,&#xA;&#x9;[Creditor account] [float] NULL,&#xA;&#x9;[Short name] [nvarchar](255) NULL,&#xA;&#x9;[Debtor name] [nvarchar](255) NULL,&#xA;&#x9;[Debtor ID] [float] NULL,&#xA;&#x9;[ID type] [nvarchar](255) NULL,&#xA;&#x9;[Account type] [nvarchar](255) NULL,&#xA;&#x9;[Debtor account] [float] NULL,&#xA;&#x9;[Debtor branch] [float] NULL,&#xA;&#x9;[Debtor email] [nvarchar](255) NULL,&#xA;&#x9;[Debtor phone] [float] NULL&#xA;)&#xA;end" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Debit OrderTable"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C53CA9BF-6F54-43C0-BF0E-2FB34DB58E6D}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Debit OrderTable"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04FB8144-8EAB-4E2B-9CFD-1BB9B59E0B08}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="&#xA;IF OBJECT_ID(N'Omega.[dbo].[HC_DebitOrders]') IS NOT NULL&#xA;BEGIN&#xA;&#x9;DROP TABLE [dbo].[HC_DebitOrders]&#xA;END&#xA;&#xA;begin&#xA;CREATE TABLE [dbo].[HC_DebitOrders](&#xA;&#x9;[DebitOrderId] [int] NULL,&#xA;&#x9;[PersonNo] [int] NULL,&#xA;&#x9;[DeductionDay] [int] NULL,&#xA;&#x9;[DeductionAmount] [decimal](18, 4) NULL,&#xA;&#x9;[Status] [varchar](max) NULL,&#xA;&#x9;[DeductionOccurrence] [varchar](max) NULL,&#xA;&#x9;[NowDueFlag] [bit] NULL,&#xA;&#x9;[AuthCode] [varchar](50) NULL,&#xA;&#x9;[DebiCheckStatus] [varchar](20) NULL,&#xA;&#x9;[DebitOrderType] [varchar](20) NULL,&#xA;&#x9;[CreateDate] [datetime2](7) NULL,&#xA;&#x9;[DeductionDate] [datetime2](7) NULL&#xA;) &#xA;end" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import BT File"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{67685B44-8E2C-4A7F-B907-5571B9B60BF5}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import BT File"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Import BT File\BT File"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="BT File"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">'210914 - Mandates$'</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Import BT File\BT File.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Import BT File\BT File.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Amendment reason code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Amendment reason code]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Amendment reason code]"
+                      name="Amendment reason code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Cancellation reason code]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Cancellation reason code]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Cancellation reason code]"
+                      name="Cancellation reason code"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Mandate ID]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Mandate ID]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Mandate ID]"
+                      name="Mandate ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Mandate status]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Mandate status]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Mandate status]"
+                      name="Mandate status"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Mandate group]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Mandate group]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Mandate group]"
+                      name="Mandate group"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Contract reference]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Contract reference]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Contract reference]"
+                      name="Contract reference"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Start date]"
+                      dataType="date"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Start date]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Start date]"
+                      name="Start date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[End date]"
+                      dataType="date"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[End date]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[End date]"
+                      name="End date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Occurrence]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Occurrence]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Occurrence]"
+                      name="Occurrence"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Frequency]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Frequency]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Frequency]"
+                      name="Frequency"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debit day]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Debit day]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debit day]"
+                      name="Debit day"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Value type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Value type]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Value type]"
+                      name="Value type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Entry class]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Entry class]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Entry class]"
+                      name="Entry class"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Amount]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Amount]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Amount]"
+                      name="Amount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Initial collection amount]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Initial collection amount]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Initial collection amount]"
+                      name="Initial collection amount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Initial collection date]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Initial collection date]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Initial collection date]"
+                      name="Initial collection date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Initial collection reference]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Initial collection reference]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Initial collection reference]"
+                      name="Initial collection reference"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[First collection amount]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[First collection amount]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[First collection amount]"
+                      name="First collection amount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[First collection date]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[First collection date]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[First collection date]"
+                      name="First collection date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Max amount]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Max amount]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Max amount]"
+                      name="Max amount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Allow tracking]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Allow tracking]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Allow tracking]"
+                      name="Allow tracking"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Date adjustable]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Date adjustable]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Date adjustable]"
+                      name="Date adjustable"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Adjustment category]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Adjustment category]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Adjustment category]"
+                      name="Adjustment category"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Adjustment amount]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Adjustment amount]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Adjustment amount]"
+                      name="Adjustment amount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Adjustment rate]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Adjustment rate]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Adjustment rate]"
+                      name="Adjustment rate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Preapprove collections]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Preapprove collections]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Preapprove collections]"
+                      name="Preapprove collections"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[DebiCheck key]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[DebiCheck key]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[DebiCheck key]"
+                      name="DebiCheck key"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Preferred service]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Preferred service]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Preferred service]"
+                      name="Preferred service"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Mandate instrument]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Mandate instrument]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Mandate instrument]"
+                      name="Mandate instrument"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Tracking days]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Tracking days]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Tracking days]"
+                      name="Tracking days"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Creditor bank]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Creditor bank]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Creditor bank]"
+                      name="Creditor bank"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Creditor account]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Creditor account]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Creditor account]"
+                      name="Creditor account"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Short name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Short name]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Short name]"
+                      name="Short name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debtor name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Debtor name]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debtor name]"
+                      name="Debtor name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debtor ID]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Debtor ID]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debtor ID]"
+                      name="Debtor ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[ID type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[ID type]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[ID type]"
+                      name="ID type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Account type]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Account type]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Account type]"
+                      name="Account type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debtor account]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Debtor account]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debtor account]"
+                      name="Debtor account"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debtor branch]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Debtor branch]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debtor branch]"
+                      name="Debtor branch"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debtor email]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Debtor email]"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debtor email]"
+                      name="Debtor email"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debtor phone]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Debtor phone]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debtor phone]"
+                      name="Debtor phone"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Amendment reason code]"
+                      dataType="wstr"
+                      length="255"
+                      name="Amendment reason code" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Cancellation reason code]"
+                      dataType="wstr"
+                      length="255"
+                      name="Cancellation reason code" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Mandate ID]"
+                      dataType="r8"
+                      name="Mandate ID" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Mandate status]"
+                      dataType="wstr"
+                      length="255"
+                      name="Mandate status" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Mandate group]"
+                      dataType="wstr"
+                      length="255"
+                      name="Mandate group" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Contract reference]"
+                      dataType="r8"
+                      name="Contract reference" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Start date]"
+                      dataType="date"
+                      name="Start date" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[End date]"
+                      dataType="date"
+                      name="End date" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Occurrence]"
+                      dataType="wstr"
+                      length="255"
+                      name="Occurrence" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Frequency]"
+                      dataType="wstr"
+                      length="255"
+                      name="Frequency" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Debit day]"
+                      dataType="r8"
+                      name="Debit day" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Value type]"
+                      dataType="wstr"
+                      length="255"
+                      name="Value type" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Entry class]"
+                      dataType="r8"
+                      name="Entry class" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Amount]"
+                      dataType="r8"
+                      name="Amount" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Initial collection amount]"
+                      dataType="wstr"
+                      length="255"
+                      name="Initial collection amount" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Initial collection date]"
+                      dataType="wstr"
+                      length="255"
+                      name="Initial collection date" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Initial collection reference]"
+                      dataType="wstr"
+                      length="255"
+                      name="Initial collection reference" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[First collection amount]"
+                      dataType="wstr"
+                      length="255"
+                      name="First collection amount" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[First collection date]"
+                      dataType="wstr"
+                      length="255"
+                      name="First collection date" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Max amount]"
+                      dataType="r8"
+                      name="Max amount" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Allow tracking]"
+                      dataType="bool"
+                      name="Allow tracking" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Date adjustable]"
+                      dataType="bool"
+                      name="Date adjustable" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Adjustment category]"
+                      dataType="wstr"
+                      length="255"
+                      name="Adjustment category" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Adjustment amount]"
+                      dataType="r8"
+                      name="Adjustment amount" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Adjustment rate]"
+                      dataType="r8"
+                      name="Adjustment rate" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Preapprove collections]"
+                      dataType="wstr"
+                      length="255"
+                      name="Preapprove collections" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[DebiCheck key]"
+                      dataType="wstr"
+                      length="255"
+                      name="DebiCheck key" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Preferred service]"
+                      dataType="wstr"
+                      length="255"
+                      name="Preferred service" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Mandate instrument]"
+                      dataType="wstr"
+                      length="255"
+                      name="Mandate instrument" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Tracking days]"
+                      dataType="r8"
+                      name="Tracking days" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Creditor bank]"
+                      dataType="wstr"
+                      length="255"
+                      name="Creditor bank" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Creditor account]"
+                      dataType="r8"
+                      name="Creditor account" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Short name]"
+                      dataType="wstr"
+                      length="255"
+                      name="Short name" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Debtor name]"
+                      dataType="wstr"
+                      length="255"
+                      name="Debtor name" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Debtor ID]"
+                      dataType="r8"
+                      name="Debtor ID" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[ID type]"
+                      dataType="wstr"
+                      length="255"
+                      name="ID type" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Account type]"
+                      dataType="wstr"
+                      length="255"
+                      name="Account type" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Debtor account]"
+                      dataType="r8"
+                      name="Debtor account" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Debtor branch]"
+                      dataType="r8"
+                      name="Debtor branch" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Debtor email]"
+                      dataType="wstr"
+                      length="255"
+                      name="Debtor email" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Output].ExternalColumns[Debtor phone]"
+                      dataType="r8"
+                      name="Debtor phone" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Amendment reason code]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Amendment reason code]"
+                      name="Amendment reason code" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Cancellation reason code]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Cancellation reason code]"
+                      name="Cancellation reason code" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Mandate ID]"
+                      dataType="r8"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Mandate ID]"
+                      name="Mandate ID" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Mandate status]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Mandate status]"
+                      name="Mandate status" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Mandate group]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Mandate group]"
+                      name="Mandate group" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Contract reference]"
+                      dataType="r8"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Contract reference]"
+                      name="Contract reference" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Start date]"
+                      dataType="date"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Start date]"
+                      name="Start date" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[End date]"
+                      dataType="date"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[End date]"
+                      name="End date" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Occurrence]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Occurrence]"
+                      name="Occurrence" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Frequency]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Frequency]"
+                      name="Frequency" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Debit day]"
+                      dataType="r8"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Debit day]"
+                      name="Debit day" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Value type]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Value type]"
+                      name="Value type" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Entry class]"
+                      dataType="r8"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Entry class]"
+                      name="Entry class" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Amount]"
+                      dataType="r8"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Amount]"
+                      name="Amount" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Initial collection amount]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Initial collection amount]"
+                      name="Initial collection amount" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Initial collection date]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Initial collection date]"
+                      name="Initial collection date" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Initial collection reference]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Initial collection reference]"
+                      name="Initial collection reference" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[First collection amount]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[First collection amount]"
+                      name="First collection amount" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[First collection date]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[First collection date]"
+                      name="First collection date" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Max amount]"
+                      dataType="r8"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Max amount]"
+                      name="Max amount" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Allow tracking]"
+                      dataType="bool"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Allow tracking]"
+                      name="Allow tracking" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Date adjustable]"
+                      dataType="bool"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Date adjustable]"
+                      name="Date adjustable" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Adjustment category]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Adjustment category]"
+                      name="Adjustment category" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Adjustment amount]"
+                      dataType="r8"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Adjustment amount]"
+                      name="Adjustment amount" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Adjustment rate]"
+                      dataType="r8"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Adjustment rate]"
+                      name="Adjustment rate" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Preapprove collections]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Preapprove collections]"
+                      name="Preapprove collections" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[DebiCheck key]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[DebiCheck key]"
+                      name="DebiCheck key" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Preferred service]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Preferred service]"
+                      name="Preferred service" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Mandate instrument]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Mandate instrument]"
+                      name="Mandate instrument" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Tracking days]"
+                      dataType="r8"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Tracking days]"
+                      name="Tracking days" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Creditor bank]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Creditor bank]"
+                      name="Creditor bank" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Creditor account]"
+                      dataType="r8"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Creditor account]"
+                      name="Creditor account" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Short name]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Short name]"
+                      name="Short name" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Debtor name]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Debtor name]"
+                      name="Debtor name" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Debtor ID]"
+                      dataType="r8"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Debtor ID]"
+                      name="Debtor ID" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[ID type]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[ID type]"
+                      name="ID type" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Account type]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Account type]"
+                      name="Account type" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Debtor account]"
+                      dataType="r8"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Debtor account]"
+                      name="Debtor account" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Debtor branch]"
+                      dataType="r8"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Debtor branch]"
+                      name="Debtor branch" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Debtor email]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Debtor email]"
+                      name="Debtor email" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Debtor phone]"
+                      dataType="r8"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[Debtor phone]"
+                      name="Debtor phone" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Import BT File\BT_Mandates"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="BT_Mandates"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[BT_Mandates]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Import BT File\BT_Mandates.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SQL-DEV.Omega.mheyns]"
+                  connectionManagerRefId="Package.ConnectionManagers[SQL-DEV.Omega.mheyns]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Amendment reason code]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Amendment reason code"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Amendment reason code]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Amendment reason code]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Cancellation reason code]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Cancellation reason code"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Cancellation reason code]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Cancellation reason code]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Mandate ID]"
+                      cachedDataType="r8"
+                      cachedName="Mandate ID"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Mandate ID]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Mandate ID]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Mandate status]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Mandate status"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Mandate status]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Mandate status]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Mandate group]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Mandate group"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Mandate group]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Mandate group]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Contract reference]"
+                      cachedDataType="r8"
+                      cachedName="Contract reference"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Contract reference]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Contract reference]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Start date]"
+                      cachedDataType="date"
+                      cachedName="Start date"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Start date]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Start date]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[End date]"
+                      cachedDataType="date"
+                      cachedName="End date"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[End date]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[End date]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Occurrence]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Occurrence"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Occurrence]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Occurrence]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Frequency]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Frequency"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Frequency]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Frequency]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Debit day]"
+                      cachedDataType="r8"
+                      cachedName="Debit day"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Debit day]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debit day]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Value type]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Value type"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Value type]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Value type]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Entry class]"
+                      cachedDataType="r8"
+                      cachedName="Entry class"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Entry class]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Entry class]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Amount]"
+                      cachedDataType="r8"
+                      cachedName="Amount"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Amount]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Amount]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Initial collection amount]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Initial collection amount"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Initial collection amount]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Initial collection amount]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Initial collection date]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Initial collection date"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Initial collection date]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Initial collection date]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Initial collection reference]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Initial collection reference"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Initial collection reference]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Initial collection reference]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[First collection amount]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="First collection amount"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[First collection amount]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[First collection amount]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[First collection date]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="First collection date"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[First collection date]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[First collection date]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Max amount]"
+                      cachedDataType="r8"
+                      cachedName="Max amount"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Max amount]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Max amount]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Allow tracking]"
+                      cachedDataType="bool"
+                      cachedName="Allow tracking"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Allow tracking]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Allow tracking]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Date adjustable]"
+                      cachedDataType="bool"
+                      cachedName="Date adjustable"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Date adjustable]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Date adjustable]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Adjustment category]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Adjustment category"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Adjustment category]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Adjustment category]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Adjustment amount]"
+                      cachedDataType="r8"
+                      cachedName="Adjustment amount"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Adjustment amount]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Adjustment amount]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Adjustment rate]"
+                      cachedDataType="r8"
+                      cachedName="Adjustment rate"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Adjustment rate]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Adjustment rate]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Preapprove collections]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Preapprove collections"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Preapprove collections]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Preapprove collections]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[DebiCheck key]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DebiCheck key"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[DebiCheck key]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[DebiCheck key]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Preferred service]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Preferred service"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Preferred service]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Preferred service]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Mandate instrument]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Mandate instrument"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Mandate instrument]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Mandate instrument]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Tracking days]"
+                      cachedDataType="r8"
+                      cachedName="Tracking days"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Tracking days]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Tracking days]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Creditor bank]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Creditor bank"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Creditor bank]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Creditor bank]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Creditor account]"
+                      cachedDataType="r8"
+                      cachedName="Creditor account"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Creditor account]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Creditor account]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Short name]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Short name"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Short name]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Short name]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Debtor name]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Debtor name"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Debtor name]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debtor name]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Debtor ID]"
+                      cachedDataType="r8"
+                      cachedName="Debtor ID"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Debtor ID]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debtor ID]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[ID type]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="ID type"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[ID type]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[ID type]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Account type]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Account type"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Account type]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Account type]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Debtor account]"
+                      cachedDataType="r8"
+                      cachedName="Debtor account"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Debtor account]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debtor account]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Debtor branch]"
+                      cachedDataType="r8"
+                      cachedName="Debtor branch"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Debtor branch]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debtor branch]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Debtor email]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Debtor email"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Debtor email]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debtor email]" />
+                    <inputColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].Columns[Debtor phone]"
+                      cachedDataType="r8"
+                      cachedName="Debtor phone"
+                      externalMetadataColumnId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Debtor phone]"
+                      lineageId="Package\Import BT File\BT File.Outputs[Excel Source Output].Columns[Debtor phone]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Amendment reason code]"
+                      dataType="wstr"
+                      length="255"
+                      name="Amendment reason code" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Cancellation reason code]"
+                      dataType="wstr"
+                      length="255"
+                      name="Cancellation reason code" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Mandate ID]"
+                      dataType="r8"
+                      name="Mandate ID" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Mandate status]"
+                      dataType="wstr"
+                      length="255"
+                      name="Mandate status" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Mandate group]"
+                      dataType="wstr"
+                      length="255"
+                      name="Mandate group" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Contract reference]"
+                      dataType="r8"
+                      name="Contract reference" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Start date]"
+                      dataType="dbTimeStamp"
+                      name="Start date" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[End date]"
+                      dataType="dbTimeStamp"
+                      name="End date" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Occurrence]"
+                      dataType="wstr"
+                      length="255"
+                      name="Occurrence" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Frequency]"
+                      dataType="wstr"
+                      length="255"
+                      name="Frequency" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Debit day]"
+                      dataType="r8"
+                      name="Debit day" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Value type]"
+                      dataType="wstr"
+                      length="255"
+                      name="Value type" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Entry class]"
+                      dataType="r8"
+                      name="Entry class" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Amount]"
+                      dataType="r8"
+                      name="Amount" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Initial collection amount]"
+                      dataType="wstr"
+                      length="255"
+                      name="Initial collection amount" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Initial collection date]"
+                      dataType="wstr"
+                      length="255"
+                      name="Initial collection date" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Initial collection reference]"
+                      dataType="wstr"
+                      length="255"
+                      name="Initial collection reference" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[First collection amount]"
+                      dataType="wstr"
+                      length="255"
+                      name="First collection amount" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[First collection date]"
+                      dataType="wstr"
+                      length="255"
+                      name="First collection date" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Max amount]"
+                      dataType="r8"
+                      name="Max amount" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Allow tracking]"
+                      dataType="bool"
+                      name="Allow tracking" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Date adjustable]"
+                      dataType="bool"
+                      name="Date adjustable" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Adjustment category]"
+                      dataType="wstr"
+                      length="255"
+                      name="Adjustment category" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Adjustment amount]"
+                      dataType="r8"
+                      name="Adjustment amount" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Adjustment rate]"
+                      dataType="r8"
+                      name="Adjustment rate" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Preapprove collections]"
+                      dataType="wstr"
+                      length="255"
+                      name="Preapprove collections" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[DebiCheck key]"
+                      dataType="wstr"
+                      length="255"
+                      name="DebiCheck key" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Preferred service]"
+                      dataType="wstr"
+                      length="255"
+                      name="Preferred service" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Mandate instrument]"
+                      dataType="wstr"
+                      length="255"
+                      name="Mandate instrument" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Tracking days]"
+                      dataType="r8"
+                      name="Tracking days" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Creditor bank]"
+                      dataType="wstr"
+                      length="255"
+                      name="Creditor bank" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Creditor account]"
+                      dataType="r8"
+                      name="Creditor account" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Short name]"
+                      dataType="wstr"
+                      length="255"
+                      name="Short name" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Debtor name]"
+                      dataType="wstr"
+                      length="255"
+                      name="Debtor name" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Debtor ID]"
+                      dataType="r8"
+                      name="Debtor ID" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[ID type]"
+                      dataType="wstr"
+                      length="255"
+                      name="ID type" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Account type]"
+                      dataType="wstr"
+                      length="255"
+                      name="Account type" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Debtor account]"
+                      dataType="r8"
+                      name="Debtor account" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Debtor branch]"
+                      dataType="r8"
+                      name="Debtor branch" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Debtor email]"
+                      dataType="wstr"
+                      length="255"
+                      name="Debtor email" />
+                    <externalMetadataColumn
+                      refId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input].ExternalColumns[Debtor phone]"
+                      dataType="r8"
+                      name="Debtor phone" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Import BT File\BT_Mandates.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import BT File\BT_Mandates.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Import BT File\BT_Mandates.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Import BT File\BT_Mandates.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Import BT File\BT_Mandates.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Import BT File.Paths[Excel Source Output]"
+              endId="Package\Import BT File\BT_Mandates.Inputs[OLE DB Destination Input]"
+              name="Excel Source Output"
+              startId="Package\Import BT File\BT File.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import Debit Orders from Prod"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DelayValidation="True"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{28385C10-7E75-4B32-B15B-30F56ABD9E7F}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import Debit Orders from Prod"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Import Debit Orders from Prod\DebitOrder"
+              componentClassID="Microsoft.SSISODBCSrc"
+              contactInfo="ODBC Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="ODBC Source"
+              name="DebitOrder"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The name of the table to be fetched."
+                  expressionType="Notify"
+                  name="TableName">DebitOrder</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select DebitOrderId, PersonNo, cast(DeductionDay as SIGNED) as DeductionDay, DeductionDate, DeductionAmount, Status, DeductionOccurrence, NowDueFlag, AuthCode, DebiCheckStatus, DebitOrderType, CreateDate 
+from DebitOrder
+where status = 'Active'  and createdate &lt; '2021-09-14 14:00:00.000'</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows fetched per batch."
+                  expressionType="Notify"
+                  name="BatchSize">1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Determines the chunk size allocation for LOB columns"
+                  expressionType="Notify"
+                  name="LobChunkSize">32768</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines how the component exposes CHAR columns. If False, CHAR columns are exposed as (multi-)byte strings (DT_STR), if True, CHAR columns are exposed as wide strings (DT_WSTR)"
+                  expressionType="Notify"
+                  name="ExposeCharColumnsAsUnicode">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds to wait for an SQL statement to execute before returning to the application."
+                  expressionType="Notify"
+                  name="StatementTimeout">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The code page to use when code page information is unavailable from the data source."
+                  expressionType="Notify"
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Int32"
+                  description="The method used for fetching data."
+                  expressionType="Notify"
+                  name="FetchMethod">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="The ODBC C data type for binding numeric data."
+                  expressionType="Notify"
+                  name="BindNumericAs">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Determines how the component would bind columns of (multi)-byte string types (i.e., SQL_CHAR, SQL_VARCHAR, SQL_LONGVARCHAR). The options are: Unicode (SQL_C_WCHAR) and ANSI (SQL_C_CHAR)."
+                  expressionType="Notify"
+                  name="BindCharColumnsAs">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The mode used to access the database."
+                  expressionType="Notify"
+                  name="AccessMode"
+                  typeConverter="AccessMode">1</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Import Debit Orders from Prod\DebitOrder.Connections[ODBCConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Prod-DebitOrder]"
+                  connectionManagerRefId="Package.ConnectionManagers[Prod-DebitOrder]"
+                  description="The ODBC runtime connection used to access the database."
+                  name="ODBCConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output]"
+                  errorRowDisposition="FailComponent"
+                  name="ODBC Source Output"
+                  truncationRowDisposition="FailComponent">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DebitOrderId]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DebitOrderId]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DebitOrderId]"
+                      name="DebitOrderId" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[PersonNo]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[PersonNo]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[PersonNo]"
+                      name="PersonNo" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionDay]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionDay]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionDay]"
+                      name="DeductionDay" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionAmount]"
+                      dataType="numeric"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionAmount]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionAmount]"
+                      name="DeductionAmount"
+                      precision="18"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[Status]"
+                      codePage="1252"
+                      dataType="text"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[Status]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[Status]"
+                      name="Status" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionOccurrence]"
+                      codePage="1252"
+                      dataType="text"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionOccurrence]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionOccurrence]"
+                      name="DeductionOccurrence" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[NowDueFlag]"
+                      dataType="bool"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[NowDueFlag]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[NowDueFlag]"
+                      name="NowDueFlag" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[AuthCode]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[AuthCode]"
+                      length="50"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[AuthCode]"
+                      name="AuthCode" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DebiCheckStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DebiCheckStatus]"
+                      length="20"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DebiCheckStatus]"
+                      name="DebiCheckStatus" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DebitOrderType]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DebitOrderType]"
+                      length="20"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DebitOrderType]"
+                      name="DebitOrderType" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[CreateDate]"
+                      dataType="dbTimeStamp"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[CreateDate]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[CreateDate]"
+                      name="CreateDate" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionDate]"
+                      dataType="dbTimeStamp"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionDate]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionDate]"
+                      name="DeductionDate" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DebitOrderId]"
+                      dataType="i4"
+                      name="DebitOrderId" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[PersonNo]"
+                      dataType="i4"
+                      name="PersonNo" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionAmount]"
+                      dataType="numeric"
+                      name="DeductionAmount"
+                      precision="18"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionDay]"
+                      dataType="i8"
+                      name="DeductionDay" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[Status]"
+                      codePage="1252"
+                      dataType="text"
+                      name="Status" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionOccurrence]"
+                      codePage="1252"
+                      dataType="text"
+                      name="DeductionOccurrence" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[NowDueFlag]"
+                      dataType="bool"
+                      name="NowDueFlag" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[CreateDate]"
+                      dataType="dbTimeStamp"
+                      name="CreateDate" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[AuthCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="AuthCode" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DebiCheckStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="DebiCheckStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DebitOrderType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="DebitOrderType" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionDate]"
+                      dataType="dbTimeStamp"
+                      name="DeductionDate" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output]"
+                  isErrorOut="true"
+                  name="ODBC Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[DebitOrderId]"
+                      dataType="i4"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[DebitOrderId]"
+                      name="DebitOrderId" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[PersonNo]"
+                      dataType="i4"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[PersonNo]"
+                      name="PersonNo" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[DeductionDay]"
+                      dataType="i8"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[DeductionDay]"
+                      name="DeductionDay" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[DeductionAmount]"
+                      dataType="numeric"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[DeductionAmount]"
+                      name="DeductionAmount"
+                      precision="18"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[Status]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[Status]"
+                      name="Status" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[DeductionOccurrence]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[DeductionOccurrence]"
+                      name="DeductionOccurrence" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[NowDueFlag]"
+                      dataType="bool"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[NowDueFlag]"
+                      name="NowDueFlag" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[AuthCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[AuthCode]"
+                      name="AuthCode" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[DebiCheckStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[DebiCheckStatus]"
+                      name="DebiCheckStatus" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[DeductionDate]"
+                      dataType="dbTimeStamp"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].ExternalColumns[DeductionDate]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[DeductionDate]"
+                      name="DeductionDate" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[DebitOrderType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[DebitOrderType]"
+                      name="DebitOrderType" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[CreateDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Error Output].Columns[CreateDate]"
+                      name="CreateDate" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Import Debit Orders from Prod\HC_DebitOrders"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="HC_DebitOrders"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[HC_DebitOrders]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SQL-DEV.Omega.mheyns]"
+                  connectionManagerRefId="Package.ConnectionManagers[SQL-DEV.Omega.mheyns]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].Columns[DebitOrderId]"
+                      cachedDataType="i4"
+                      cachedName="DebitOrderId"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[DebitOrderId]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DebitOrderId]" />
+                    <inputColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].Columns[PersonNo]"
+                      cachedDataType="i4"
+                      cachedName="PersonNo"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[PersonNo]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[PersonNo]" />
+                    <inputColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].Columns[DeductionDay]"
+                      cachedDataType="i4"
+                      cachedName="DeductionDay"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[DeductionDay]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionDay]" />
+                    <inputColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].Columns[DeductionAmount]"
+                      cachedDataType="numeric"
+                      cachedName="DeductionAmount"
+                      cachedPrecision="18"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[DeductionAmount]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionAmount]" />
+                    <inputColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].Columns[Status]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="Status"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[Status]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[Status]" />
+                    <inputColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].Columns[DeductionOccurrence]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="DeductionOccurrence"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[DeductionOccurrence]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionOccurrence]" />
+                    <inputColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].Columns[NowDueFlag]"
+                      cachedDataType="bool"
+                      cachedName="NowDueFlag"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[NowDueFlag]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[NowDueFlag]" />
+                    <inputColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].Columns[AuthCode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="AuthCode"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[AuthCode]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[AuthCode]" />
+                    <inputColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].Columns[DebiCheckStatus]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="DebiCheckStatus"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[DebiCheckStatus]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DebiCheckStatus]" />
+                    <inputColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].Columns[DebitOrderType]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="DebitOrderType"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[DebitOrderType]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DebitOrderType]" />
+                    <inputColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].Columns[CreateDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="CreateDate"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[CreateDate]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[CreateDate]" />
+                    <inputColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].Columns[DeductionDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="DeductionDate"
+                      externalMetadataColumnId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[DeductionDate]"
+                      lineageId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output].Columns[DeductionDate]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[DebitOrderId]"
+                      dataType="i4"
+                      name="DebitOrderId" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[PersonNo]"
+                      dataType="i4"
+                      name="PersonNo" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[DeductionDay]"
+                      dataType="i4"
+                      name="DeductionDay" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[DeductionAmount]"
+                      dataType="numeric"
+                      name="DeductionAmount"
+                      precision="18"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[Status]"
+                      codePage="1252"
+                      dataType="text"
+                      name="Status" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[DeductionOccurrence]"
+                      codePage="1252"
+                      dataType="text"
+                      name="DeductionOccurrence" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[NowDueFlag]"
+                      dataType="bool"
+                      name="NowDueFlag" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[AuthCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="AuthCode" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[DebiCheckStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="DebiCheckStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[DebitOrderType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="DebitOrderType" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[CreateDate]"
+                      dataType="dbTimeStamp2"
+                      name="CreateDate"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input].ExternalColumns[DeductionDate]"
+                      dataType="dbTimeStamp2"
+                      name="DeductionDate"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Import Debit Orders from Prod\HC_DebitOrders.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Import Debit Orders from Prod\HC_DebitOrders.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Import Debit Orders from Prod\HC_DebitOrders.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Import Debit Orders from Prod.Paths[ODBC Source Output]"
+              endId="Package\Import Debit Orders from Prod\HC_DebitOrders.Inputs[OLE DB Destination Input]"
+              name="ODBC Source Output"
+              startId="Package\Import Debit Orders from Prod\DebitOrder.Outputs[ODBC Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{6D48A711-07D7-488A-A3AE-683548ACEF8C}"
+      DTS:From="Package\Create Debit OrderTable"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Import Debit Orders from Prod" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{F3392117-0FFA-4459-BF94-FE008134ABE6}"
+      DTS:From="Package\Import Debit Orders from Prod"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Create BT table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{9CE9C828-D7CD-4102-99FF-2F0100BC93F3}"
+      DTS:From="Package\Create BT table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Import BT File" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="222.666666666667,42.6666666666667"
+          Id="Package\Import Debit Orders from Prod"
+          TopLeft="37.7272721650921,113.765552380589" />
+        <NodeLayout
+          Size="196.666666666667,42.6666666666667"
+          Id="Package\Create Debit OrderTable"
+          TopLeft="49.4318174452268,26.7464119866884" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="148.412878138493,69.4130786533551">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44.3524737272337"
+              Start="0,0"
+              End="0,36.8524737272337">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.8524737272337" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="154.666666666667,42.6666666666667"
+          Id="Package\Create BT table"
+          TopLeft="68.1818171658299,204.641152177221" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="147.287877998794,156.432219047255">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48.2089331299653"
+              Start="0,0"
+              End="0,40.7089331299653">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.7089331299653" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="146.666666666667,42.6666666666667"
+          Id="Package\Import BT File"
+          TopLeft="72.1590898338367,293.588522272487" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="145.503786833167,247.307818843887">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,46.2807034285997"
+              Start="0,0"
+              End="0,38.7807034285997">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.7807034285997" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Import Debit Orders from Prod">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="158.666666666667,42.6666666666667"
+          Id="Package\Import Debit Orders from Prod\HC_DebitOrders"
+          TopLeft="191.249997150153,192.263161513614" />
+        <NodeLayout
+          Size="132,42.6666666666667"
+          Id="Package\Import Debit Orders from Prod\DebitOrder"
+          TopLeft="86.8749987054617,49.9298254886603" />
+        <EdgeLayout
+          Id="Package\Import Debit Orders from Prod.Paths[ODBC Source Output]"
+          TopLeft="152.874998705462,92.5964921553269">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="117.708331778025,99.666669358287"
+              Start="0,0"
+              End="117.708331778025,92.166669358287">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,45.8333346791435" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,45.8333346791435"
+                    Point2="0,49.8333346791435"
+                    Point3="4,49.8333346791435" />
+                  <mssgle:LineSegment
+                    End="113.708331778025,49.8333346791435" />
+                  <mssgle:CubicBezierSegment
+                    Point1="113.708331778025,49.8333346791435"
+                    Point2="117.708331778025,49.8333346791435"
+                    Point3="117.708331778025,53.8333346791435" />
+                  <mssgle:LineSegment
+                    End="117.708331778025,92.166669358287" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Import Debit Orders from Prod\DebitOrder">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Import Debit Orders from Prod\HC_DebitOrders">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Import BT File">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="113.333333333334,42.6666666666667"
+          Id="Package\Import BT File\BT File"
+          TopLeft="150.230769230769,37.4615384615385" />
+        <NodeLayout
+          Size="146.666666666667,42.6666666666667"
+          Id="Package\Import BT File\BT_Mandates"
+          TopLeft="232.307692307692,126.923076923077" />
+        <EdgeLayout
+          Id="Package\Import BT File.Paths[Excel Source Output]"
+          TopLeft="206.897435897436,80.1282051282051">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="98.7435897435897,46.7948717948718"
+              Start="0,0"
+              End="98.7435897435897,39.2948717948718">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.3974358974359" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.3974358974359"
+                    Point2="0,23.3974358974359"
+                    Point3="4,23.3974358974359" />
+                  <mssgle:LineSegment
+                    End="94.7435897435897,23.3974358974359" />
+                  <mssgle:CubicBezierSegment
+                    Point1="94.7435897435897,23.3974358974359"
+                    Point2="98.7435897435897,23.3974358974359"
+                    Point3="98.7435897435897,27.3974358974359" />
+                  <mssgle:LineSegment
+                    End="98.7435897435897,39.2948717948718" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Import BT File\BT File">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Import BT File\BT_Mandates">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

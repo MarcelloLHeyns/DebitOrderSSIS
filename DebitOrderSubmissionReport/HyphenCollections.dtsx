@@ -1,0 +1,3916 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/18/2021 10:48:46 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="2YNN473-NB"
+  DTS:CreatorName="HOMECHOICE\MHEYNS"
+  DTS:DTSID="{8B0C803E-9AFB-40B8-9CD6-89A34F02B3F8}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.167"
+  DTS:LocaleID="7177"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="51"
+  DTS:VersionGUID="{9E77560E-0686-48C1-9D1B-E75476906B58}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Load Report]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{9CCF12CE-6C4E-4A16-AE3E-2921C690AD4B}"
+      DTS:ObjectName="Load Report">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="RaggedRight"
+          DTS:LocaleID="7177"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="C:\Users\MHEYNS\Documents\HyphenCollectionsFile.txt">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:DataType="302"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Column 0"
+              DTS:DTSID="{D0443AB7-A51D-4648-9336-F0016F55965D}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[MySQL-Local]"
+      DTS:CreationName="ODBC"
+      DTS:DTSID="{AAD35959-940D-4B6B-8249-EE21581809E7}"
+      DTS:ObjectName="MySQL-Local">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Dsn=MySQL-Local;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create Hyphen Collection File"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{DA1575CA-D8F7-4F0A-9247-B67B0DF18040}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Hyphen Collection File"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Read Load Report"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{D755D5C4-C263-46E9-BA15-9FB8A1D1ACEA}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Read Load Report"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Read Load Report\Convert Blob to String"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Convert Blob to String"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Read Load Report\Convert Blob to String.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Read Load Report\Convert Blob to String.Inputs[Data Conversion Input].Columns[Load Report]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="Load Report"
+                      lineageId="Package\Read Load Report\Load Report.Outputs[Flat File Source Output].Columns[Load Report]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Read Load Report\Convert Blob to String.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Read Load Report\Convert Blob to String.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Read Load Report\Convert Blob to String.Outputs[Data Conversion Output].Columns[ConvertedLoadReport]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="323"
+                      lineageId="Package\Read Load Report\Convert Blob to String.Outputs[Data Conversion Output].Columns[ConvertedLoadReport]"
+                      name="ConvertedLoadReport"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Read Load Report\Load Report.Outputs[Flat File Source Output].Columns[Load Report]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Read Load Report\Convert Blob to String.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Read Load Report\Convert Blob to String.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Read Load Report\Convert Blob to String.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Read Load Report\Convert Blob to String.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Convert Blob to String.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Read Load Report\Convert Blob to String.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Read Load Report\Header"
+              componentClassID="Microsoft.SSISODBCDst"
+              contactInfo="ODBC Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="ODBC Destination"
+              name="Header"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The name of the table to be fetched."
+                  expressionType="Notify"
+                  name="TableName">headertest</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows fetched per batch."
+                  expressionType="Notify"
+                  name="BatchSize">1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of rows inserted under the same transaction."
+                  expressionType="Notify"
+                  name="TransactionSize">1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Determines the chunk size allocation for LOB columns"
+                  expressionType="Notify"
+                  name="LobChunkSize">32768</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds to wait for an SQL statement to execute before returning to the application."
+                  expressionType="Notify"
+                  name="StatementTimeout">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The code page to use when code page information is unavailable from the data source."
+                  expressionType="Notify"
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Int32"
+                  description="The method used for inserting data. Possible values are 'Batch' or 'Row by row'."
+                  expressionType="Notify"
+                  name="InsertMethod">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The ODBC C data type for binding numeric data."
+                  expressionType="Notify"
+                  name="BindNumericAs">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Determines how the component would bind columns of (multi)-byte string types (i.e., SQL_CHAR, SQL_VARCHAR, SQL_LONGVARCHAR). The options are: Unicode (SQL_C_WCHAR) and ANSI (SQL_C_CHAR)."
+                  expressionType="Notify"
+                  name="BindCharColumnsAs">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Read Load Report\Header.Connections[ODBCConnection]"
+                  connectionManagerID="Package.ConnectionManagers[MySQL-Local]"
+                  connectionManagerRefId="Package.ConnectionManagers[MySQL-Local]"
+                  description="The ODBC runtime connection used to access the database."
+                  name="ODBCConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Read Load Report\Header.Inputs[ODBC Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ODBC Destination Input"
+                  truncationRowDisposition="FailComponent">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Read Load Report\Header.Inputs[ODBC Destination Input].Columns[MessageType]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="9"
+                      cachedName="MessageType"
+                      externalMetadataColumnId="Package\Read Load Report\Header.Inputs[ODBC Destination Input].ExternalColumns[MessageType]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[Header].Columns[MessageType]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Header.Inputs[ODBC Destination Input].Columns[TransmissionDate]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="TransmissionDate"
+                      externalMetadataColumnId="Package\Read Load Report\Header.Inputs[ODBC Destination Input].ExternalColumns[TransmissionDate]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[Header].Columns[TransmissionDate]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Header.Inputs[ODBC Destination Input].Columns[TransmissionTime]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="6"
+                      cachedName="TransmissionTime"
+                      externalMetadataColumnId="Package\Read Load Report\Header.Inputs[ODBC Destination Input].ExternalColumns[TransmissionTime]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[Header].Columns[TransmissionTime]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Header.Inputs[ODBC Destination Input].Columns[BatchNumber]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="BatchNumber"
+                      externalMetadataColumnId="Package\Read Load Report\Header.Inputs[ODBC Destination Input].ExternalColumns[BatchNumber]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[Header].Columns[BatchNumber]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Header.Inputs[ODBC Destination Input].ExternalColumns[MessageType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="9"
+                      name="MessageType" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Header.Inputs[ODBC Destination Input].ExternalColumns[BatchNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="BatchNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Header.Inputs[ODBC Destination Input].ExternalColumns[TransmissionDate]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="TransmissionDate" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Header.Inputs[ODBC Destination Input].ExternalColumns[TransmissionTime]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="TransmissionTime" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Read Load Report\Header.Outputs[ODBC Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ODBC Destination Error Output"
+                  synchronousInputId="Package\Read Load Report\Header.Inputs[ODBC Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Read Load Report\Header.Outputs[ODBC Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Read Load Report\Header.Outputs[ODBC Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Header.Outputs[ODBC Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Read Load Report\Header.Outputs[ODBC Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Read Load Report\Load Report"
+              componentClassID="Microsoft.FlatFileSource"
+              contactInfo="Flat File Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Source"
+              localeId="7177"
+              name="Load Report"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether zero-length columns are treated as null."
+                  name="RetainNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of an output column containing the file name. If no name is specified, no output column containing the file name will be generated."
+                  name="FileNameColumnName"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Read Load Report\Load Report.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Load Report]"
+                  connectionManagerRefId="Package.ConnectionManagers[Load Report]"
+                  name="FlatFileConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Read Load Report\Load Report.Outputs[Flat File Source Output]"
+                  name="Flat File Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Read Load Report\Load Report.Outputs[Flat File Source Output].Columns[Load Report]"
+                      codePage="1252"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Read Load Report\Load Report.Outputs[Flat File Source Output].ExternalColumns[Column 0]"
+                      lineageId="Package\Read Load Report\Load Report.Outputs[Flat File Source Output].Columns[Load Report]"
+                      name="Load Report"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Load Report.Outputs[Flat File Source Output].ExternalColumns[Column 0]"
+                      codePage="1252"
+                      dataType="text"
+                      name="Column 0" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Read Load Report\Load Report.Outputs[Flat File Source Error Output]"
+                  isErrorOut="true"
+                  name="Flat File Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Read Load Report\Load Report.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      codePage="1252"
+                      dataType="text"
+                      description="Flat File Source Error Output Column"
+                      lineageId="Package\Read Load Report\Load Report.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      name="Flat File Source Error Output Column" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Load Report.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Read Load Report\Load Report.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Load Report.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Read Load Report\Load Report.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Read Load Report\Split the Load Report"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Includes and runs custom script code. For example, apply a business rule that limits the range of valid values in an &quot;income&quot; column or add values in two columns and calculate the average of the sum.;Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;12"
+              description="Includes and runs custom script code. For example, apply a business rule that limits the range of valid values in an &quot;income&quot; column or add values in two columns and calculate the average of the sum."
+              name="Split the Load Report"
+              version="12">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Stores the source code of the component"
+                  isArray="true"
+                  name="SourceCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="30">
+                    <arrayElement
+                      dataType="System.String"><![CDATA[ComponentWrapper.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[/* THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT!
+*  Microsoft SQL Server Integration Services component wrapper
+*  This module defines the base class for your component
+*  THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT! */
+
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Pipeline;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+using Microsoft.SqlServer.Dts.Runtime.Wrapper;
+
+public class UserComponent: ScriptComponent
+{
+    public Connections Connections;
+    public Variables Variables;
+    public UserComponent()
+    {
+        Connections = new Connections(this);
+        Variables = new Variables(this);
+    }
+
+    public HeaderBuffer HeaderBuffer;
+
+    public TransactionDetailBuffer TransactionDetailBuffer;
+
+    public TrailerBuffer TrailerBuffer;
+
+    int InputsFinished = 0;
+
+    public override void ProcessInput(int InputID, string InputName, PipelineBuffer Buffer, OutputNameMap OutputMap)
+    {
+
+        if (InputName.Equals(@"Input 0", StringComparison.Ordinal))
+        {
+            Input0_ProcessInput(new Input0Buffer(Buffer, GetColumnIndexes(InputID), OutputMap));
+        }
+
+        if (Buffer.EndOfRowset)
+        {
+            InputsFinished = InputsFinished + 1;
+            if (InputsFinished == 1)
+            {
+                FinishOutputs();
+                MarkOutputsFinished();
+            }
+        }
+
+    }
+
+    public virtual void FinishOutputs()
+    {
+    }
+
+    private void MarkOutputsFinished()
+    {
+
+        if (null != HeaderBuffer)
+        {
+            HeaderBuffer.SetEndOfRowset();
+            HeaderBuffer = null;
+        }
+
+        if (null != TransactionDetailBuffer)
+        {
+            TransactionDetailBuffer.SetEndOfRowset();
+            TransactionDetailBuffer = null;
+        }
+
+        if (null != TrailerBuffer)
+        {
+            TrailerBuffer.SetEndOfRowset();
+            TrailerBuffer = null;
+        }
+
+    }
+
+    public override void PrimeOutput(int Outputs, int[] OutputIDs, PipelineBuffer[] Buffers, OutputNameMap OutputMap)
+    {
+       for(int Idx = 0; Idx < Outputs; Idx++)
+       {
+            if(OutputIDs[Idx] == GetOutputID(OutputMap, @"Header"))
+            {
+                HeaderBuffer = new HeaderBuffer(Buffers[Idx], GetColumnIndexes(OutputIDs[Idx]), OutputMap);
+            }
+            if(OutputIDs[Idx] == GetOutputID(OutputMap, @"TransactionDetail"))
+            {
+                TransactionDetailBuffer = new TransactionDetailBuffer(Buffers[Idx], GetColumnIndexes(OutputIDs[Idx]), OutputMap);
+            }
+            if(OutputIDs[Idx] == GetOutputID(OutputMap, @"Trailer"))
+            {
+                TrailerBuffer = new TrailerBuffer(Buffers[Idx], GetColumnIndexes(OutputIDs[Idx]), OutputMap);
+            }
+        }
+
+        CreateNewOutputRows();
+
+    }
+
+    public virtual void CreateNewOutputRows()
+    {
+    }
+
+    public virtual void Input0_ProcessInput(Input0Buffer Buffer)
+    {
+        while (Buffer.NextRow())
+        {
+            Input0_ProcessInputRow(Buffer);
+        }
+    }
+
+    public virtual void Input0_ProcessInputRow(Input0Buffer Row)
+    {
+    }
+
+}
+
+public class Connections
+{
+    ScriptComponent ParentComponent;
+
+    public Connections(ScriptComponent Component)
+    {
+        ParentComponent = Component;
+    }
+
+}
+
+public class Variables
+{
+    ScriptComponent ParentComponent;
+
+    public Variables(ScriptComponent Component)
+    {
+        ParentComponent = Component;
+    }
+
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Resources.resx]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+</root>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[main.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[#region Help:  Introduction to the Script Component
+/* The Script Component allows you to perform virtually any operation that can be accomplished in
+ * a .Net application within the context of an Integration Services data flow.
+ *
+ * Expand the other regions which have "Help" prefixes for examples of specific ways to use
+ * Integration Services features within this script component. */
+#endregion
+
+#region Namespaces
+using System;
+using System.Data;
+using System.Linq;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+using Microsoft.SqlServer.Dts.Runtime.Wrapper;
+#endregion
+
+/// <summary>
+/// This is the class to which to add your code.  Do not change the name, attributes, or parent
+/// of this class.
+/// </summary>
+[Microsoft.SqlServer.Dts.Pipeline.SSISScriptComponentEntryPointAttribute]
+public class ScriptMain : UserComponent
+{
+  #region Help:  Using Integration Services variables and parameters
+  /* To use a variable in this script, first ensure that the variable has been added to
+   * either the list contained in the ReadOnlyVariables property or the list contained in
+   * the ReadWriteVariables property of this script component, according to whether or not your
+   * code needs to write into the variable.  To do so, save this script, close this instance of
+   * Visual Studio, and update the ReadOnlyVariables and ReadWriteVariables properties in the
+   * Script Transformation Editor window.
+   * To use a parameter in this script, follow the same steps. Parameters are always read-only.
+   *
+   * Example of reading from a variable or parameter:
+   *  DateTime startTime = Variables.MyStartTime;
+   *
+   * Example of writing to a variable:
+   *  Variables.myStringVariable = "new value";
+   */
+  #endregion
+
+  #region Help:  Using Integration Services Connnection Managers
+  /* Some types of connection managers can be used in this script component.  See the help topic
+   * "Working with Connection Managers Programatically" for details.
+   *
+   * To use a connection manager in this script, first ensure that the connection manager has
+   * been added to either the list of connection managers on the Connection Managers page of the
+   * script component editor.  To add the connection manager, save this script, close this instance of
+   * Visual Studio, and add the Connection Manager to the list.
+   *
+   * If the component needs to hold a connection open while processing rows, override the
+   * AcquireConnections and ReleaseConnections methods.
+   * 
+   * Example of using an ADO.Net connection manager to acquire a SqlConnection:
+   *  object rawConnection = Connections.SalesDB.AcquireConnection(transaction);
+   *  SqlConnection salesDBConn = (SqlConnection)rawConnection;
+   *
+   * Example of using a File connection manager to acquire a file path:
+   *  object rawConnection = Connections.Prices_zip.AcquireConnection(transaction);
+   *  string filePath = (string)rawConnection;
+   *
+   * Example of releasing a connection manager:
+   *  Connections.SalesDB.ReleaseConnection(rawConnection);
+   */
+  #endregion
+
+  #region Help:  Firing Integration Services Events
+  /* This script component can fire events.
+   *
+   * Example of firing an error event:
+   *  ComponentMetaData.FireError(10, "Process Values", "Bad value", "", 0, out cancel);
+   *
+   * Example of firing an information event:
+   *  ComponentMetaData.FireInformation(10, "Process Values", "Processing has started", "", 0, fireAgain);
+   *
+   * Example of firing a warning event:
+   *  ComponentMetaData.FireWarning(10, "Process Values", "No rows were received", "", 0);
+   */
+  #endregion
+
+  /// <summary>
+  /// This method is called once, before rows begin to be processed in the data flow.
+  ///
+  /// You can remove this method if you don't need to do anything here.
+  /// </summary>
+  public override void PreExecute()
+  {
+    base.PreExecute();
+    /*
+     * Add your code here
+     */
+  }
+
+  /// <summary>
+  /// This method is called after all the rows have passed through this component.
+  ///
+  /// You can delete this method if you don't need to do anything here.
+  /// </summary>
+  public override void PostExecute()
+  {
+    base.PostExecute();
+    /*
+     * Add your code here
+     */
+  }
+
+  /// <summary>
+  /// This method is called once for every row that passes through the component from Input0.
+  ///
+  /// Example of reading a value from a column in the the row:
+  ///  string zipCode = Row.ZipCode
+  ///
+  /// Example of writing a value to a column in the row:
+  ///  Row.ZipCode = zipCode5
+  /// </summary>
+  /// <param name="Row">The row that is currently passing through the component</param>
+  public override void Input0_ProcessInputRow(Input0Buffer Row)
+  {
+
+    var line = Row.ConvertedLoadReport.ToString();
+
+    if (line.Substring(0, 9) == "000070000")
+    {
+      HeaderBuffer.AddRow();
+      HeaderBuffer.MessageType = line.Substring(0, 9);
+      HeaderBuffer.BatchNumber = line.Substring(9, 8);
+      HeaderBuffer.TransmissionDate = line.Substring(17, 10);
+      HeaderBuffer.TransmissionTime = line.Substring(27, 6);
+    }
+    if (line.Substring(0, 9) == "000090000")
+    {
+      TrailerBuffer.AddRow();
+      TrailerBuffer.MessageType = line.Substring(0, 9);
+      TrailerBuffer.BatchNumber = line.Substring(9, 8);
+      TrailerBuffer.TotalTransactions = line.Substring(17, 8);
+      TrailerBuffer.Value = line.Substring(25, 15);
+      TrailerBuffer.HashTotal = line.Substring(40, 18);
+    }
+    if (line.Substring(0, 9) == "000080000")
+    {
+      TransactionDetailBuffer.AddRow();
+      TransactionDetailBuffer.MessageType = line.Substring(0, 9);
+      TransactionDetailBuffer.BatchNumber = line.Substring(9, 8);
+      TransactionDetailBuffer.TransactionType = line.Substring(17, 5);
+      TransactionDetailBuffer.DocumentType = line.Substring(22, 2);
+      TransactionDetailBuffer.RequisitionNumber = line.Substring(24, 9);
+      TransactionDetailBuffer.DocumentNumber = line.Substring(33, 8);
+      TransactionDetailBuffer.UserReference1 = line.Substring(41, 2);
+      TransactionDetailBuffer.UserReference2 = line.Substring(43, 20);
+      TransactionDetailBuffer.ThirdParty = line.Substring(63, 30);
+      TransactionDetailBuffer.Code1 = line.Substring(93, 20);
+      TransactionDetailBuffer.Code2 = line.Substring(113, 20);
+      TransactionDetailBuffer.TransactionAmount = line.Substring(133, 11);
+      TransactionDetailBuffer.Payee = line.Substring(143, 80);
+      TransactionDetailBuffer.ErrorCode = line.Substring(224, 4);
+      TransactionDetailBuffer.ProcessingOption1 = line.Substring(228, 1);
+      TransactionDetailBuffer.ProcessingOption2 = line.Substring(229, 1);
+      TransactionDetailBuffer.ProgramNameCreated = line.Substring(230, 10);
+      TransactionDetailBuffer.BankAccountNum = line.Substring(240, 17);
+      TransactionDetailBuffer.BranchCode = line.Substring(257, 6);
+      TransactionDetailBuffer.AccountType = line.Substring(263, 1);
+      TransactionDetailBuffer.AgencyPrefix = line.Substring(264, 1);
+      TransactionDetailBuffer.AgencyNumber = line.Substring(265, 6);
+      TransactionDetailBuffer.Filler1 = line.Substring(271, 21);
+      TransactionDetailBuffer.BankAccountNumber = line.Substring(292, 17);
+      TransactionDetailBuffer.UniqueUserCode = line.Substring(309, 4);
+      TransactionDetailBuffer.ActionDate = line.Substring(312, 10);
+      //TransactionDetailBuffer.Filler2 = line.Substring(324, 69);
+      //TransactionDetailBuffer.EmailAddress1 = line.Substring(393, 25);
+      //TransactionDetailBuffer.EmailAddress2 = line.Substring(418, 25);
+      //TransactionDetailBuffer.EmailAddress3 = line.Substring(443, 25);
+      //TransactionDetailBuffer.CellPhoneNumber = line.Substring(468, 25);
+      //TransactionDetailBuffer.PostalCode = line.Substring(493, 5);
+      //TransactionDetailBuffer.AddressIndicator = line.Substring(498, 1);
+      //TransactionDetailBuffer.Filler = line.Substring(656, 211);
+    }
+  }
+
+  public override void CreateNewOutputRows()
+  {
+    /*
+      Add rows by calling the AddRow method on the member variable named "<Output Name>Buffer".
+      For example, call MyOutputBuffer.AddRow() if your output was named "MyOutput".
+    */
+  }
+
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[BufferWrapper.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[/* THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT!
+*  Microsoft SQL Server Integration Services buffer wrappers
+*  This module defines classes for accessing data flow buffers
+*  THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT! */
+
+
+
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Pipeline;
+using Microsoft.SqlServer.Dts.Pipeline.Wrapper;
+
+public class Input0Buffer: ScriptBuffer
+
+{
+    public Input0Buffer(PipelineBuffer Buffer, int[] BufferColumnIndexes, OutputNameMap OutputMap)
+        : base(Buffer, BufferColumnIndexes, OutputMap)
+    {
+    }
+
+    public String ConvertedLoadReport
+    {
+        get
+        {
+            return Buffer.GetString(BufferColumnIndexes[0]);
+        }
+    }
+    public bool ConvertedLoadReport_IsNull
+    {
+        get
+        {
+            return IsNull(0);
+        }
+    }
+
+    new public bool NextRow()
+    {
+        return base.NextRow();
+    }
+
+    new public bool EndOfRowset()
+    {
+        return base.EndOfRowset();
+    }
+
+}
+
+public class HeaderBuffer: ScriptBuffer
+
+{
+    public HeaderBuffer(PipelineBuffer Buffer, int[] BufferColumnIndexes, OutputNameMap OutputMap)
+        : base(Buffer, BufferColumnIndexes, OutputMap)
+    {
+    }
+
+    public String MessageType
+    {
+        set
+        {
+            this[0] = value;
+        }
+    }
+    public bool MessageType_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(0);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String BatchNumber
+    {
+        set
+        {
+            this[1] = value;
+        }
+    }
+    public bool BatchNumber_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(1);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String TransmissionDate
+    {
+        set
+        {
+            this[2] = value;
+        }
+    }
+    public bool TransmissionDate_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(2);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String TransmissionTime
+    {
+        set
+        {
+            this[3] = value;
+        }
+    }
+    public bool TransmissionTime_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(3);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    new public void AddRow()
+    {
+        base.AddRow();
+    }
+
+    new public void SetEndOfRowset()
+    {
+        base.SetEndOfRowset();
+    }
+
+    new public bool EndOfRowset()
+    {
+        return base.EndOfRowset();
+    }
+
+}
+
+public class TransactionDetailBuffer: ScriptBuffer
+
+{
+    public TransactionDetailBuffer(PipelineBuffer Buffer, int[] BufferColumnIndexes, OutputNameMap OutputMap)
+        : base(Buffer, BufferColumnIndexes, OutputMap)
+    {
+    }
+
+    public String MessageType
+    {
+        set
+        {
+            this[0] = value;
+        }
+    }
+    public bool MessageType_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(0);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String BatchNumber
+    {
+        set
+        {
+            this[1] = value;
+        }
+    }
+    public bool BatchNumber_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(1);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String TransactionType
+    {
+        set
+        {
+            this[2] = value;
+        }
+    }
+    public bool TransactionType_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(2);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String DocumentType
+    {
+        set
+        {
+            this[3] = value;
+        }
+    }
+    public bool DocumentType_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(3);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String RequisitionNumber
+    {
+        set
+        {
+            this[4] = value;
+        }
+    }
+    public bool RequisitionNumber_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(4);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String DocumentNumber
+    {
+        set
+        {
+            this[5] = value;
+        }
+    }
+    public bool DocumentNumber_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(5);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String UserReference1
+    {
+        set
+        {
+            this[6] = value;
+        }
+    }
+    public bool UserReference1_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(6);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String UserReference2
+    {
+        set
+        {
+            this[7] = value;
+        }
+    }
+    public bool UserReference2_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(7);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String ThirdParty
+    {
+        set
+        {
+            this[8] = value;
+        }
+    }
+    public bool ThirdParty_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(8);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Code1
+    {
+        set
+        {
+            this[9] = value;
+        }
+    }
+    public bool Code1_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(9);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Code2
+    {
+        set
+        {
+            this[10] = value;
+        }
+    }
+    public bool Code2_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(10);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String TransactionAmount
+    {
+        set
+        {
+            this[11] = value;
+        }
+    }
+    public bool TransactionAmount_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(11);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Payee
+    {
+        set
+        {
+            this[12] = value;
+        }
+    }
+    public bool Payee_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(12);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String ErrorCode
+    {
+        set
+        {
+            this[13] = value;
+        }
+    }
+    public bool ErrorCode_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(13);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String ProcessingOption1
+    {
+        set
+        {
+            this[14] = value;
+        }
+    }
+    public bool ProcessingOption1_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(14);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String ProcessingOption2
+    {
+        set
+        {
+            this[15] = value;
+        }
+    }
+    public bool ProcessingOption2_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(15);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String ProgramNameCreated
+    {
+        set
+        {
+            this[16] = value;
+        }
+    }
+    public bool ProgramNameCreated_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(16);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String BankAccountNum
+    {
+        set
+        {
+            this[17] = value;
+        }
+    }
+    public bool BankAccountNum_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(17);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String BranchCode
+    {
+        set
+        {
+            this[18] = value;
+        }
+    }
+    public bool BranchCode_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(18);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String AccountType
+    {
+        set
+        {
+            this[19] = value;
+        }
+    }
+    public bool AccountType_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(19);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String AgencyPrefix
+    {
+        set
+        {
+            this[20] = value;
+        }
+    }
+    public bool AgencyPrefix_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(20);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String AgencyNumber
+    {
+        set
+        {
+            this[21] = value;
+        }
+    }
+    public bool AgencyNumber_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(21);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Filler1
+    {
+        set
+        {
+            this[22] = value;
+        }
+    }
+    public bool Filler1_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(22);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String BankAccountNumber
+    {
+        set
+        {
+            this[23] = value;
+        }
+    }
+    public bool BankAccountNumber_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(23);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String UniqueUserCode
+    {
+        set
+        {
+            this[24] = value;
+        }
+    }
+    public bool UniqueUserCode_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(24);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String ActionDate
+    {
+        set
+        {
+            this[25] = value;
+        }
+    }
+    public bool ActionDate_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(25);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Filler2
+    {
+        set
+        {
+            this[26] = value;
+        }
+    }
+    public bool Filler2_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(26);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String EmailAddress1
+    {
+        set
+        {
+            this[27] = value;
+        }
+    }
+    public bool EmailAddress1_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(27);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String EmailAddress2
+    {
+        set
+        {
+            this[28] = value;
+        }
+    }
+    public bool EmailAddress2_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(28);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String EmailAddress3
+    {
+        set
+        {
+            this[29] = value;
+        }
+    }
+    public bool EmailAddress3_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(29);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String CellPhoneNumber
+    {
+        set
+        {
+            this[30] = value;
+        }
+    }
+    public bool CellPhoneNumber_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(30);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String PostalCode
+    {
+        set
+        {
+            this[31] = value;
+        }
+    }
+    public bool PostalCode_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(31);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String AddressIndicator
+    {
+        set
+        {
+            this[32] = value;
+        }
+    }
+    public bool AddressIndicator_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(32);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Filler
+    {
+        set
+        {
+            this[33] = value;
+        }
+    }
+    public bool Filler_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(33);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    new public void AddRow()
+    {
+        base.AddRow();
+    }
+
+    new public void SetEndOfRowset()
+    {
+        base.SetEndOfRowset();
+    }
+
+    new public bool EndOfRowset()
+    {
+        return base.EndOfRowset();
+    }
+
+}
+
+public class TrailerBuffer: ScriptBuffer
+
+{
+    public TrailerBuffer(PipelineBuffer Buffer, int[] BufferColumnIndexes, OutputNameMap OutputMap)
+        : base(Buffer, BufferColumnIndexes, OutputMap)
+    {
+    }
+
+    public String MessageType
+    {
+        set
+        {
+            this[0] = value;
+        }
+    }
+    public bool MessageType_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(0);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String BatchNumber
+    {
+        set
+        {
+            this[1] = value;
+        }
+    }
+    public bool BatchNumber_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(1);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String TotalTransactions
+    {
+        set
+        {
+            this[2] = value;
+        }
+    }
+    public bool TotalTransactions_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(2);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String Value
+    {
+        set
+        {
+            this[3] = value;
+        }
+    }
+    public bool Value_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(3);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    public String HashTotal
+    {
+        set
+        {
+            this[4] = value;
+        }
+    }
+    public bool HashTotal_IsNull
+    {
+        set
+        {
+            if (value)
+            {
+                SetNull(4);
+            }
+            else
+            {
+                throw new InvalidOperationException("IsNull property cannot be set to False. Assign a value to the column instead.");
+            }
+        }
+    }
+
+    new public void AddRow()
+    {
+        base.AddRow();
+    }
+
+    new public void SetEndOfRowset()
+    {
+        base.SetEndOfRowset();
+    }
+
+    new public bool EndOfRowset()
+    {
+        return base.EndOfRowset();
+    }
+
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Settings.Designer.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_e578703868e74bd795b03d42fbd736e3.Properties.Settings.get_Default():SC_e578703868e74bd795b03d42fbd736e3.Properties.Sett" +
+    "ings")]
+
+namespace SC_e578703868e74bd795b03d42fbd736e3.Properties {
+    
+    
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+        private static Settings defaultInstance = new Settings();
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+    }
+}
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Project]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF16LE]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="4.0" schemaVersion="1.0">
+  <msb:PropertyGroup>
+    <msb:CodeName>SC_e578703868e74bd795b03d42fbd736e3</msb:CodeName>
+    <msb:Language>msBuild</msb:Language>
+    <msb:DisplayName>SC_e578703868e74bd795b03d42fbd736e3</msb:DisplayName>
+    <msb:ProjectId>{22A7362B-7A3C-429D-B296-833B1940D12E}</msb:ProjectId>
+  </msb:PropertyGroup>
+  <msb:ItemGroup>
+    <msb:Project Include="SC_e578703868e74bd795b03d42fbd736e3.csproj" />
+    <msb:File Include="Properties\Settings.Designer.cs" />
+    <msb:File Include="main.cs" />
+    <msb:File Include="BufferWrapper.cs" />
+    <msb:File Include="ComponentWrapper.cs" />
+    <msb:File Include="Properties\Settings.settings" />
+    <msb:File Include="Properties\AssemblyInfo.cs" />
+    <msb:File Include="Properties\Resources.resx" />
+    <msb:File Include="Properties\Resources.Designer.cs" />
+  </msb:ItemGroup>
+</c:Project>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\AssemblyInfo.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[using System.Reflection;
+using System.Runtime.CompilerServices;
+
+//
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+//
+[assembly: AssemblyTitle("SC_e578703868e74bd795b03d42fbd736e3")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("SC_e578703868e74bd795b03d42fbd736e3")]
+[assembly: AssemblyCopyright("Copyright @  2021")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+//
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
+
+[assembly: AssemblyVersion("1.0.0.0")]
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[SC_e578703868e74bd795b03d42fbd736e3.csproj]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2DE362C6-129D-4919-B6CD-EBD4A733ECEC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SC_e578703868e74bd795b03d42fbd736e3</RootNamespace>
+    <AssemblyName>SC_e578703868e74bd795b03d42fbd736e3</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
+    <TargetFrameworkProfile></TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>.\bin\Debug\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>.\bin\Release\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.SqlServer.TxScript, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.DTSRuntimeWrap, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.DTSPipelineWrap, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.PipelineHost, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Compile Include="main.cs" />
+    <Compile Include="BufferWrapper.cs" />
+    <Compile Include="ComponentWrapper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <!-- Include the build rules for a C# project.-->
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- This section defines VSTA properties that describe the host-changable project properties. -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}">
+        <ProjectProperties HostName="VSTAHostName" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="cs" TemplatesPath="" />
+        <Host Name="ScriptComponent" IconIndex="0" />
+        <ProjectClient>
+          <HostIdentifier>SSIS_SC150</HostIdentifier>
+        </ProjectClient>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Settings.settings]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Properties\Resources.Designer.cs]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_e578703868e74bd795b03d42fbd736e3.Properties.Resources.get_ResourceManager():System.Resources.Resou" +
+    "rceManager")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_e578703868e74bd795b03d42fbd736e3.Properties.Resources.get_Culture():System.Globalization.CultureIn" +
+    "fo")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="SC_e578703868e74bd795b03d42fbd736e3.Properties.Resources.set_Culture(System.Globalization.CultureInfo" +
+    "):Void")]
+
+namespace SC_e578703868e74bd795b03d42fbd736e3.Properties {
+    
+    
+    /// <summary>
+    ///   A strongly-typed resource class, for looking up localized strings, etc.
+    /// </summary>
+    // This class was auto-generated by the StronglyTypedResourceBuilder
+    // class via a tool like ResGen or Visual Studio.
+    // To add or remove a member, edit your .ResX file then rerun ResGen
+    // with the /str option, or rebuild your VS project.
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    internal class Resources {
+        
+        private static global::System.Resources.ResourceManager resourceMan;
+        
+        private static global::System.Globalization.CultureInfo resourceCulture;
+        
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        internal Resources() {
+        }
+        
+        /// <summary>
+        ///   Returns the cached ResourceManager instance used by this class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if ((resourceMan == null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SC_e578703868e74bd795b03d42fbd736e3.Properties.Resources", typeof(Resources).Assembly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+        }
+        
+        /// <summary>
+        ///   Overrides the current thread's CurrentUICulture property for all
+        ///   resource lookups using this strongly typed resource class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
+                return resourceCulture;
+            }
+            set {
+                resourceCulture = value;
+            }
+        }
+    }
+}
+]]></arrayElement>
+                  </arrayElements>
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Stores the binary representation of the component"
+                  isArray="true"
+                  name="BinaryCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="2">
+                    <arrayElement
+                      dataType="System.String"><![CDATA[SC_e578703868e74bd795b03d42fbd736e3.dll]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[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
+BgBsADcqAAAAAMYBzQy5AGwA1CMAAAAAxgH0DLkAbQBKKgAAAACGGJoK2gBuAFkqAAAAAIYYmgra
+AG8AaCoAAAAAgxiaCgYAcABwKgAAAACTCGYK4ABwAJwqAAAAAJMIOwLlAHAAoyoAAAAAkwhHAuoA
+cACrKgAAAACWCCcM8ABxALIqAAAAAIYYmgoGAHEAuioAAAAAkRigCvUAcQAAAAEADw0AAAEAXwoA
+AAIAgAsAAAMAjAkAAAEAXwoAAAIAgAsAAAMAjAkAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEA
+cwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAXwoAAAIAgAsAAAMAjAkAAAEAcwQAAAEAcwQAAAEAcwQA
+AAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEA
+cwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQA
+AAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEA
+cwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQA
+AAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEA
+cwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQA
+AAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAXwoAAAIA
+gAsAAAMAjAkAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQAAAEAcwQA
+AAEAcwQAAAEAcwQAAAEA4gAAAAIAtgEAAAMAXwoAAAQAjAkAAAEA5QsAAAIApwoAAAMA1wsAAAQA
+jAkAAAEAXwoAAAEADw0AAAEAVwwAAAEAVwwAAAEAcwQJAJoKAQARAJoKBgAZAJoKCgApAJoKEAAx
+AJoKEAA5AJoKEABBAJoKEABJAJoKEABRAJoKEABZAJoKEABhAJoKEABpAJoKBgCZAJoKBgC5AJoK
+FQDJAJoKBgCJAFIEBgCJAF0EBgCRAJMEHwDRAKYEIwDRADENKQBxAJoKLwBxAF8KOQBxAIALPQB5
+AJwEQQBxAMIIRgBxAAsNSwBxABsMSwBxANEITwBxAMkIAQDZAJoKEABxAO0MBgBxABgMBgCJAJoK
+BgDRAK4LVQCJAJQLXAB5AAgMSwCJAOoAZgCRAJoKBgDpAKQBbQDpACQNdAChAJoKeQDBAJoKBgAu
+AAsAEAEuABMAGQEuABsAOAEuACMAQQEuACsAagEuADMAagEuADsAagEuAEMAQQEuAEsAcAEuAFMA
+agEuAFsAhwFDAGMA0QFDAWsA0QFhAXsA0QEpC3MAOAFJC3MAOAEbAGIAAwABAAQAAwAFAAsABgBP
+AAoAWQALAFsAAACYDPkAAACACP0AAAD6AfkAAACnBv0AAACuCfkAAACVB/0AAAB/AvkAAAAIB/0A
+AADEAfkAAACLBv0AAAD6AfkAAACnBv0AAACuCfkAAACVB/0AAAAKAvkAAAC+Bv0AAAAeAvkAAADZ
+Bv0AAAC+CfkAAACsB/0AAADUCfkAAADJB/0AAAAFAPkAAAAABf0AAABWAPkAAAB0Bf0AAABBDfkA
+AAC3CP0AAAAYAPkAAAAaBf0AAABpAPkAAACOBf0AAABlDPkAAABjCP0AAACMAfkAAAB6Bv0AAAB+
+AfkAAABlBv0AAAAiAPkAAAArBf0AAABzAPkAAACfBf0AAAAmAfkAAAABBv0AAADlCPkAAABgB/0A
+AABNAfkAAAAfBv0AAAAvAvkAAADxBv0AAAAXDfkAAACfCP0AAAD9CfkAAAAACP0AAAA4APkAAABI
+Bf0AAADnCfkAAADjB/0AAABrAfkAAABLBv0AAACUAvkAAAAkB/0AAACJAPkAAAC8Bf0AAABEAPkA
+AABbBf0AAACVAPkAAADPBf0AAADLAPkAAADoBf0AAACaCfkAAAB6B/0AAABcAfkAAAA1Bv0AAACJ
+CvkAAAAqCP0AAAB+CvkAAAAYCP0AAAD6AfkAAACnBv0AAACuCfkAAACVB/0AAAC5C/kAAABGCP0A
+AABtBPkAAAA6B/0AAAC0BPkAAABLB/0AAABqCgEBAABbAgYBAAArDAsBAgAHAAMAAgAIAAUAAQAM
+AAcAAQANAAkAAQAOAAsAAQAPAA0AAQAQAA8AAQARABEAAQASABMAAQATABUAAQAYABcAAQAZABkA
+AQAaABsAAQAbAB0AAQAcAB8AAQAdACEAAQAeACMAAQAfACUAAQAgACcAAQAhACkAAQAiACsAAQAj
+AC0AAQAkAC8AAQAlADEAAQAmADMAAQAnADUAAQAoADcAAQApADkAAQAqADsAAQArAD0AAQAsAD8A
+AQAtAEEAAQAuAEMAAQAvAEUAAQAwAEcAAQAxAEkAAQAyAEsAAQAzAE0AAQA0AE8AAQA1AFEAAQA2
+AFMAAQA3AFUAAQA4AFcAAQA5AFkAAQA6AFsAAQA7AF0AAQA8AF8AAQA9AGEAAQA+AGMAAQA/AGUA
+AQBAAGcAAQBBAGkAAQBCAGsAAQBDAG0AAQBEAG8AAQBFAHEAAQBGAHMAAQBHAHUAAQBIAHcAAQBJ
+AHkAAQBKAHsAAQBLAH0AAQBMAH8AAQBNAIEAAQBOAIMAAQBPAIUAAQBQAIcAAQBRAIkAAQBSAIsA
+AQBTAI0AAQBUAI8AAQBVAJEAAQBWAJMAAQBXAJUAAQBYAJcAAQBZAJkAAQBaAJsAAQBbAJ0AAQBg
+AJ8AAQBhAKEAAQBiAKMAAQBjAKUAAQBkAKcAAQBlAKkAAQBmAKsAAQBnAK0AAQBoAK8AAQBpALEA
+AgB4ALMAAgB5ALUAAQB6ALUAAgB7ALcABIAAAAEAAAAAAAAAAAAAAAAAowAAAAQAAAAAAAAAAAAA
+AIAA9gAAAAAADwAAAAAAAAAAAAAAiQB3DAAAAAAPAAAAAAAAAAAAAACJAKwMAAAAAAQAAAAAAAAA
+AAAAAIAA2ggAAAAAAAAAAAEAAAD1CgAAAAAAc2V0X1VzZXJSZWZlcmVuY2UxAHNldF9Db2RlMQBz
+ZXRfUHJvY2Vzc2luZ09wdGlvbjEAc2V0X0ZpbGxlcjEAc2V0X0VtYWlsQWRkcmVzczEAc2V0X1Vz
+ZXJSZWZlcmVuY2UyAHNldF9Db2RlMgBzZXRfUHJvY2Vzc2luZ09wdGlvbjIAc2V0X0ZpbGxlcjIA
+c2V0X0VtYWlsQWRkcmVzczIAU0NfZTU3ODcwMzg2OGU3NGJkNzk1YjAzZDQyZmJkNzM2ZTMAc2V0
+X0VtYWlsQWRkcmVzczMAPE1vZHVsZT4ASW5wdXRJRABHZXRPdXRwdXRJRABtc2NvcmxpYgBJbnB1
+dHNGaW5pc2hlZABNYXJrT3V0cHV0c0ZpbmlzaGVkAHNldF9Qcm9ncmFtTmFtZUNyZWF0ZWQAZGVm
+YXVsdEluc3RhbmNlAHNldF9CcmFuY2hDb2RlAHNldF9Qb3N0YWxDb2RlAHNldF9VbmlxdWVVc2Vy
+Q29kZQBzZXRfRXJyb3JDb2RlAHNldF9QYXllZQBSdW50aW1lVHlwZUhhbmRsZQBHZXRUeXBlRnJv
+bUhhbmRsZQBJbnB1dE5hbWUAc2V0X1RyYW5zbWlzc2lvblRpbWUATWljcm9zb2Z0LlNxbFNlcnZl
+ci5EdHMuUGlwZWxpbmUAc2V0X01lc3NhZ2VUeXBlAHNldF9UcmFuc2FjdGlvblR5cGUAc2V0X0Rv
+Y3VtZW50VHlwZQBzZXRfQWNjb3VudFR5cGUAZ2V0X0N1bHR1cmUAc2V0X0N1bHR1cmUAcmVzb3Vy
+Y2VDdWx0dXJlAEFwcGxpY2F0aW9uU2V0dGluZ3NCYXNlAHNldF9UcmFuc21pc3Npb25EYXRlAHNl
+dF9BY3Rpb25EYXRlAEVkaXRvckJyb3dzYWJsZVN0YXRlAENvbXBpbGVyR2VuZXJhdGVkQXR0cmli
+dXRlAERlYnVnZ2VyTm9uVXNlckNvZGVBdHRyaWJ1dGUARGVidWdnYWJsZUF0dHJpYnV0ZQBFZGl0
+b3JCcm93c2FibGVBdHRyaWJ1dGUAQXNzZW1ibHlUaXRsZUF0dHJpYnV0ZQBBc3NlbWJseVRyYWRl
+bWFya0F0dHJpYnV0ZQBUYXJnZXRGcmFtZXdvcmtBdHRyaWJ1dGUAQXNzZW1ibHlDb25maWd1cmF0
+aW9uQXR0cmlidXRlAEFzc2VtYmx5RGVzY3JpcHRpb25BdHRyaWJ1dGUAQ29tcGlsYXRpb25SZWxh
+eGF0aW9uc0F0dHJpYnV0ZQBBc3NlbWJseVByb2R1Y3RBdHRyaWJ1dGUAQXNzZW1ibHlDb3B5cmln
+aHRBdHRyaWJ1dGUAU1NJU1NjcmlwdENvbXBvbmVudEVudHJ5UG9pbnRBdHRyaWJ1dGUAQXNzZW1i
+bHlDb21wYW55QXR0cmlidXRlAFJ1bnRpbWVDb21wYXRpYmlsaXR5QXR0cmlidXRlAFByZUV4ZWN1
+dGUAUG9zdEV4ZWN1dGUAc2V0X1ZhbHVlAHZhbHVlAFN5c3RlbS5SdW50aW1lLlZlcnNpb25pbmcA
+VG9TdHJpbmcAR2V0U3RyaW5nAFN1YnN0cmluZwBzZXRfSGFzaFRvdGFsAFN5c3RlbS5Db21wb25l
+bnRNb2RlbABTQ19lNTc4NzAzODY4ZTc0YmQ3OTViMDNkNDJmYmQ3MzZlMy5kbGwAc2V0X1VzZXJS
+ZWZlcmVuY2UxX0lzTnVsbABzZXRfQ29kZTFfSXNOdWxsAHNldF9Qcm9jZXNzaW5nT3B0aW9uMV9J
+c051bGwAc2V0X0ZpbGxlcjFfSXNOdWxsAHNldF9FbWFpbEFkZHJlc3MxX0lzTnVsbABzZXRfVXNl
+clJlZmVyZW5jZTJfSXNOdWxsAHNldF9Db2RlMl9Jc051bGwAc2V0X1Byb2Nlc3NpbmdPcHRpb24y
+X0lzTnVsbABzZXRfRmlsbGVyMl9Jc051bGwAc2V0X0VtYWlsQWRkcmVzczJfSXNOdWxsAHNldF9F
+bWFpbEFkZHJlc3MzX0lzTnVsbABzZXRfUHJvZ3JhbU5hbWVDcmVhdGVkX0lzTnVsbABzZXRfQnJh
+bmNoQ29kZV9Jc051bGwAc2V0X1Bvc3RhbENvZGVfSXNOdWxsAHNldF9VbmlxdWVVc2VyQ29kZV9J
+c051bGwAc2V0X0Vycm9yQ29kZV9Jc051bGwAc2V0X1BheWVlX0lzTnVsbABzZXRfVHJhbnNtaXNz
+aW9uVGltZV9Jc051bGwAc2V0X01lc3NhZ2VUeXBlX0lzTnVsbABzZXRfVHJhbnNhY3Rpb25UeXBl
+X0lzTnVsbABzZXRfRG9jdW1lbnRUeXBlX0lzTnVsbABzZXRfQWNjb3VudFR5cGVfSXNOdWxsAHNl
+dF9UcmFuc21pc3Npb25EYXRlX0lzTnVsbABzZXRfQWN0aW9uRGF0ZV9Jc051bGwAc2V0X1ZhbHVl
+X0lzTnVsbABzZXRfSGFzaFRvdGFsX0lzTnVsbABzZXRfQmFua0FjY291bnROdW1fSXNOdWxsAHNl
+dF9DZWxsUGhvbmVOdW1iZXJfSXNOdWxsAHNldF9CYXRjaE51bWJlcl9Jc051bGwAc2V0X1JlcXVp
+c2l0aW9uTnVtYmVyX0lzTnVsbABzZXRfRG9jdW1lbnROdW1iZXJfSXNOdWxsAHNldF9CYW5rQWNj
+b3VudE51bWJlcl9Jc051bGwAc2V0X0FnZW5jeU51bWJlcl9Jc051bGwAc2V0X0ZpbGxlcl9Jc051
+bGwAc2V0X0FkZHJlc3NJbmRpY2F0b3JfSXNOdWxsAHNldF9Ub3RhbFRyYW5zYWN0aW9uc19Jc051
+bGwAc2V0X1RyYW5zYWN0aW9uQW1vdW50X0lzTnVsbABnZXRfQ29udmVydGVkTG9hZFJlcG9ydF9J
+c051bGwAc2V0X0FnZW5jeVByZWZpeF9Jc051bGwAc2V0X1RoaXJkUGFydHlfSXNOdWxsAFNldE51
+bGwAc2V0X0l0ZW0AU3lzdGVtAHNldF9CYW5rQWNjb3VudE51bQByZXNvdXJjZU1hbgBTY3JpcHRN
+YWluAFN5c3RlbS5Db25maWd1cmF0aW9uAFN5c3RlbS5HbG9iYWxpemF0aW9uAFN5c3RlbS5SZWZs
+ZWN0aW9uAEludmFsaWRPcGVyYXRpb25FeGNlcHRpb24AU3RyaW5nQ29tcGFyaXNvbgBDdWx0dXJl
+SW5mbwBPdXRwdXROYW1lTWFwAE91dHB1dE1hcABzZXRfQ2VsbFBob25lTnVtYmVyAHNldF9CYXRj
+aE51bWJlcgBzZXRfUmVxdWlzaXRpb25OdW1iZXIAc2V0X0RvY3VtZW50TnVtYmVyAHNldF9CYW5r
+QWNjb3VudE51bWJlcgBzZXRfQWdlbmN5TnVtYmVyAElucHV0MEJ1ZmZlcgBQaXBlbGluZUJ1ZmZl
+cgBUcmFuc2FjdGlvbkRldGFpbEJ1ZmZlcgBIZWFkZXJCdWZmZXIAVHJhaWxlckJ1ZmZlcgBTY3Jp
+cHRCdWZmZXIAZ2V0X1Jlc291cmNlTWFuYWdlcgBzZXRfRmlsbGVyAHNldF9BZGRyZXNzSW5kaWNh
+dG9yAC5jdG9yAC5jY3RvcgBPdXRwdXRJRHMAU3lzdGVtLkRpYWdub3N0aWNzAFN5c3RlbS5SdW50
+aW1lLkNvbXBpbGVyU2VydmljZXMAU3lzdGVtLlJlc291cmNlcwBTQ19lNTc4NzAzODY4ZTc0YmQ3
+OTViMDNkNDJmYmQ3MzZlMy5Qcm9wZXJ0aWVzLlJlc291cmNlcy5yZXNvdXJjZXMARGVidWdnaW5n
+TW9kZXMAU0NfZTU3ODcwMzg2OGU3NGJkNzk1YjAzZDQyZmJkNzM2ZTMuUHJvcGVydGllcwBWYXJp
+YWJsZXMAQnVmZmVyQ29sdW1uSW5kZXhlcwBHZXRDb2x1bW5JbmRleGVzAFNldHRpbmdzAEVxdWFs
+cwBzZXRfVG90YWxUcmFuc2FjdGlvbnMAQ29ubmVjdGlvbnMAQnVmZmVycwBGaW5pc2hPdXRwdXRz
+AENyZWF0ZU5ld091dHB1dFJvd3MAT2JqZWN0AGdldF9FbmRPZlJvd3NldABTZXRFbmRPZlJvd3Nl
+dABnZXRfRGVmYXVsdABVc2VyQ29tcG9uZW50AFBhcmVudENvbXBvbmVudABTY3JpcHRDb21wb25l
+bnQAc2V0X1RyYW5zYWN0aW9uQW1vdW50AE1pY3Jvc29mdC5TcWxTZXJ2ZXIuVHhTY3JpcHQAZ2V0
+X0NvbnZlcnRlZExvYWRSZXBvcnQATWljcm9zb2Z0LlNxbFNlcnZlci5QaXBlbGluZUhvc3QASW5w
+dXQwX1Byb2Nlc3NJbnB1dABQcmltZU91dHB1dABBZGRSb3cASW5wdXQwX1Byb2Nlc3NJbnB1dFJv
+dwBOZXh0Um93AHNldF9BZ2VuY3lQcmVmaXgAZ2V0X0Fzc2VtYmx5AG9wX0VxdWFsaXR5AHNldF9U
+aGlyZFBhcnR5AAATMAAwADAAMAA3ADAAMAAwADAAABMwADAAMAAwADkAMAAwADAAMAAAEzAAMAAw
+ADAAOAAwADAAMAAwAACAm0kAcwBOAHUAbABsACAAcAByAG8AcABlAHIAdAB5ACAAYwBhAG4AbgBv
+AHQAIABiAGUAIABzAGUAdAAgAHQAbwAgAEYAYQBsAHMAZQAuACAAQQBzAHMAaQBnAG4AIABhACAA
+dgBhAGwAdQBlACAAdABvACAAdABoAGUAIABjAG8AbAB1AG0AbgAgAGkAbgBzAHQAZQBhAGQALgAA
+D0kAbgBwAHUAdAAgADAAAA1IAGUAYQBkAGUAcgAAI1QAcgBhAG4AcwBhAGMAdABpAG8AbgBEAGUA
+dABhAGkAbAAAD1QAcgBhAGkAbABlAHIAAHFTAEMAXwBlADUANwA4ADcAMAAzADgANgA4AGUANwA0
+AGIAZAA3ADkANQBiADAAMwBkADQAMgBmAGIAZAA3ADMANgBlADMALgBQAHIAbwBwAGUAcgB0AGkA
+ZQBzAC4AUgBlAHMAbwB1AHIAYwBlAHMAAAAA8SFzRObM1EKHUtldNjk7yAAEIAEBCAMgAAEFIAEB
+EREEIAEBDgUgAQERWQMHAQ4DIAAOBSACDggIBQACAg4OCSADARI9HQgSQQMGEj0DBh0IBCABDggE
+IAECCAMgAAIFIAIBCBwGIAICDhFxBSABHQgIAwcBCAYAAggSQQ4GAAESdRF5BCAAEn0GIAIBDhJ9
+CLd6XFYZNOCJCImEXc2AgMyRAwYSIAMGEiQDBhIQAwYSFAMGEhgCBggDBhJFAwYSUQMGElUDBhIs
+BSABARIMBCABAQIJIAQBCA4SPRJBCyAEAQgdCB0SPRJBBSABARJFBAAAElEEAAASVQUAAQESVQQA
+ABIsAwAAAQMoAA4DKAACBAgAElEECAASVQQIABIsCAEACAAAAAAAHgEAAQBUAhZXcmFwTm9uRXhj
+ZXB0aW9uVGhyb3dzAQgBAAIAAAAAACgBACNTQ19lNTc4NzAzODY4ZTc0YmQ3OTViMDNkNDJmYmQ3
+MzZlMwAABQEAAAAAFgEAEUNvcHlyaWdodCBAICAyMDIxAABJAQAaLk5FVEZyYW1ld29yayxWZXJz
+aW9uPXY0LjcBAFQOFEZyYW1ld29ya0Rpc3BsYXlOYW1lEi5ORVQgRnJhbWV3b3JrIDQuNwQBAAAA
+AAC0AAAAzsrvvgEAAACRAAAAbFN5c3RlbS5SZXNvdXJjZXMuUmVzb3VyY2VSZWFkZXIsIG1zY29y
+bGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3
+YTVjNTYxOTM0ZTA4OSNTeXN0ZW0uUmVzb3VyY2VzLlJ1bnRpbWVSZXNvdXJjZVNldAIAAAAAAAAA
+AAAAAFBBRFBBRFC0AAAAiE4AAAAAAAAAAAAAok4AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJRO
+AAAAAAAAAAAAAAAAX0NvckRsbE1haW4AbXNjb3JlZS5kbGwAAAAAAP8lACAAEAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAEAAAABgAAIAA
+AAAAAAAAAAAAAAAAAAEAAQAAADAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAEgAAABYYAAA7AMAAAAA
+AAAAAAAA7AM0AAAAVgBTAF8AVgBFAFIAUwBJAE8ATgBfAEkATgBGAE8AAAAAAL0E7/4AAAEAAAAB
+AAAAAAAAAAEAAAAAAD8AAAAAAAAABAAAAAIAAAAAAAAAAAAAAAAAAABEAAAAAQBWAGEAcgBGAGkA
+bABlAEkAbgBmAG8AAAAAACQABAAAAFQAcgBhAG4AcwBsAGEAdABpAG8AbgAAAAAAAACwBEwDAAAB
+AFMAdAByAGkAbgBnAEYAaQBsAGUASQBuAGYAbwAAACgDAAABADAAMAAwADAAMAA0AGIAMAAAABoA
+AQABAEMAbwBtAG0AZQBuAHQAcwAAAAAAAAAiAAEAAQBDAG8AbQBwAGEAbgB5AE4AYQBtAGUAAAAA
+AAAAAABwACQAAQBGAGkAbABlAEQAZQBzAGMAcgBpAHAAdABpAG8AbgAAAAAAUwBDAF8AZQA1ADcA
+OAA3ADAAMwA4ADYAOABlADcANABiAGQANwA5ADUAYgAwADMAZAA0ADIAZgBiAGQANwAzADYAZQAz
+AAAAMAAIAAEARgBpAGwAZQBWAGUAcgBzAGkAbwBuAAAAAAAxAC4AMAAuADAALgAwAAAAcAAoAAEA
+SQBuAHQAZQByAG4AYQBsAE4AYQBtAGUAAABTAEMAXwBlADUANwA4ADcAMAAzADgANgA4AGUANwA0
+AGIAZAA3ADkANQBiADAAMwBkADQAMgBmAGIAZAA3ADMANgBlADMALgBkAGwAbAAAAEgAEgABAEwA
+ZQBnAGEAbABDAG8AcAB5AHIAaQBnAGgAdAAAAEMAbwBwAHkAcgBpAGcAaAB0ACAAQAAgACAAMgAw
+ADIAMQAAACoAAQABAEwAZQBnAGEAbABUAHIAYQBkAGUAbQBhAHIAawBzAAAAAAAAAAAAeAAoAAEA
+TwByAGkAZwBpAG4AYQBsAEYAaQBsAGUAbgBhAG0AZQAAAFMAQwBfAGUANQA3ADgANwAwADMAOAA2
+ADgAZQA3ADQAYgBkADcAOQA1AGIAMAAzAGQANAAyAGYAYgBkADcAMwA2AGUAMwAuAGQAbABsAAAA
+aAAkAAEAUAByAG8AZAB1AGMAdABOAGEAbQBlAAAAAABTAEMAXwBlADUANwA4ADcAMAAzADgANgA4
+AGUANwA0AGIAZAA3ADkANQBiADAAMwBkADQAMgBmAGIAZAA3ADMANgBlADMAAAA0AAgAAQBQAHIA
+bwBkAHUAYwB0AFYAZQByAHMAaQBvAG4AAAAxAC4AMAAuADAALgAwAAAAOAAIAAEAQQBzAHMAZQBt
+AGIAbAB5ACAAVgBlAHIAcwBpAG8AbgAAADEALgAwAC4AMAAuADAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAADAAAALQ+AAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
+                  </arrayElements>
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the Microsoft Visual Studio Tools for Applications project. Project names must be unique within a package."
+                  name="VSTAProjectName"
+                  typeConverter="NOTBROWSABLE">SC_e578703868e74bd795b03d42fbd736e3</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the programming language used by the script."
+                  name="ScriptLanguage"
+                  typeConverter="Microsoft.SqlServer.VSTAHosting.ScriptingLanguages">CSharp</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a comma-separated list of read-only variables."
+                  name="ReadOnlyVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIVariablePickerDlg"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a comma-separated list of read/write variables."
+                  name="ReadWriteVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIWriteableVariablePickerDlg"></property>
+                <property
+                  dataType="System.String"
+                  description="List of breakpoints present on the script."
+                  isArray="true"
+                  name="BreakpointCollection"
+                  typeConverter="NOTBROWSABLE">
+                  <arrayElements
+                    arrayElementCount="0" />
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Checksum to match component metedata against compiled codes."
+                  name="MetadataChecksum140"
+                  typeConverter="NOTBROWSABLE">9C</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ScriptComponentHost</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Read Load Report\Split the Load Report.Inputs[Input 0]"
+                  hasSideEffects="true"
+                  name="Input 0">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Inputs[Input 0].Columns[ConvertedLoadReport]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="323"
+                      cachedName="ConvertedLoadReport"
+                      lineageId="Package\Read Load Report\Convert Blob to String.Outputs[Data Conversion Output].Columns[ConvertedLoadReport]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Read Load Report\Split the Load Report.Outputs[Header]"
+                  hasSideEffects="true"
+                  name="Header">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[Header].Columns[MessageType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="9"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[Header].Columns[MessageType]"
+                      name="MessageType" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[Header].Columns[BatchNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[Header].Columns[BatchNumber]"
+                      name="BatchNumber" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[Header].Columns[TransmissionDate]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[Header].Columns[TransmissionDate]"
+                      name="TransmissionDate" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[Header].Columns[TransmissionTime]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[Header].Columns[TransmissionTime]"
+                      name="TransmissionTime" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail]"
+                  hasSideEffects="true"
+                  name="TransactionDetail">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[MessageType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="9"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[MessageType]"
+                      name="MessageType" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[BatchNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[BatchNumber]"
+                      name="BatchNumber" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[TransactionType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="5"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[TransactionType]"
+                      name="TransactionType" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[DocumentType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[DocumentType]"
+                      name="DocumentType" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[RequisitionNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="9"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[RequisitionNumber]"
+                      name="RequisitionNumber" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[DocumentNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[DocumentNumber]"
+                      name="DocumentNumber" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[UserReference1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[UserReference1]"
+                      name="UserReference1" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[UserReference2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[UserReference2]"
+                      name="UserReference2" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[ThirdParty]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[ThirdParty]"
+                      name="ThirdParty" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[Code1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[Code1]"
+                      name="Code1" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[Code2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[Code2]"
+                      name="Code2" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[TransactionAmount]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[TransactionAmount]"
+                      name="TransactionAmount" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[Payee]"
+                      codePage="1252"
+                      dataType="str"
+                      length="80"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[Payee]"
+                      name="Payee" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[ErrorCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[ErrorCode]"
+                      name="ErrorCode" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[ProcessingOption1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[ProcessingOption1]"
+                      name="ProcessingOption1" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[ProcessingOption2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[ProcessingOption2]"
+                      name="ProcessingOption2" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[ProgramNameCreated]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[ProgramNameCreated]"
+                      name="ProgramNameCreated" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[BankAccountNum]"
+                      codePage="1252"
+                      dataType="str"
+                      length="17"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[BankAccountNum]"
+                      name="BankAccountNum" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[BranchCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[BranchCode]"
+                      name="BranchCode" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[AccountType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[AccountType]"
+                      name="AccountType" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[AgencyPrefix]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[AgencyPrefix]"
+                      name="AgencyPrefix" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[AgencyNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[AgencyNumber]"
+                      name="AgencyNumber" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[Filler1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="21"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[Filler1]"
+                      name="Filler1" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[BankAccountNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="17"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[BankAccountNumber]"
+                      name="BankAccountNumber" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[UniqueUserCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[UniqueUserCode]"
+                      name="UniqueUserCode" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[ActionDate]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[ActionDate]"
+                      name="ActionDate" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[Filler2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="69"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[Filler2]"
+                      name="Filler2" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[EmailAddress1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="25"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[EmailAddress1]"
+                      name="EmailAddress1" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[EmailAddress2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="25"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[EmailAddress2]"
+                      name="EmailAddress2" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[EmailAddress3]"
+                      codePage="1252"
+                      dataType="str"
+                      length="25"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[EmailAddress3]"
+                      name="EmailAddress3" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[CellPhoneNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="25"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[CellPhoneNumber]"
+                      name="CellPhoneNumber" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[PostalCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="5"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[PostalCode]"
+                      name="PostalCode" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[AddressIndicator]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[AddressIndicator]"
+                      name="AddressIndicator" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[Filler]"
+                      codePage="1252"
+                      dataType="str"
+                      length="211"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[Filler]"
+                      name="Filler" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Read Load Report\Split the Load Report.Outputs[Trailer]"
+                  hasSideEffects="true"
+                  name="Trailer">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[Trailer].Columns[MessageType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="9"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[Trailer].Columns[MessageType]"
+                      name="MessageType" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[Trailer].Columns[BatchNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[Trailer].Columns[BatchNumber]"
+                      name="BatchNumber" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[Trailer].Columns[TotalTransactions]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[Trailer].Columns[TotalTransactions]"
+                      name="TotalTransactions" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[Trailer].Columns[Value]"
+                      codePage="1252"
+                      dataType="str"
+                      length="15"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[Trailer].Columns[Value]"
+                      name="Value" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Split the Load Report.Outputs[Trailer].Columns[HashTotal]"
+                      codePage="1252"
+                      dataType="str"
+                      length="18"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[Trailer].Columns[HashTotal]"
+                      name="HashTotal" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Read Load Report\Trailer"
+              componentClassID="Microsoft.SSISODBCDst"
+              contactInfo="ODBC Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="ODBC Destination"
+              name="Trailer"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The name of the table to be fetched."
+                  expressionType="Notify"
+                  name="TableName">trailertest</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows fetched per batch."
+                  expressionType="Notify"
+                  name="BatchSize">1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of rows inserted under the same transaction."
+                  expressionType="Notify"
+                  name="TransactionSize">1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Determines the chunk size allocation for LOB columns"
+                  expressionType="Notify"
+                  name="LobChunkSize">32768</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds to wait for an SQL statement to execute before returning to the application."
+                  expressionType="Notify"
+                  name="StatementTimeout">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The code page to use when code page information is unavailable from the data source."
+                  expressionType="Notify"
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Int32"
+                  description="The method used for inserting data. Possible values are 'Batch' or 'Row by row'."
+                  expressionType="Notify"
+                  name="InsertMethod">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The ODBC C data type for binding numeric data."
+                  expressionType="Notify"
+                  name="BindNumericAs">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Determines how the component would bind columns of (multi)-byte string types (i.e., SQL_CHAR, SQL_VARCHAR, SQL_LONGVARCHAR). The options are: Unicode (SQL_C_WCHAR) and ANSI (SQL_C_CHAR)."
+                  expressionType="Notify"
+                  name="BindCharColumnsAs">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Read Load Report\Trailer.Connections[ODBCConnection]"
+                  connectionManagerID="Package.ConnectionManagers[MySQL-Local]"
+                  connectionManagerRefId="Package.ConnectionManagers[MySQL-Local]"
+                  description="The ODBC runtime connection used to access the database."
+                  name="ODBCConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Read Load Report\Trailer.Inputs[ODBC Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ODBC Destination Input"
+                  truncationRowDisposition="FailComponent">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Read Load Report\Trailer.Inputs[ODBC Destination Input].Columns[MessageType]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="9"
+                      cachedName="MessageType"
+                      externalMetadataColumnId="Package\Read Load Report\Trailer.Inputs[ODBC Destination Input].ExternalColumns[MessageType]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[Trailer].Columns[MessageType]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Trailer.Inputs[ODBC Destination Input].Columns[BatchNumber]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="BatchNumber"
+                      externalMetadataColumnId="Package\Read Load Report\Trailer.Inputs[ODBC Destination Input].ExternalColumns[BatchNumber]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[Trailer].Columns[BatchNumber]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Trailer.Inputs[ODBC Destination Input].Columns[TotalTransactions]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="TotalTransactions"
+                      externalMetadataColumnId="Package\Read Load Report\Trailer.Inputs[ODBC Destination Input].ExternalColumns[TotalTransactions]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[Trailer].Columns[TotalTransactions]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Trailer.Inputs[ODBC Destination Input].Columns[Value]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="15"
+                      cachedName="Value"
+                      externalMetadataColumnId="Package\Read Load Report\Trailer.Inputs[ODBC Destination Input].ExternalColumns[Value]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[Trailer].Columns[Value]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Trailer.Inputs[ODBC Destination Input].Columns[HashTotal]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="18"
+                      cachedName="HashTotal"
+                      externalMetadataColumnId="Package\Read Load Report\Trailer.Inputs[ODBC Destination Input].ExternalColumns[HashTotal]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[Trailer].Columns[HashTotal]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Trailer.Inputs[ODBC Destination Input].ExternalColumns[MessageType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="9"
+                      name="MessageType" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Trailer.Inputs[ODBC Destination Input].ExternalColumns[BatchNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="BatchNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Trailer.Inputs[ODBC Destination Input].ExternalColumns[TotalTransactions]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="TotalTransactions" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Trailer.Inputs[ODBC Destination Input].ExternalColumns[Value]"
+                      codePage="1252"
+                      dataType="str"
+                      length="15"
+                      name="Value" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Trailer.Inputs[ODBC Destination Input].ExternalColumns[HashTotal]"
+                      codePage="1252"
+                      dataType="str"
+                      length="18"
+                      name="HashTotal" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Read Load Report\Trailer.Outputs[ODBC Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ODBC Destination Error Output"
+                  synchronousInputId="Package\Read Load Report\Trailer.Inputs[ODBC Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Read Load Report\Trailer.Outputs[ODBC Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Read Load Report\Trailer.Outputs[ODBC Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Trailer.Outputs[ODBC Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Read Load Report\Trailer.Outputs[ODBC Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Read Load Report\Transaction Detail"
+              componentClassID="Microsoft.SSISODBCDst"
+              contactInfo="ODBC Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="ODBC Destination"
+              name="Transaction Detail"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The name of the table to be fetched."
+                  expressionType="Notify"
+                  name="TableName">transactiondetailtest</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows fetched per batch."
+                  expressionType="Notify"
+                  name="BatchSize">1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of rows inserted under the same transaction."
+                  expressionType="Notify"
+                  name="TransactionSize">1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Determines the chunk size allocation for LOB columns"
+                  expressionType="Notify"
+                  name="LobChunkSize">32768</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds to wait for an SQL statement to execute before returning to the application."
+                  expressionType="Notify"
+                  name="StatementTimeout">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The code page to use when code page information is unavailable from the data source."
+                  expressionType="Notify"
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Int32"
+                  description="The method used for inserting data. Possible values are 'Batch' or 'Row by row'."
+                  expressionType="Notify"
+                  name="InsertMethod">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The ODBC C data type for binding numeric data."
+                  expressionType="Notify"
+                  name="BindNumericAs">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Determines how the component would bind columns of (multi)-byte string types (i.e., SQL_CHAR, SQL_VARCHAR, SQL_LONGVARCHAR). The options are: Unicode (SQL_C_WCHAR) and ANSI (SQL_C_CHAR)."
+                  expressionType="Notify"
+                  name="BindCharColumnsAs">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Read Load Report\Transaction Detail.Connections[ODBCConnection]"
+                  connectionManagerID="Package.ConnectionManagers[MySQL-Local]"
+                  connectionManagerRefId="Package.ConnectionManagers[MySQL-Local]"
+                  description="The ODBC runtime connection used to access the database."
+                  name="ODBCConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ODBC Destination Input"
+                  truncationRowDisposition="FailComponent">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[MessageType]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="9"
+                      cachedName="MessageType"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[MessageType]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[MessageType]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[BatchNumber]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="BatchNumber"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[BatchNumber]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[BatchNumber]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[TransactionType]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="5"
+                      cachedName="TransactionType"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[TransactionType]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[TransactionType]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[DocumentType]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="DocumentType"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[DocumentType]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[DocumentType]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[RequisitionNumber]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="9"
+                      cachedName="RequisitionNumber"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[RequisitionNumber]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[RequisitionNumber]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[DocumentNumber]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="8"
+                      cachedName="DocumentNumber"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[DocumentNumber]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[DocumentNumber]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[UserReference1]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="UserReference1"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[UserReference1]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[UserReference1]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[UserReference2]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="UserReference2"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[UserReference2]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[UserReference2]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[ThirdParty]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="ThirdParty"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[ThirdParty]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[ThirdParty]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[Code1]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Code1"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[Code1]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[Code1]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[Code2]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Code2"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[Code2]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[Code2]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[TransactionAmount]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="11"
+                      cachedName="TransactionAmount"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[TransactionAmount]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[TransactionAmount]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[Payee]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="80"
+                      cachedName="Payee"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[Payee]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[Payee]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[ErrorCode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="ErrorCode"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[ErrorCode]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[ErrorCode]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[ProcessingOption1]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="ProcessingOption1"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[ProcessingOption1]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[ProcessingOption1]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[ProcessingOption2]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="ProcessingOption2"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[ProcessingOption2]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[ProcessingOption2]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[ProgramNameCreated]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="ProgramNameCreated"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[ProgramNameCreated]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[ProgramNameCreated]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[BranchCode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="6"
+                      cachedName="BranchCode"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[BranchCode]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[BranchCode]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[AccountType]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="AccountType"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[AccountType]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[AccountType]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[AgencyPrefix]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="AgencyPrefix"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[AgencyPrefix]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[AgencyPrefix]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[AgencyNumber]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="6"
+                      cachedName="AgencyNumber"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[AgencyNumber]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[AgencyNumber]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[Filler1]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="21"
+                      cachedName="Filler1"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[Filler1]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[Filler1]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[BankAccountNumber]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="17"
+                      cachedName="BankAccountNumber"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[BankAccountNumber]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[BankAccountNumber]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[UniqueUserCode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="UniqueUserCode"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[UniqueUserCode]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[UniqueUserCode]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[ActionDate]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="ActionDate"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[ActionDate]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[ActionDate]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[Filler2]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="69"
+                      cachedName="Filler2"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[Filler2]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[Filler2]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[EmailAddress1]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="25"
+                      cachedName="EmailAddress1"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[EmailAddress1]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[EmailAddress1]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[EmailAddress2]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="25"
+                      cachedName="EmailAddress2"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[EmailAddress2]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[EmailAddress2]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[EmailAddress3]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="25"
+                      cachedName="EmailAddress3"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[EmailAddress3]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[EmailAddress3]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[PostalCode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="5"
+                      cachedName="PostalCode"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[PostalCode]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[PostalCode]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[AddressIndicator]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="AddressIndicator"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[AddressIndicator]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[AddressIndicator]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[Filler]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="211"
+                      cachedName="Filler"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[Filler]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[Filler]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[BankAccountNum]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="17"
+                      cachedName="BankAccountNum"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[BankAccountNum]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[BankAccountNum]" />
+                    <inputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].Columns[CellPhoneNumber]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="25"
+                      cachedName="CellPhoneNumber"
+                      externalMetadataColumnId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[CellPhoneNumber]"
+                      lineageId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail].Columns[CellPhoneNumber]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[MessageType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="9"
+                      name="MessageType" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[BatchNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="BatchNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[TransactionType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="5"
+                      name="TransactionType" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[DocumentType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="DocumentType" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[RequisitionNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="9"
+                      name="RequisitionNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[DocumentNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="8"
+                      name="DocumentNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[UserReference1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="UserReference1" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[UserReference2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="UserReference2" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[ThirdParty]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="ThirdParty" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[Code1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Code1" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[Code2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Code2" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[TransactionAmount]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      name="TransactionAmount" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[Payee]"
+                      codePage="1252"
+                      dataType="str"
+                      length="80"
+                      name="Payee" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[ErrorCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="ErrorCode" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[ProcessingOption1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="ProcessingOption1" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[ProcessingOption2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="ProcessingOption2" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[ProgramNameCreated]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="ProgramNameCreated" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[BranchCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="BranchCode" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[AccountType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="AccountType" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[AgencyPrefix]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="AgencyPrefix" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[AgencyNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="AgencyNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[Filler1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="21"
+                      name="Filler1" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[BankAccountNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="17"
+                      name="BankAccountNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[UniqueUserCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="UniqueUserCode" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[ActionDate]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="ActionDate" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[Filler2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="69"
+                      name="Filler2" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[EmailAddress1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="25"
+                      name="EmailAddress1" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[EmailAddress2]"
+                      codePage="1252"
+                      dataType="str"
+                      length="25"
+                      name="EmailAddress2" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[EmailAddress3]"
+                      codePage="1252"
+                      dataType="str"
+                      length="25"
+                      name="EmailAddress3" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[PostalCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="5"
+                      name="PostalCode" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[AddressIndicator]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="AddressIndicator" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[Filler]"
+                      codePage="1252"
+                      dataType="str"
+                      length="211"
+                      name="Filler" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[BankAccountNum]"
+                      codePage="1252"
+                      dataType="str"
+                      length="17"
+                      name="BankAccountNum" />
+                    <externalMetadataColumn
+                      refId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input].ExternalColumns[CellPhoneNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="25"
+                      name="CellPhoneNumber" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Read Load Report\Transaction Detail.Outputs[ODBC Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ODBC Destination Error Output"
+                  synchronousInputId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Outputs[ODBC Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Read Load Report\Transaction Detail.Outputs[ODBC Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Read Load Report\Transaction Detail.Outputs[ODBC Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Read Load Report\Transaction Detail.Outputs[ODBC Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Read Load Report.Paths[Data Conversion Output]"
+              endId="Package\Read Load Report\Split the Load Report.Inputs[Input 0]"
+              name="Data Conversion Output"
+              startId="Package\Read Load Report\Convert Blob to String.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Read Load Report.Paths[Flat File Source Output]"
+              endId="Package\Read Load Report\Convert Blob to String.Inputs[Data Conversion Input]"
+              name="Flat File Source Output"
+              startId="Package\Read Load Report\Load Report.Outputs[Flat File Source Output]" />
+            <path
+              refId="Package\Read Load Report.Paths[Header]"
+              endId="Package\Read Load Report\Header.Inputs[ODBC Destination Input]"
+              name="Header"
+              startId="Package\Read Load Report\Split the Load Report.Outputs[Header]" />
+            <path
+              refId="Package\Read Load Report.Paths[Trailer]"
+              endId="Package\Read Load Report\Trailer.Inputs[ODBC Destination Input]"
+              name="Trailer"
+              startId="Package\Read Load Report\Split the Load Report.Outputs[Trailer]" />
+            <path
+              refId="Package\Read Load Report.Paths[TransactionDetail]"
+              endId="Package\Read Load Report\Transaction Detail.Inputs[ODBC Destination Input]"
+              name="TransactionDetail"
+              startId="Package\Read Load Report\Split the Load Report.Outputs[TransactionDetail]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="221.333333333334,42.6666666666667"
+          Id="Package\Create Hyphen Collection File"
+          TopLeft="31.8749995250255,54.0350887238264" />
+        <NodeLayout
+          Size="166.666666666667,42.6666666666667"
+          Id="Package\Read Load Report"
+          TopLeft="56.8749991524967,154.631581857924" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Read Load Report">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="190.666666666667,42.6666666666667"
+          Id="Package\Read Load Report\Split the Load Report"
+          TopLeft="203.749996963889,182.000003425698" />
+        <NodeLayout
+          Size="184,42.6666666666667"
+          Id="Package\Read Load Report\Convert Blob to String"
+          TopLeft="208.124996898696,101.666668379516" />
+        <NodeLayout
+          Size="114.666666666667,42.6666666666667"
+          Id="Package\Read Load Report\Header"
+          TopLeft="37.4999994412064,326.368427195707" />
+        <NodeLayout
+          Size="110.666666666667,42.6666666666667"
+          Id="Package\Read Load Report\Trailer"
+          TopLeft="478.749992866069,326.175444597903" />
+        <NodeLayout
+          Size="138,42.6666666666667"
+          Id="Package\Read Load Report\Load Report"
+          TopLeft="225.624996637926,14.3684213230815" />
+        <NodeLayout
+          Size="165.333333333334,42.6666666666667"
+          Id="Package\Read Load Report\Transaction Detail"
+          TopLeft="216.249996777624,326.368427195708" />
+        <EdgeLayout
+          Id="Package\Read Load Report.Paths[TransactionDetail]"
+          TopLeft="298.999996870756,224.666670092365">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,101.701757103343"
+              Start="0,0"
+              End="0,94.201757103343">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,94.201757103343" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-38.87822265625,42.2263668329215,77.7564453125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Read Load Report.Paths[Trailer]"
+          TopLeft="344.749996963889,224.666670092365">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="189.333329235514,101.508774505538"
+              Start="0,0"
+              End="189.333329235514,94.0087745055377">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.7696721869543" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,30.7696721869543"
+                    Point2="0,34.7696721869543"
+                    Point3="4,34.7696721869543" />
+                  <mssgle:LineSegment
+                    End="185.333329235514,34.7696721869543" />
+                  <mssgle:CubicBezierSegment
+                    Point1="185.333329235514,34.7696721869543"
+                    Point2="189.333329235514,34.7696721869543"
+                    Point3="189.333329235514,38.7696721869543" />
+                  <mssgle:LineSegment
+                    End="189.333329235514,94.0087745055377" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="79.621879461507,39.7696721869543,30.0895703125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Read Load Report.Paths[Header]"
+          TopLeft="253.416663630555,224.666670092365">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-158.583330856016,101.701757103342"
+              Start="0,0"
+              End="-158.583330856016,94.201757103342">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.8357742721792" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,30.8357742721792"
+                    Point2="0,34.8357742721792"
+                    Point3="-4,34.8357742721792" />
+                  <mssgle:LineSegment
+                    End="-154.583330856016,34.8357742721792" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-154.583330856016,34.8357742721792"
+                    Point2="-158.583330856016,34.8357742721792"
+                    Point3="-158.583330856016,38.8357742721792" />
+                  <mssgle:LineSegment
+                    End="-158.583330856016,94.201757103342" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-95.7253568342578,39.8357742721792,32.8673828125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Read Load Report.Paths[Flat File Source Output]"
+          TopLeft="297.374996768311,57.0350879897481">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44.6315803897678"
+              Start="0,0"
+              End="0,37.1315803897678">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.1315803897678" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Read Load Report.Paths[Data Conversion Output]"
+          TopLeft="299.604163597959,144.333335046183">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37.6666683795157"
+              Start="0,0"
+              End="0,30.1666683795157">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.1666683795157" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="z"
+          ParentId="Package\Read Load Report"
+          FontInfo="{assembly:Null}"
+          Size="34.6666666666667,40"
+          Id="b43d087a-48ac-4b39-9c35-06a7d736def9"
+          TopLeft="683.124989820644,282.578952687269" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Read Load Report\Header">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Read Load Report\Trailer">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Read Load Report\Transaction Detail">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

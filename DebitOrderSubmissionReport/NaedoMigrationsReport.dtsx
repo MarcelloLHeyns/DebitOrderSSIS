@@ -1,0 +1,1735 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="9/6/2021 4:33:54 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="2YNN473-NB"
+  DTS:CreatorName="HOMECHOICE\MHEYNS"
+  DTS:DTSID="{89D3D650-DC6F-4491-A452-294C6A814A1A}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.167"
+  DTS:LocaleID="7177"
+  DTS:ObjectName="NaedoMigrationsReport"
+  DTS:PackageType="5"
+  DTS:VersionBuild="29"
+  DTS:VersionGUID="{FFAB21D5-3A2B-4681-838D-11828AFC9423}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Master File]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{A427465E-B033-4CBB-B755-9DE7C3AF8793}"
+      DTS:ObjectName="Master File">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="0"
+          DTS:ConnectRetryInterval="0"
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\MHEYNS\Documents\Support\Migrations\HMC NM Report 2021-09-10.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Prod-DebitOrder]"
+      DTS:CreationName="ODBC"
+      DTS:DTSID="{8B6D9FE8-BADC-4022-A17C-33E19DF4A96A}"
+      DTS:ObjectName="Prod-DebitOrder">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Dsn=Prod-DebitOrder;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SQL-DEV.Omega.mheyns]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3615135E-8188-4279-8838-13D7534B2C1D}"
+      DTS:ObjectName="SQL-DEV.Omega.mheyns">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=SQL-DEV;User ID=mheyns;Initial Catalog=Omega;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAA7FNIVkAJUmFRf2Vvb1iugAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACp7uqE/HMNmbJ2X6z6uAPVAAAAAASAAACgAAAAEAAAAGHhYCqEKLd8MNJQyvRQqxUYAAAA5ikLqCV7gNJayhWFOs/TiczZP/J1Ew3IFAAAACrQHaj/6QaLYuB6Q0C+Is/BuxsR</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create the MigrationsMaster table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{13DF9B41-F07A-4CB8-9D47-6C8B2D3ADB51}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create the MigrationsMaster table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3615135E-8188-4279-8838-13D7534B2C1D}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="IF OBJECT_ID(N'Omega.dbo.MigrationsMaster') IS NOT NULL&#xA;BEGIN&#xA;&#x9;DROP TABLE [dbo].[MigrationsMaster]&#xA;END&#xA;&#xA;begin&#xA;CREATE TABLE [dbo].[MigrationsMaster] (&#xA;[mandateidentification] nvarchar(255),&#xA;[contractreference] nvarchar(255),&#xA;[clientreference] nvarchar(255),&#xA;[DebtorBranchCode] nvarchar(255),&#xA;[authenticationinstrument] nvarchar(255),&#xA;[requestedauthenticationdate] nvarchar(255),&#xA;[submissiondate] nvarchar(255),&#xA;[authenticationdate] nvarchar(255),&#xA;[authenticationstatus] nvarchar(255),&#xA;[authenticationresultcode] nvarchar(255),&#xA;[resultdescription] nvarchar(255),&#xA;[dcauthkey] nvarchar(255),&#xA;[filename] nvarchar(255),&#xA;[submittedat] nvarchar(255),&#xA;[hoursago] nvarchar(255),&#xA;[filename1] nvarchar(255),&#xA;[replydate] nvarchar(255),&#xA;[transmissionstatus] nvarchar(255)&#xA;)&#xA;end" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create the NaedoMigrations table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{A055B09D-DFD8-40C9-AAB8-321E853783EF}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create the NaedoMigrations table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3615135E-8188-4279-8838-13D7534B2C1D}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="IF OBJECT_ID(N'Omega.dbo.NaedoMigrations') IS NOT NULL&#xA;BEGIN&#xA;&#x9;DROP TABLE [dbo].[NaedoMigrations]&#xA;END&#xA;&#xA;begin&#xA;CREATE TABLE [NaedoMigrations] (&#xA;    [Id] int,&#xA;    [Type] varchar(20),&#xA;    [Status] varchar(20),&#xA;    [AuthKey] varchar(50),&#xA;    [Bank] int,&#xA;    [DebitOrderId] int,&#xA;    [DebitOrderType] varchar(20),&#xA;    [DebiCheckStatus] varchar(20),&#xA;    [AuthCode] varchar(50),&#xA;    [BankId] int&#xA;)&#xA;end" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import DC Migrated Debit Orders"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DelayValidation="True"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{41C07876-65BD-435E-BB33-65996F806308}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import DC Migrated Debit Orders"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB"
+              componentClassID="Microsoft.SSISODBCSrc"
+              contactInfo="ODBC Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="ODBC Source"
+              name="DebitOrderProcessor MySQL DB"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The name of the table to be fetched."
+                  expressionType="Notify"
+                  name="TableName"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select nm.DebitOrderId as 'Id', nm.DebitOrderType as 'Type', nm.DebiCheckStatus as 'Status', nm.AuthCode as 'AuthKey', nm.BankId as 'Bank',
+	   do.DebitOrderId, do.DebitOrderType, do.DebiCheckStatus, do.AuthCode, do.BankId
+from DebitOrderNaedoMigration nm
+left join DebitOrder do
+on do.DebitOrderId = nm.DebitOrderId where do.DebiCheckStatus &lt;&gt; 'NotRequested'
+order by do.DebiCheckStatus desc;</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows fetched per batch."
+                  expressionType="Notify"
+                  name="BatchSize">1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Determines the chunk size allocation for LOB columns"
+                  expressionType="Notify"
+                  name="LobChunkSize">32768</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines how the component exposes CHAR columns. If False, CHAR columns are exposed as (multi-)byte strings (DT_STR), if True, CHAR columns are exposed as wide strings (DT_WSTR)"
+                  expressionType="Notify"
+                  name="ExposeCharColumnsAsUnicode">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds to wait for an SQL statement to execute before returning to the application."
+                  expressionType="Notify"
+                  name="StatementTimeout">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The code page to use when code page information is unavailable from the data source."
+                  expressionType="Notify"
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Int32"
+                  description="The method used for fetching data."
+                  expressionType="Notify"
+                  name="FetchMethod">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="The ODBC C data type for binding numeric data."
+                  expressionType="Notify"
+                  name="BindNumericAs">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Determines how the component would bind columns of (multi)-byte string types (i.e., SQL_CHAR, SQL_VARCHAR, SQL_LONGVARCHAR). The options are: Unicode (SQL_C_WCHAR) and ANSI (SQL_C_CHAR)."
+                  expressionType="Notify"
+                  name="BindCharColumnsAs">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The mode used to access the database."
+                  expressionType="Notify"
+                  name="AccessMode"
+                  typeConverter="AccessMode">1</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Connections[ODBCConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Prod-DebitOrder]"
+                  connectionManagerRefId="Package.ConnectionManagers[Prod-DebitOrder]"
+                  description="The ODBC runtime connection used to access the database."
+                  name="ODBCConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output]"
+                  errorRowDisposition="FailComponent"
+                  name="ODBC Source Output"
+                  truncationRowDisposition="FailComponent">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[Id]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[Id]"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[Id]"
+                      name="Id" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[Type]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[Type]"
+                      length="20"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[Type]"
+                      name="Type" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[Status]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[Status]"
+                      length="20"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[Status]"
+                      name="Status" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[AuthKey]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[AuthKey]"
+                      length="50"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[AuthKey]"
+                      name="AuthKey" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[Bank]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[Bank]"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[Bank]"
+                      name="Bank" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[DebitOrderId]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[DebitOrderId]"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[DebitOrderId]"
+                      name="DebitOrderId" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[DebitOrderType]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[DebitOrderType]"
+                      length="20"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[DebitOrderType]"
+                      name="DebitOrderType" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[DebiCheckStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[DebiCheckStatus]"
+                      length="20"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[DebiCheckStatus]"
+                      name="DebiCheckStatus" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[AuthCode]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[AuthCode]"
+                      length="50"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[AuthCode]"
+                      name="AuthCode" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[BankId]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[BankId]"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[BankId]"
+                      name="BankId" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[Id]"
+                      dataType="i4"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[Type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Type" />
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Status" />
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[AuthKey]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="AuthKey" />
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[Bank]"
+                      dataType="i4"
+                      name="Bank" />
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[DebitOrderId]"
+                      dataType="i4"
+                      name="DebitOrderId" />
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[DebitOrderType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="DebitOrderType" />
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[DebiCheckStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="DebiCheckStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[AuthCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="AuthCode" />
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[BankId]"
+                      dataType="i4"
+                      name="BankId" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output]"
+                  isErrorOut="true"
+                  name="ODBC Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[Id]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[Id]"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[Id]"
+                      name="Id" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[Type]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[Type]"
+                      length="20"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[Type]"
+                      name="Type" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[Status]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[Status]"
+                      length="20"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[Status]"
+                      name="Status" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[AuthKey]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[AuthKey]"
+                      length="50"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[AuthKey]"
+                      name="AuthKey" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[Bank]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[Bank]"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[Bank]"
+                      name="Bank" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[DebitOrderId]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[DebitOrderId]"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[DebitOrderId]"
+                      name="DebitOrderId" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[DebitOrderType]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[DebitOrderType]"
+                      length="20"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[DebitOrderType]"
+                      name="DebitOrderType" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[DebiCheckStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[DebiCheckStatus]"
+                      length="20"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[DebiCheckStatus]"
+                      name="DebiCheckStatus" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[AuthCode]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[AuthCode]"
+                      length="50"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[AuthCode]"
+                      name="AuthCode" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[BankId]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].ExternalColumns[BankId]"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[BankId]"
+                      name="BankId" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Import DC Migrated Debit Orders\Omega DEV"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Omega DEV"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[NaedoMigrations]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Import DC Migrated Debit Orders\Omega DEV.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SQL-DEV.Omega.mheyns]"
+                  connectionManagerRefId="Package.ConnectionManagers[SQL-DEV.Omega.mheyns]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].Columns[Id]"
+                      cachedDataType="i4"
+                      cachedName="Id"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[Id]"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[Id]" />
+                    <inputColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].Columns[Type]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Type"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[Type]"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[Type]" />
+                    <inputColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].Columns[Status]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Status"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[Status]"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[Status]" />
+                    <inputColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].Columns[AuthKey]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="AuthKey"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[AuthKey]"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[AuthKey]" />
+                    <inputColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].Columns[Bank]"
+                      cachedDataType="i4"
+                      cachedName="Bank"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[Bank]"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[Bank]" />
+                    <inputColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].Columns[DebitOrderId]"
+                      cachedDataType="i4"
+                      cachedName="DebitOrderId"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[DebitOrderId]"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[DebitOrderId]" />
+                    <inputColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].Columns[DebitOrderType]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="DebitOrderType"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[DebitOrderType]"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[DebitOrderType]" />
+                    <inputColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].Columns[DebiCheckStatus]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="DebiCheckStatus"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[DebiCheckStatus]"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[DebiCheckStatus]" />
+                    <inputColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].Columns[AuthCode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="AuthCode"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[AuthCode]"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[AuthCode]" />
+                    <inputColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].Columns[BankId]"
+                      cachedDataType="i4"
+                      cachedName="BankId"
+                      externalMetadataColumnId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[BankId]"
+                      lineageId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output].Columns[BankId]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[Id]"
+                      dataType="i4"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[Type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Type" />
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Status" />
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[AuthKey]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="AuthKey" />
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[Bank]"
+                      dataType="i4"
+                      name="Bank" />
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[DebitOrderId]"
+                      dataType="i4"
+                      name="DebitOrderId" />
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[DebitOrderType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="DebitOrderType" />
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[DebiCheckStatus]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="DebiCheckStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[AuthCode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="AuthCode" />
+                    <externalMetadataColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[BankId]"
+                      dataType="i4"
+                      name="BankId" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Import DC Migrated Debit Orders\Omega DEV.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Import DC Migrated Debit Orders\Omega DEV.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Import DC Migrated Debit Orders\Omega DEV.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Import DC Migrated Debit Orders\Omega DEV.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Import DC Migrated Debit Orders.Paths[ODBC Source Output]"
+              endId="Package\Import DC Migrated Debit Orders\Omega DEV.Inputs[OLE DB Destination Input]"
+              name="ODBC Source Output"
+              startId="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB.Outputs[ODBC Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import the Migrations master file"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DelayValidation="True"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{3CAFDC80-CE50-4216-8061-814E74052C8C}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import the Migrations master file"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Import the Migrations master file\Master File"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Master File"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">'Full List$'</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Import the Migrations master file\Master File.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Master File]"
+                  connectionManagerRefId="Package.ConnectionManagers[Master File]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[mandateidentification]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[mandateidentification]"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[mandateidentification]"
+                      name="mandateidentification"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[contractreference]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[contractreference]"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[contractreference]"
+                      name="contractreference"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[clientreference]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[clientreference]"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[clientreference]"
+                      name="clientreference"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[DebtorBranchCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[DebtorBranchCode]"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[DebtorBranchCode]"
+                      name="DebtorBranchCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[authenticationinstrument]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[authenticationinstrument]"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[authenticationinstrument]"
+                      name="authenticationinstrument"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[requestedauthenticationdate]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[requestedauthenticationdate]"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[requestedauthenticationdate]"
+                      name="requestedauthenticationdate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[submissiondate]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[submissiondate]"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[submissiondate]"
+                      name="submissiondate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[authenticationdate]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[authenticationdate]"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[authenticationdate]"
+                      name="authenticationdate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[authenticationstatus]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[authenticationstatus]"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[authenticationstatus]"
+                      name="authenticationstatus"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[authenticationresultcode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[authenticationresultcode]"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[authenticationresultcode]"
+                      name="authenticationresultcode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[resultdescription]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[resultdescription]"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[resultdescription]"
+                      name="resultdescription"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[dcauthkey]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[dcauthkey]"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[dcauthkey]"
+                      name="dcauthkey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[filename]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[filename]"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[filename]"
+                      name="filename"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[submittedat]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[submittedat]"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[submittedat]"
+                      name="submittedat"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[hoursago]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[hoursago]"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[hoursago]"
+                      name="hoursago"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[filename1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[filename1]"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[filename1]"
+                      name="filename1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[replydate]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[replydate]"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[replydate]"
+                      name="replydate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[transmissionstatus]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[transmissionstatus]"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[transmissionstatus]"
+                      name="transmissionstatus"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[mandateidentification]"
+                      dataType="wstr"
+                      length="255"
+                      name="mandateidentification" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[contractreference]"
+                      dataType="wstr"
+                      length="255"
+                      name="contractreference" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[clientreference]"
+                      dataType="wstr"
+                      length="255"
+                      name="clientreference" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[DebtorBranchCode]"
+                      dataType="wstr"
+                      length="255"
+                      name="DebtorBranchCode" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[authenticationinstrument]"
+                      dataType="wstr"
+                      length="255"
+                      name="authenticationinstrument" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[requestedauthenticationdate]"
+                      dataType="wstr"
+                      length="255"
+                      name="requestedauthenticationdate" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[submissiondate]"
+                      dataType="wstr"
+                      length="255"
+                      name="submissiondate" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[authenticationdate]"
+                      dataType="wstr"
+                      length="255"
+                      name="authenticationdate" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[authenticationstatus]"
+                      dataType="wstr"
+                      length="255"
+                      name="authenticationstatus" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[authenticationresultcode]"
+                      dataType="wstr"
+                      length="255"
+                      name="authenticationresultcode" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[resultdescription]"
+                      dataType="wstr"
+                      length="255"
+                      name="resultdescription" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[dcauthkey]"
+                      dataType="wstr"
+                      length="255"
+                      name="dcauthkey" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[filename]"
+                      dataType="wstr"
+                      length="255"
+                      name="filename" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[submittedat]"
+                      dataType="wstr"
+                      length="255"
+                      name="submittedat" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[hoursago]"
+                      dataType="wstr"
+                      length="255"
+                      name="hoursago" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[filename1]"
+                      dataType="wstr"
+                      length="255"
+                      name="filename1" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[replydate]"
+                      dataType="wstr"
+                      length="255"
+                      name="replydate" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].ExternalColumns[transmissionstatus]"
+                      dataType="wstr"
+                      length="255"
+                      name="transmissionstatus" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[mandateidentification]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[mandateidentification]"
+                      name="mandateidentification" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[contractreference]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[contractreference]"
+                      name="contractreference" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[clientreference]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[clientreference]"
+                      name="clientreference" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[DebtorBranchCode]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[DebtorBranchCode]"
+                      name="DebtorBranchCode" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[authenticationinstrument]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[authenticationinstrument]"
+                      name="authenticationinstrument" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[requestedauthenticationdate]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[requestedauthenticationdate]"
+                      name="requestedauthenticationdate" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[submissiondate]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[submissiondate]"
+                      name="submissiondate" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[authenticationdate]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[authenticationdate]"
+                      name="authenticationdate" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[authenticationstatus]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[authenticationstatus]"
+                      name="authenticationstatus" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[authenticationresultcode]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[authenticationresultcode]"
+                      name="authenticationresultcode" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[resultdescription]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[resultdescription]"
+                      name="resultdescription" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[dcauthkey]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[dcauthkey]"
+                      name="dcauthkey" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[filename]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[filename]"
+                      name="filename" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[submittedat]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[submittedat]"
+                      name="submittedat" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[hoursago]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[hoursago]"
+                      name="hoursago" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[filename1]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[filename1]"
+                      name="filename1" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[replydate]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[replydate]"
+                      name="replydate" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[transmissionstatus]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[transmissionstatus]"
+                      name="transmissionstatus" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Import the Migrations master file\Omega DEV"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Omega DEV"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[MigrationsMaster]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Import the Migrations master file\Omega DEV.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SQL-DEV.Omega.mheyns]"
+                  connectionManagerRefId="Package.ConnectionManagers[SQL-DEV.Omega.mheyns]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].Columns[mandateidentification]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="mandateidentification"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[mandateidentification]"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[mandateidentification]" />
+                    <inputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].Columns[contractreference]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="contractreference"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[contractreference]"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[contractreference]" />
+                    <inputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].Columns[clientreference]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="clientreference"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[clientreference]"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[clientreference]" />
+                    <inputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].Columns[DebtorBranchCode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DebtorBranchCode"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[DebtorBranchCode]"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[DebtorBranchCode]" />
+                    <inputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].Columns[authenticationinstrument]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="authenticationinstrument"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[authenticationinstrument]"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[authenticationinstrument]" />
+                    <inputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].Columns[requestedauthenticationdate]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="requestedauthenticationdate"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[requestedauthenticationdate]"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[requestedauthenticationdate]" />
+                    <inputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].Columns[submissiondate]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="submissiondate"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[submissiondate]"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[submissiondate]" />
+                    <inputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].Columns[authenticationdate]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="authenticationdate"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[authenticationdate]"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[authenticationdate]" />
+                    <inputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].Columns[authenticationstatus]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="authenticationstatus"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[authenticationstatus]"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[authenticationstatus]" />
+                    <inputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].Columns[authenticationresultcode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="authenticationresultcode"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[authenticationresultcode]"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[authenticationresultcode]" />
+                    <inputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].Columns[resultdescription]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="resultdescription"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[resultdescription]"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[resultdescription]" />
+                    <inputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].Columns[dcauthkey]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="dcauthkey"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[dcauthkey]"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[dcauthkey]" />
+                    <inputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].Columns[filename]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="filename"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[filename]"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[filename]" />
+                    <inputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].Columns[submittedat]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="submittedat"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[submittedat]"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[submittedat]" />
+                    <inputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].Columns[hoursago]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="hoursago"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[hoursago]"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[hoursago]" />
+                    <inputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].Columns[filename1]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="filename1"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[filename1]"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[filename1]" />
+                    <inputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].Columns[replydate]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="replydate"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[replydate]"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[replydate]" />
+                    <inputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].Columns[transmissionstatus]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="transmissionstatus"
+                      externalMetadataColumnId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[transmissionstatus]"
+                      lineageId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output].Columns[transmissionstatus]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[mandateidentification]"
+                      dataType="wstr"
+                      length="255"
+                      name="mandateidentification" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[contractreference]"
+                      dataType="wstr"
+                      length="255"
+                      name="contractreference" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[clientreference]"
+                      dataType="wstr"
+                      length="255"
+                      name="clientreference" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[DebtorBranchCode]"
+                      dataType="wstr"
+                      length="255"
+                      name="DebtorBranchCode" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[authenticationinstrument]"
+                      dataType="wstr"
+                      length="255"
+                      name="authenticationinstrument" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[requestedauthenticationdate]"
+                      dataType="wstr"
+                      length="255"
+                      name="requestedauthenticationdate" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[submissiondate]"
+                      dataType="wstr"
+                      length="255"
+                      name="submissiondate" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[authenticationdate]"
+                      dataType="wstr"
+                      length="255"
+                      name="authenticationdate" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[authenticationstatus]"
+                      dataType="wstr"
+                      length="255"
+                      name="authenticationstatus" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[authenticationresultcode]"
+                      dataType="wstr"
+                      length="255"
+                      name="authenticationresultcode" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[resultdescription]"
+                      dataType="wstr"
+                      length="255"
+                      name="resultdescription" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[dcauthkey]"
+                      dataType="wstr"
+                      length="255"
+                      name="dcauthkey" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[filename]"
+                      dataType="wstr"
+                      length="255"
+                      name="filename" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[submittedat]"
+                      dataType="wstr"
+                      length="255"
+                      name="submittedat" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[hoursago]"
+                      dataType="wstr"
+                      length="255"
+                      name="hoursago" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[filename1]"
+                      dataType="wstr"
+                      length="255"
+                      name="filename1" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[replydate]"
+                      dataType="wstr"
+                      length="255"
+                      name="replydate" />
+                    <externalMetadataColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input].ExternalColumns[transmissionstatus]"
+                      dataType="wstr"
+                      length="255"
+                      name="transmissionstatus" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Import the Migrations master file\Omega DEV.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Import the Migrations master file\Omega DEV.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Import the Migrations master file\Omega DEV.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Import the Migrations master file\Omega DEV.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Import the Migrations master file.Paths[Excel Source Output]"
+              endId="Package\Import the Migrations master file\Omega DEV.Inputs[OLE DB Destination Input]"
+              name="Excel Source Output"
+              startId="Package\Import the Migrations master file\Master File.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{B1672DF9-4DF8-4BC5-976D-17EF2B7CBE7B}"
+      DTS:From="Package\Import the Migrations master file"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Import DC Migrated Debit Orders" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{46627544-1BE0-43EA-9224-8F924DACB625}"
+      DTS:From="Package\Create the MigrationsMaster table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Create the NaedoMigrations table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{2BF4EA35-F54B-485B-AC3F-27A8346AE324}"
+      DTS:From="Package\Create the NaedoMigrations table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Import the Migrations master file" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="240,42.6666666666667"
+          Id="Package\Create the MigrationsMaster table"
+          TopLeft="41.874999376014,13.0000002446927" />
+        <NodeLayout
+          Size="238.666666666667,42.6666666666667"
+          Id="Package\Create the NaedoMigrations table"
+          TopLeft="43.1249993573875,97.8421071047928" />
+        <NodeLayout
+          Size="236,42.6666666666667"
+          Id="Package\Import DC Migrated Debit Orders"
+          TopLeft="47.4999992921949,260.684215433049" />
+        <NodeLayout
+          Size="232,42.6666666666667"
+          Id="Package\Import the Migrations master file"
+          TopLeft="44.374999338761,181.315792886504" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="162.937499315478,223.982459553171">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,36.7017558798783"
+              Start="0,0"
+              End="0,29.2017558798783">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.2017558798783" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="162.166666033367,55.6666669113594">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42.1754401934335"
+              Start="0,0"
+              End="0,34.6754401934335">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.6754401934335" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="161.416666014741,140.50877377146">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40.8070191150446"
+              Start="0,0"
+              End="0,33.3070191150446">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.3070191150446" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Import DC Migrated Debit Orders">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="236,42.6666666666667"
+          Id="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB"
+          TopLeft="42.4999993667007,28.7368426461629" />
+        <NodeLayout
+          Size="140,42.6666666666667"
+          Id="Package\Import DC Migrated Debit Orders\Omega DEV"
+          TopLeft="186.874997215346,145.052634309203" />
+        <EdgeLayout
+          Id="Package\Import DC Migrated Debit Orders.Paths[ODBC Source Output]"
+          TopLeft="160.499999366701,71.4035093128295">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="96.3749978486449,73.6491249963735"
+              Start="0,0"
+              End="96.3749978486449,66.1491249963735">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.8245624981868" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,32.8245624981868"
+                    Point2="0,36.8245624981868"
+                    Point3="4,36.8245624981868" />
+                  <mssgle:LineSegment
+                    End="92.3749978486449,36.8245624981868" />
+                  <mssgle:CubicBezierSegment
+                    Point1="92.3749978486449,36.8245624981868"
+                    Point2="96.3749978486449,36.8245624981868"
+                    Point3="96.3749978486449,40.8245624981868" />
+                  <mssgle:LineSegment
+                    End="96.3749978486449,66.1491249963735" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Import DC Migrated Debit Orders\DebitOrderProcessor MySQL DB">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Import DC Migrated Debit Orders\Omega DEV">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Import the Migrations master file">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="140,42.6666666666667"
+          Id="Package\Import the Migrations master file\Omega DEV"
+          TopLeft="152,165" />
+        <NodeLayout
+          Size="132,42.6666666666667"
+          Id="Package\Import the Migrations master file\Master File"
+          TopLeft="52,29" />
+        <EdgeLayout
+          Id="Package\Import the Migrations master file.Paths[Excel Source Output]"
+          TopLeft="118,71.6666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="104,93.3333333333333"
+              Start="0,0"
+              End="104,85.8333333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.6666666666667" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,42.6666666666667"
+                    Point2="0,46.6666666666667"
+                    Point3="4,46.6666666666667" />
+                  <mssgle:LineSegment
+                    End="100,46.6666666666667" />
+                  <mssgle:CubicBezierSegment
+                    Point1="100,46.6666666666667"
+                    Point2="104,46.6666666666667"
+                    Point3="104,50.6666666666667" />
+                  <mssgle:LineSegment
+                    End="104,85.8333333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Import the Migrations master file\Master File">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Import the Migrations master file\Omega DEV">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
