@@ -11,8 +11,8 @@
   DTS:LocaleID="7177"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="173"
-  DTS:VersionGUID="{73683B0D-73C3-40E5-A9E8-1EDCD27FEC04}">
+  DTS:VersionBuild="189"
+  DTS:VersionGUID="{903E1CD6-AF94-4A76-B6B8-70909B461103}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -59,7 +59,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAA7FNIVkAJUmFRf2Vvb1iugAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABVuApZPcTCj585bw2JrNWlAAAAAASAAACgAAAAEAAAAMkTR/5yW/uLWQ9IaSrnALYgAAAA1DNalZBesh8rbrdm9mU7enyqRSkbuqiYbxc4IBLLzzsUAAAA0Dxoi3yQcft2Zx4ukP6oaOSA5Dw</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAA7FNIVkAJUmFRf2Vvb1iugAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADMecpejpFkRdlFXWiKG0dZAAAAAASAAACgAAAAEAAAAJYaTLmgndDPGYIiaqTqOsIgAAAAJJ4TLpw8rNblBIm1zlMQVtoZO3hqO9O0SW3OI+u9a7UUAAAAsB80HXdykZHlLGuIq+zaoiLPIhU</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -306,6 +306,16 @@
                               cachedDataType="nText"
                               cachedName="Status"
                               lineageId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\MySQL DebitOrder.Outputs[ADO NET Source Output].Columns[Status]" />
+                            <inputColumn
+                              refId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Data Conversion.Inputs[Data Conversion Input].Columns[AuditDate]"
+                              cachedDataType="dbTimeStamp"
+                              cachedName="AuditDate"
+                              lineageId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\MySQL DebitOrder.Outputs[ADO NET Source Output].Columns[AuditDate]" />
+                            <inputColumn
+                              refId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Data Conversion.Inputs[Data Conversion Input].Columns[DeductionDate]"
+                              cachedDataType="dbTimeStamp"
+                              cachedName="DeductionDate"
+                              lineageId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\MySQL DebitOrder.Outputs[ADO NET Source Output].Columns[DeductionDate]" />
                           </inputColumns>
                           <externalMetadataColumns />
                         </input>
@@ -670,6 +680,46 @@
                                   dataType="System.Int32"
                                   description="Specifies the input column used as the source of data for the conversion."
                                   name="SourceInputColumnLineageID">#{Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\MySQL DebitOrder.Outputs[ADO NET Source Output].Columns[AuditUser]}</property>
+                                <property
+                                  dataType="System.Boolean"
+                                  description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                                  name="FastParse">false</property>
+                              </properties>
+                            </outputColumn>
+                            <outputColumn
+                              refId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of AuditDate]"
+                              dataType="dbTimeStamp"
+                              errorOrTruncationOperation="Conversion"
+                              errorRowDisposition="FailComponent"
+                              lineageId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of AuditDate]"
+                              name="Copy of AuditDate"
+                              truncationRowDisposition="FailComponent">
+                              <properties>
+                                <property
+                                  containsID="true"
+                                  dataType="System.Int32"
+                                  description="Specifies the input column used as the source of data for the conversion."
+                                  name="SourceInputColumnLineageID">#{Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\MySQL DebitOrder.Outputs[ADO NET Source Output].Columns[AuditDate]}</property>
+                                <property
+                                  dataType="System.Boolean"
+                                  description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                                  name="FastParse">false</property>
+                              </properties>
+                            </outputColumn>
+                            <outputColumn
+                              refId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DeductionDate]"
+                              dataType="dbTime"
+                              errorOrTruncationOperation="Conversion"
+                              errorRowDisposition="FailComponent"
+                              lineageId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DeductionDate]"
+                              name="Copy of DeductionDate"
+                              truncationRowDisposition="FailComponent">
+                              <properties>
+                                <property
+                                  containsID="true"
+                                  dataType="System.Int32"
+                                  description="Specifies the input column used as the source of data for the conversion."
+                                  name="SourceInputColumnLineageID">#{Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\MySQL DebitOrder.Outputs[ADO NET Source Output].Columns[DeductionDate]}</property>
                                 <property
                                   dataType="System.Boolean"
                                   description="Indicates whether the column uses the faster, locale-neutral parsing routines."
@@ -1542,12 +1592,6 @@
                               externalMetadataColumnId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Omega DOMandateAmend.Inputs[OLE DB Destination Input].ExternalColumns[DeductionDay]"
                               lineageId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\MySQL DebitOrder.Outputs[ADO NET Source Output].Columns[DeductionDay]" />
                             <inputColumn
-                              refId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Omega DOMandateAmend.Inputs[OLE DB Destination Input].Columns[DeductionDate]"
-                              cachedDataType="dbTimeStamp"
-                              cachedName="DeductionDate"
-                              externalMetadataColumnId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Omega DOMandateAmend.Inputs[OLE DB Destination Input].ExternalColumns[DeductionDate]"
-                              lineageId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\MySQL DebitOrder.Outputs[ADO NET Source Output].Columns[DeductionDate]" />
-                            <inputColumn
                               refId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Omega DOMandateAmend.Inputs[OLE DB Destination Input].Columns[MandateReceived]"
                               cachedDataType="bool"
                               cachedName="MandateReceived"
@@ -1687,11 +1731,17 @@
                               externalMetadataColumnId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Omega DOMandateAmend.Inputs[OLE DB Destination Input].ExternalColumns[DebitOrderType]"
                               lineageId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DebitOrderType]" />
                             <inputColumn
-                              refId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Omega DOMandateAmend.Inputs[OLE DB Destination Input].Columns[AuditDate]"
+                              refId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Omega DOMandateAmend.Inputs[OLE DB Destination Input].Columns[Copy of AuditDate]"
                               cachedDataType="dbTimeStamp"
-                              cachedName="AuditDate"
+                              cachedName="Copy of AuditDate"
                               externalMetadataColumnId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Omega DOMandateAmend.Inputs[OLE DB Destination Input].ExternalColumns[AuditDate]"
-                              lineageId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\MySQL DebitOrder.Outputs[ADO NET Source Output].Columns[AuditDate]" />
+                              lineageId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of AuditDate]" />
+                            <inputColumn
+                              refId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Omega DOMandateAmend.Inputs[OLE DB Destination Input].Columns[Copy of DeductionDate]"
+                              cachedDataType="dbTime"
+                              cachedName="Copy of DeductionDate"
+                              externalMetadataColumnId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Omega DOMandateAmend.Inputs[OLE DB Destination Input].ExternalColumns[DeductionDate]"
+                              lineageId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DeductionDate]" />
                           </inputColumns>
                           <externalMetadataColumns
                             isUsed="True">
@@ -5197,9 +5247,10 @@
                             </outputColumn>
                             <outputColumn
                               refId="Package\Mandate Amend\Naedo Mandate Amend\Get the Naedo Debit Orders Amended after last export\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of BankBranchCode]"
-                              dataType="nText"
+                              dataType="wstr"
                               errorOrTruncationOperation="Conversion"
                               errorRowDisposition="FailComponent"
+                              length="50"
                               lineageId="Package\Mandate Amend\Naedo Mandate Amend\Get the Naedo Debit Orders Amended after last export\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of BankBranchCode]"
                               name="Copy of BankBranchCode"
                               truncationRowDisposition="FailComponent">
@@ -6384,7 +6435,8 @@
                               lineageId="Package\Mandate Amend\Naedo Mandate Amend\Get the Naedo Debit Orders Amended after last export\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of BankAccountNumber]" />
                             <inputColumn
                               refId="Package\Mandate Amend\Naedo Mandate Amend\Get the Naedo Debit Orders Amended after last export\Omega DOMandateAmendNaedo.Inputs[OLE DB Destination Input].Columns[Copy of BankBranchCode]"
-                              cachedDataType="nText"
+                              cachedDataType="wstr"
+                              cachedLength="50"
                               cachedName="Copy of BankBranchCode"
                               externalMetadataColumnId="Package\Mandate Amend\Naedo Mandate Amend\Get the Naedo Debit Orders Amended after last export\Omega DOMandateAmendNaedo.Inputs[OLE DB Destination Input].ExternalColumns[BankBranchCode]"
                               lineageId="Package\Mandate Amend\Naedo Mandate Amend\Get the Naedo Debit Orders Amended after last export\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of BankBranchCode]" />
@@ -8224,6 +8276,7 @@
               DTS:refId="Package\Mandate Amend\Naedo Mandate Amend\Move the DOMandateNaedo table to history"
               DTS:CreationName="Microsoft.Pipeline"
               DTS:Description="Data Flow Task"
+              DTS:Disabled="True"
               DTS:DTSID="{bf255125-f057-4578-bb84-67e43378af83}"
               DTS:ExecutableType="Microsoft.Pipeline"
               DTS:LocaleID="-1"
@@ -10706,7 +10759,7 @@
                           dataType="System.Int32"
                           description="The method used for inserting data. Possible values are 'Batch' or 'Row by row'."
                           expressionType="Notify"
-                          name="InsertMethod">1</property>
+                          name="InsertMethod">0</property>
                         <property
                           dataType="System.Int32"
                           description="The ODBC C data type for binding numeric data."
@@ -11314,7 +11367,6 @@
       DTS:refId="Package\Mandate Create"
       DTS:CreationName="STOCK:SEQUENCE"
       DTS:Description="Sequence Container"
-      DTS:Disabled="True"
       DTS:DTSID="{794CAD78-6AD6-4BB9-9A78-078574465EA4}"
       DTS:ExecutableType="STOCK:SEQUENCE"
       DTS:LocaleID="-1"
@@ -16464,7 +16516,7 @@ from hcdebitorder_dev.DebitOrder
           Id="Package\Mandate Amend\Naedo Mandate Amend\Log the Audit date Debit Order Exported"
           TopLeft="55.4092210931503,527.882204780624" />
         <NodeLayout
-          Size="289.333333333334,42.6666666666667"
+          Size="286.666666666667,42.6666666666667"
           Id="Package\Mandate Amend\Naedo Mandate Amend\Move the DOMandateNaedo table to history"
           TopLeft="38.6249953713271,22.9053780197612" />
         <NodeLayout
@@ -16477,18 +16529,18 @@ from hcdebitorder_dev.DebitOrder
           TopLeft="31.0769185607262,191.174178179482" />
         <EdgeLayout
           Id="Package\Mandate Amend\Naedo Mandate Amend.PrecedenceConstraints[Constraint]"
-          TopLeft="186.169867058739,65.5720446864279">
+          TopLeft="185.503200392072,65.5720446864279">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,44.5776942213647"
+              EndConnector="0,44.5776942213651"
               Start="0,0"
-              End="0,37.0776942213647">
+              End="0,37.0776942213651">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,37.0776942213647" />
+                    End="0,37.0776942213651" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -16610,7 +16662,7 @@ from hcdebitorder_dev.DebitOrder
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="390.666666666667,626"
+          PanelSize="390.666666666667,625.333333333334"
           Size="390.666666666667,668.666666666667"
           Id="Package\Mandate Amend\Naedo Mandate Amend"
           TopLeft="988.754612446727,27.3480938158261" />
@@ -16731,14 +16783,14 @@ from hcdebitorder_dev.DebitOrder
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="102.325547426659,0"
+              EndConnector="102.32554742666,0"
               Start="0,0"
-              End="94.8255474266595,0">
+              End="94.8255474266597,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="94.8255474266595,0" />
+                    End="94.8255474266597,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -16750,8 +16802,8 @@ from hcdebitorder_dev.DebitOrder
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="1404,744"
-          Size="1404,786.666666666667"
+          PanelSize="1404,751.333333333334"
+          Size="1404,794"
           Id="Package\Mandate Amend"
           TopLeft="532.812492060475,28.378446649442" />
         <NodeLayout
@@ -16923,7 +16975,7 @@ from hcdebitorder_dev.DebitOrder
           TopLeft="13.3482140868102,33.5125198719156" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="388.681547420143,424.445483260679">
+          TopLeft="388.681547420143,426.278816594012">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -16945,18 +16997,18 @@ from hcdebitorder_dev.DebitOrder
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="1936.81249206048,421.508145893729">
+          TopLeft="1936.81249206048,423.341479227063">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="80.5461088309182,0"
+              EndConnector="80.546108830915,0"
               Start="0,0"
-              End="73.0461088309182,0">
+              End="73.046108830915,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="73.0461088309182,0" />
+                    End="73.046108830915,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -17057,7 +17109,7 @@ from hcdebitorder_dev.DebitOrder
     design-time-name="Package\Mandate Amend\DebiCheck Mandate Amend\Import DOMandateAmend to MySQL">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="209.333333333334,42.6666666666667"
           Id="Package\Mandate Amend\DebiCheck Mandate Amend\Import DOMandateAmend to MySQL\Omega DOMandateAmend"
@@ -17097,9 +17149,7 @@ from hcdebitorder_dev.DebitOrder
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -17135,7 +17185,7 @@ from hcdebitorder_dev.DebitOrder
     design-time-name="Package\Mandate Amend\DebiCheck Mandate Amend\Move the DOMandateAmend table to history">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="206.666666666667,42.6666666666667"
           Id="Package\Mandate Amend\DebiCheck Mandate Amend\Move the DOMandateAmend table to history\History DOMandateAmend"
@@ -17175,9 +17225,7 @@ from hcdebitorder_dev.DebitOrder
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -17213,7 +17261,7 @@ from hcdebitorder_dev.DebitOrder
     design-time-name="Package\Mandate Amend\Naedo Mandate Amend\Get the Naedo Debit Orders Amended after last export">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="170.666666666667,42.6666666666667"
           Id="Package\Mandate Amend\Naedo Mandate Amend\Get the Naedo Debit Orders Amended after last export\MySQL DebitOrder"
@@ -17245,9 +17293,7 @@ from hcdebitorder_dev.DebitOrder
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -17269,9 +17315,7 @@ from hcdebitorder_dev.DebitOrder
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -17380,7 +17424,7 @@ from hcdebitorder_dev.DebitOrder
     design-time-name="Package\Mandate Amend\Naedo Mandate Amend\Move the DOMandateNaedo table to history">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="238.666666666667,42.6666666666667"
           Id="Package\Mandate Amend\Naedo Mandate Amend\Move the DOMandateNaedo table to history\History DOMandateAmendNaedo"
@@ -17420,9 +17464,7 @@ from hcdebitorder_dev.DebitOrder
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -17458,7 +17500,7 @@ from hcdebitorder_dev.DebitOrder
     design-time-name="Package\Mandate Amend\RMS Mandate Amend\Move the DOMandateRMS table to history">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="238.666666666667,42.6666666666667"
           Id="Package\Mandate Amend\RMS Mandate Amend\Move the DOMandateRMS table to history\History DOMandateAmendNaedo"
@@ -17498,9 +17540,7 @@ from hcdebitorder_dev.DebitOrder
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -17536,7 +17576,7 @@ from hcdebitorder_dev.DebitOrder
     design-time-name="Package\Mandate Create\Get the Debit Orders Created after last export">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="206.666666666667,42.6666666666667"
           Id="Package\Mandate Create\Get the Debit Orders Created after last export\Omega DOMandateCreate"
@@ -17568,7 +17608,9 @@ from hcdebitorder_dev.DebitOrder
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -17590,7 +17632,9 @@ from hcdebitorder_dev.DebitOrder
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
