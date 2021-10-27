@@ -11,46 +11,46 @@
   DTS:LocaleID="7177"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="189"
-  DTS:VersionGUID="{903E1CD6-AF94-4A76-B6B8-70909B461103}">
+  DTS:VersionBuild="198"
+  DTS:VersionGUID="{4C3C3174-A0BF-4B68-B770-818305019D6D}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[DEV-DebitOrder ADO.NET]"
+      DTS:refId="Package.ConnectionManagers[Stage-DebitOrder ADO.NET]"
       DTS:CreationName="ADO.NET:System.Data.Odbc.OdbcConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
       DTS:DTSID="{B6EBF793-55D5-4BE0-B08B-47C88ACEDB21}"
-      DTS:ObjectName="DEV-DebitOrder ADO.NET">
+      DTS:ObjectName="Stage-DebitOrder ADO.NET">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Dsn=DEV-DebitOrder;" />
+          DTS:ConnectionString="Dsn=Stage-DebitOrder;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[DEV-DebitOrder ODBC]"
+      DTS:refId="Package.ConnectionManagers[Stage-DebitOrder ODBC]"
       DTS:CreationName="ODBC"
       DTS:DTSID="{A832587D-59F1-4BE3-A979-DF99027CB7AA}"
-      DTS:ObjectName="DEV-DebitOrder ODBC">
+      DTS:ObjectName="Stage-DebitOrder ODBC">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Dsn=DEV-DebitOrder;" />
+          DTS:ConnectionString="Dsn=Stage-DebitOrder;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[Local-DebitOrderHistory]"
+      DTS:refId="Package.ConnectionManagers[Stage-DebitOrderHistory]"
       DTS:CreationName="ODBC"
       DTS:DTSID="{E1619AE5-4C7B-4FE8-AC0E-7D68538D247D}"
-      DTS:ObjectName="Local-DebitOrderHistory">
+      DTS:ObjectName="Stage-DebitOrderHistory">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Dsn=MySQL-Local;" />
+          DTS:ConnectionString="Dsn=Stage-DebitOrderHistory;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[SQL-DEV]"
+      DTS:refId="Package.ConnectionManagers[Stage-Omega]"
       DTS:CreationName="OLEDB"
       DTS:DTSID="{31D7B7F2-09BF-418D-BB21-9B7AF582B136}"
-      DTS:ObjectName="SQL-DEV">
+      DTS:ObjectName="Stage-Omega">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
@@ -59,7 +59,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAA7FNIVkAJUmFRf2Vvb1iugAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADMecpejpFkRdlFXWiKG0dZAAAAAASAAACgAAAAEAAAAJYaTLmgndDPGYIiaqTqOsIgAAAAJJ4TLpw8rNblBIm1zlMQVtoZO3hqO9O0SW3OI+u9a7UUAAAAsB80HXdykZHlLGuIq+zaoiLPIhU</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAA7FNIVkAJUmFRf2Vvb1iugAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADUvOd1IufujwgusDoKeCfRAAAAAASAAACgAAAAEAAAALnz0q9APuL5gA7+dPqM4UwgAAAA907dQmjpYYlqaB2hP6+31RQHx6mzdNM1n7TDsS2QCy0UAAAABGKhBgVIns2dM/zYZSXpk+9v4xc</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -823,10 +823,10 @@
                        DebiCheckStatus, 
                        DebitOrderType, 
                        AuditDate 
-				   from hcdebitorder_dev.DebitOrder 
+				   from DebitOrder 
 				  where  DebitOrderType     in ('DebiCheck', 'RMS')
                      and AuditDate          &gt;= (SELECT ExportDate
-												FROM hcdebitorder_dev.DebitOrderFileExportAudit
+												FROM DebitOrderFileExportAudit
 												WHERE ExportAction = 'Amend'
 												Order by ExportDate desc
 												Limit 1)
@@ -863,10 +863,10 @@
                             DebiCheckStatus, 
                             DebitOrderType, 
                             AuditDate  
-						from hcdebitorder_dev.DebitOrder 
+						from DebitOrder 
 					  where  DebitOrderType                in ('DebiCheck', 'RMS')
                       and    AuditDate                     &gt;= (SELECT ExportDate
-																FROM hcdebitorder_dev.DebitOrderFileExportAudit
+																FROM DebitOrderFileExportAudit
 																WHERE ExportAction = 'Amend'
 																Order by ExportDate desc
 																Limit 1) 
@@ -901,8 +901,8 @@
                       <connections>
                         <connection
                           refId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\MySQL DebitOrder.Connections[IDbConnection]"
-                          connectionManagerID="Package.ConnectionManagers[DEV-DebitOrder ADO.NET]"
-                          connectionManagerRefId="Package.ConnectionManagers[DEV-DebitOrder ADO.NET]"
+                          connectionManagerID="Package.ConnectionManagers[Stage-DebitOrder ADO.NET]"
+                          connectionManagerRefId="Package.ConnectionManagers[Stage-DebitOrder ADO.NET]"
                           description="Managed connection manager"
                           name="IDbConnection" />
                       </connections>
@@ -1534,8 +1534,8 @@
                       <connections>
                         <connection
                           refId="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Omega DOMandateAmend.Connections[OleDbConnection]"
-                          connectionManagerID="Package.ConnectionManagers[SQL-DEV]"
-                          connectionManagerRefId="Package.ConnectionManagers[SQL-DEV]"
+                          connectionManagerID="Package.ConnectionManagers[Stage-Omega]"
+                          connectionManagerRefId="Package.ConnectionManagers[Stage-Omega]"
                           description="The OLE DB runtime connection used to access the database."
                           name="OleDbConnection" />
                       </connections>
@@ -2050,8 +2050,8 @@
                       <connections>
                         <connection
                           refId="Package\Mandate Amend\DebiCheck Mandate Amend\Import DOMandateAmend to MySQL\MySQL DOMandateAmend.Connections[ODBCConnection]"
-                          connectionManagerID="Package.ConnectionManagers[DEV-DebitOrder ODBC]"
-                          connectionManagerRefId="Package.ConnectionManagers[DEV-DebitOrder ODBC]"
+                          connectionManagerID="Package.ConnectionManagers[Stage-DebitOrder ODBC]"
+                          connectionManagerRefId="Package.ConnectionManagers[Stage-DebitOrder ODBC]"
                           description="The ODBC runtime connection used to access the database."
                           name="ODBCConnection" />
                       </connections>
@@ -2601,8 +2601,8 @@
                       <connections>
                         <connection
                           refId="Package\Mandate Amend\DebiCheck Mandate Amend\Import DOMandateAmend to MySQL\Omega DOMandateAmend.Connections[OleDbConnection]"
-                          connectionManagerID="Package.ConnectionManagers[SQL-DEV]"
-                          connectionManagerRefId="Package.ConnectionManagers[SQL-DEV]"
+                          connectionManagerID="Package.ConnectionManagers[Stage-Omega]"
+                          connectionManagerRefId="Package.ConnectionManagers[Stage-Omega]"
                           description="The OLE DB runtime connection used to access the database."
                           name="OleDbConnection" />
                       </connections>
@@ -3464,14 +3464,7 @@
               <DTS:ObjectData>
                 <SQLTask:SqlTaskData
                   SQLTask:Connection="{A832587D-59F1-4BE3-A979-DF99027CB7AA}"
-                  SQLTask:SqlStatementSource="insert into hcdebitorder_dev.DebitOrderFileExportAudit&#xA;(&#xA;ExportDate,&#xA;ExportAction,&#xA;DebitOrderId&#xA;)&#xA;select&#xA;DATE_ADD(max(AuditDate), INTERVAL 1 second), &#xA;'Amend',&#xA;null&#xA;from DOMandateAmend" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
-                  <SQLTask:ParameterBinding
-                    SQLTask:ParameterName="1"
-                    SQLTask:DtsVariableName="User::CreateRange"
-                    SQLTask:ParameterDirection="Input"
-                    SQLTask:DataType="4"
-                    SQLTask:ParameterSize="-1" />
-                </SQLTask:SqlTaskData>
+                  SQLTask:SqlStatementSource="CALL `proc_log_amend_export`();" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
               </DTS:ObjectData>
             </DTS:Executable>
             <DTS:Executable
@@ -3558,8 +3551,8 @@
                       <connections>
                         <connection
                           refId="Package\Mandate Amend\DebiCheck Mandate Amend\Move the DOMandateAmend table to history\DOMandateAmend.Connections[ODBCConnection]"
-                          connectionManagerID="Package.ConnectionManagers[DEV-DebitOrder ODBC]"
-                          connectionManagerRefId="Package.ConnectionManagers[DEV-DebitOrder ODBC]"
+                          connectionManagerID="Package.ConnectionManagers[Stage-DebitOrder ODBC]"
+                          connectionManagerRefId="Package.ConnectionManagers[Stage-DebitOrder ODBC]"
                           description="The ODBC runtime connection used to access the database."
                           name="ODBCConnection" />
                       </connections>
@@ -4352,12 +4345,12 @@
                           dataType="System.String"
                           description="The name of the table to be fetched."
                           expressionType="Notify"
-                          name="TableName">domandateamend</property>
+                          name="TableName">DOMandateAmend</property>
                         <property
                           dataType="System.Int32"
                           description="Specify the number of rows fetched per batch."
                           expressionType="Notify"
-                          name="BatchSize">10000</property>
+                          name="BatchSize">1000</property>
                         <property
                           dataType="System.Int32"
                           description="The number of rows inserted under the same transaction."
@@ -4397,8 +4390,8 @@
                       <connections>
                         <connection
                           refId="Package\Mandate Amend\DebiCheck Mandate Amend\Move the DOMandateAmend table to history\History DOMandateAmend.Connections[ODBCConnection]"
-                          connectionManagerID="Package.ConnectionManagers[Local-DebitOrderHistory]"
-                          connectionManagerRefId="Package.ConnectionManagers[Local-DebitOrderHistory]"
+                          connectionManagerID="Package.ConnectionManagers[Stage-DebitOrderHistory]"
+                          connectionManagerRefId="Package.ConnectionManagers[Stage-DebitOrderHistory]"
                           description="The ODBC runtime connection used to access the database."
                           name="ODBCConnection" />
                       </connections>
@@ -5617,10 +5610,10 @@
                        DebiCheckStatus, 
                        DebitOrderType, 
                        AuditDate 
-				   from hcdebitorder_dev.DebitOrder 
+				   from DebitOrder 
 				  where  DebitOrderType     in ('Naedo')
                      and AuditDate          &gt;= (select ExportDate
-												from hcdebitorder_dev.DebitOrderFileExportAudit
+												from DebitOrderFileExportAudit
 												where ExportAction = 'NaedoAmend'
 												order by ExportDate desc
 												limit 1)
@@ -5657,10 +5650,10 @@
                             DebiCheckStatus, 
                             DebitOrderType, 
                             AuditDate  
-						from hcdebitorder_dev.DebitOrder 
+						from DebitOrder 
 					  where  DebitOrderType                in ('Naedo')
                       and    AuditDate                     &gt;= (select ExportDate
-																from hcdebitorder_dev.DebitOrderFileExportAudit
+																from DebitOrderFileExportAudit
 																where ExportAction = 'NaedoAmend'
 																order by ExportDate desc
 																limit 1)
@@ -5695,8 +5688,8 @@
                       <connections>
                         <connection
                           refId="Package\Mandate Amend\Naedo Mandate Amend\Get the Naedo Debit Orders Amended after last export\MySQL DebitOrder.Connections[IDbConnection]"
-                          connectionManagerID="Package.ConnectionManagers[DEV-DebitOrder ADO.NET]"
-                          connectionManagerRefId="Package.ConnectionManagers[DEV-DebitOrder ADO.NET]"
+                          connectionManagerID="Package.ConnectionManagers[Stage-DebitOrder ADO.NET]"
+                          connectionManagerRefId="Package.ConnectionManagers[Stage-DebitOrder ADO.NET]"
                           description="Managed connection manager"
                           name="IDbConnection" />
                       </connections>
@@ -6331,8 +6324,8 @@
                       <connections>
                         <connection
                           refId="Package\Mandate Amend\Naedo Mandate Amend\Get the Naedo Debit Orders Amended after last export\Omega DOMandateAmendNaedo.Connections[OleDbConnection]"
-                          connectionManagerID="Package.ConnectionManagers[SQL-DEV]"
-                          connectionManagerRefId="Package.ConnectionManagers[SQL-DEV]"
+                          connectionManagerID="Package.ConnectionManagers[Stage-Omega]"
+                          connectionManagerRefId="Package.ConnectionManagers[Stage-Omega]"
                           description="The OLE DB runtime connection used to access the database."
                           name="OleDbConnection" />
                       </connections>
@@ -6848,8 +6841,8 @@
                       <connections>
                         <connection
                           refId="Package\Mandate Amend\Naedo Mandate Amend\Import DOMandateAmendNaedo to MySQL\MySQL DOMandateAmendNaedo.Connections[ODBCConnection]"
-                          connectionManagerID="Package.ConnectionManagers[DEV-DebitOrder ODBC]"
-                          connectionManagerRefId="Package.ConnectionManagers[DEV-DebitOrder ODBC]"
+                          connectionManagerID="Package.ConnectionManagers[Stage-DebitOrder ODBC]"
+                          connectionManagerRefId="Package.ConnectionManagers[Stage-DebitOrder ODBC]"
                           description="The ODBC runtime connection used to access the database."
                           name="ODBCConnection" />
                       </connections>
@@ -7399,8 +7392,8 @@
                       <connections>
                         <connection
                           refId="Package\Mandate Amend\Naedo Mandate Amend\Import DOMandateAmendNaedo to MySQL\Omega DOMandateAmendNaedo.Connections[OleDbConnection]"
-                          connectionManagerID="Package.ConnectionManagers[SQL-DEV]"
-                          connectionManagerRefId="Package.ConnectionManagers[SQL-DEV]"
+                          connectionManagerID="Package.ConnectionManagers[Stage-Omega]"
+                          connectionManagerRefId="Package.ConnectionManagers[Stage-Omega]"
                           description="The OLE DB runtime connection used to access the database."
                           name="OleDbConnection" />
                       </connections>
@@ -8262,21 +8255,13 @@
               <DTS:ObjectData>
                 <SQLTask:SqlTaskData
                   SQLTask:Connection="{A832587D-59F1-4BE3-A979-DF99027CB7AA}"
-                  SQLTask:SqlStatementSource="insert into hcdebitorder_dev.DebitOrderFileExportAudit&#xA;(&#xA;ExportDate,&#xA;ExportAction,&#xA;DebitOrderId&#xA;)&#xA;select&#xA;DATE_ADD(max(AuditDate), INTERVAL 1 second), &#xA;'NaedoAmend',&#xA;null&#xA;from DOMandateAmendNaedo" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
-                  <SQLTask:ParameterBinding
-                    SQLTask:ParameterName="1"
-                    SQLTask:DtsVariableName="User::CreateRange"
-                    SQLTask:ParameterDirection="Input"
-                    SQLTask:DataType="4"
-                    SQLTask:ParameterSize="-1" />
-                </SQLTask:SqlTaskData>
+                  SQLTask:SqlStatementSource="CALL `proc_log_naedo_export`();" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
               </DTS:ObjectData>
             </DTS:Executable>
             <DTS:Executable
               DTS:refId="Package\Mandate Amend\Naedo Mandate Amend\Move the DOMandateNaedo table to history"
               DTS:CreationName="Microsoft.Pipeline"
               DTS:Description="Data Flow Task"
-              DTS:Disabled="True"
               DTS:DTSID="{bf255125-f057-4578-bb84-67e43378af83}"
               DTS:ExecutableType="Microsoft.Pipeline"
               DTS:LocaleID="-1"
@@ -8357,8 +8342,8 @@
                       <connections>
                         <connection
                           refId="Package\Mandate Amend\Naedo Mandate Amend\Move the DOMandateNaedo table to history\DOMandateAmendNaedo.Connections[ODBCConnection]"
-                          connectionManagerID="Package.ConnectionManagers[DEV-DebitOrder ODBC]"
-                          connectionManagerRefId="Package.ConnectionManagers[DEV-DebitOrder ODBC]"
+                          connectionManagerID="Package.ConnectionManagers[Stage-DebitOrder ODBC]"
+                          connectionManagerRefId="Package.ConnectionManagers[Stage-DebitOrder ODBC]"
                           description="The ODBC runtime connection used to access the database."
                           name="ODBCConnection" />
                       </connections>
@@ -9151,12 +9136,12 @@
                           dataType="System.String"
                           description="The name of the table to be fetched."
                           expressionType="Notify"
-                          name="TableName">domandateamendnaedo</property>
+                          name="TableName">DOMandateAmendNaedo</property>
                         <property
                           dataType="System.Int32"
                           description="Specify the number of rows fetched per batch."
                           expressionType="Notify"
-                          name="BatchSize">10000</property>
+                          name="BatchSize">1000</property>
                         <property
                           dataType="System.Int32"
                           description="The number of rows inserted under the same transaction."
@@ -9196,8 +9181,8 @@
                       <connections>
                         <connection
                           refId="Package\Mandate Amend\Naedo Mandate Amend\Move the DOMandateNaedo table to history\History DOMandateAmendNaedo.Connections[ODBCConnection]"
-                          connectionManagerID="Package.ConnectionManagers[Local-DebitOrderHistory]"
-                          connectionManagerRefId="Package.ConnectionManagers[Local-DebitOrderHistory]"
+                          connectionManagerID="Package.ConnectionManagers[Stage-DebitOrderHistory]"
+                          connectionManagerRefId="Package.ConnectionManagers[Stage-DebitOrderHistory]"
                           description="The ODBC runtime connection used to access the database."
                           name="ODBCConnection" />
                       </connections>
@@ -9831,7 +9816,7 @@
               <DTS:ObjectData>
                 <SQLTask:SqlTaskData
                   SQLTask:Connection="{A832587D-59F1-4BE3-A979-DF99027CB7AA}"
-                  SQLTask:SqlStatementSource="  insert into hcdebitorder_dev.DOMandateRMS&#xA;  (&#xA;  DebitOrderId,&#xA;  ReqAuthDate,&#xA;  Instrument,&#xA;  Bank,&#xA;  AppExport,&#xA;  AuditDate&#xA;  )&#xA;  select &#xA;   DebitOrderId,&#xA;   date(now()),&#xA;   'RMS',&#xA;   'ABSA',&#xA;   0,&#xA;   AuditDate&#xA;    from hcdebitorder_dev.DebitOrder&#xA;   where DebitOrderType         = 'RMS'&#xA;         and AuditDate          &gt;= (select ExportDate&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;from hcdebitorder_dev.DebitOrderFileExportAudit&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;where ExportAction = 'RMS'&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;order by ExportDate desc&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;limit 1)&#xA;         and IdentificationType is not null&#xA;         and Status             = 'Active' ;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+                  SQLTask:SqlStatementSource="  insert into DOMandateRMS&#xA;  (&#xA;  DebitOrderId,&#xA;  ReqAuthDate,&#xA;  Instrument,&#xA;  Bank,&#xA;  AppExport,&#xA;  AuditDate&#xA;  )&#xA;  select &#xA;   DebitOrderId,&#xA;   date(now()),&#xA;   'RMS',&#xA;   'ABSA',&#xA;   0,&#xA;   AuditDate&#xA;    from DebitOrder&#xA;   where DebitOrderType         = 'RMS'&#xA;         and AuditDate          &gt;= (select ExportDate&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;from DebitOrderFileExportAudit&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;where ExportAction = 'RMS'&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;order by ExportDate desc&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;limit 1)&#xA;         and IdentificationType is not null&#xA;         and Status             = 'Active' ;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
               </DTS:ObjectData>
             </DTS:Executable>
             <DTS:Executable
@@ -9848,7 +9833,7 @@
               <DTS:ObjectData>
                 <SQLTask:SqlTaskData
                   SQLTask:Connection="{A832587D-59F1-4BE3-A979-DF99027CB7AA}"
-                  SQLTask:SqlStatementSource="insert into hcdebitorder_dev.DebitOrderFileExportAudit&#xA;(&#xA;ExportDate,&#xA;ExportAction,&#xA;DebitOrderId&#xA;)&#xA;select&#xA;DATE_ADD(max(AuditDate), INTERVAL 1 second), &#xA;'RMS',&#xA;null&#xA;from DOMandateRMS" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+                  SQLTask:SqlStatementSource="CALL `proc_log_rms_export`();" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
               </DTS:ObjectData>
             </DTS:Executable>
             <DTS:Executable
@@ -9935,8 +9920,8 @@
                       <connections>
                         <connection
                           refId="Package\Mandate Amend\RMS Mandate Amend\Move the DOMandateRMS table to history\DOMandateAmendNaedo.Connections[ODBCConnection]"
-                          connectionManagerID="Package.ConnectionManagers[DEV-DebitOrder ODBC]"
-                          connectionManagerRefId="Package.ConnectionManagers[DEV-DebitOrder ODBC]"
+                          connectionManagerID="Package.ConnectionManagers[Stage-DebitOrder ODBC]"
+                          connectionManagerRefId="Package.ConnectionManagers[Stage-DebitOrder ODBC]"
                           description="The ODBC runtime connection used to access the database."
                           name="ODBCConnection" />
                       </connections>
@@ -10729,12 +10714,12 @@
                           dataType="System.String"
                           description="The name of the table to be fetched."
                           expressionType="Notify"
-                          name="TableName">domandateamendnaedo</property>
+                          name="TableName">DOMandateAmendNaedo</property>
                         <property
                           dataType="System.Int32"
                           description="Specify the number of rows fetched per batch."
                           expressionType="Notify"
-                          name="BatchSize">10000</property>
+                          name="BatchSize">1000</property>
                         <property
                           dataType="System.Int32"
                           description="The number of rows inserted under the same transaction."
@@ -10759,7 +10744,7 @@
                           dataType="System.Int32"
                           description="The method used for inserting data. Possible values are 'Batch' or 'Row by row'."
                           expressionType="Notify"
-                          name="InsertMethod">0</property>
+                          name="InsertMethod">1</property>
                         <property
                           dataType="System.Int32"
                           description="The ODBC C data type for binding numeric data."
@@ -10774,8 +10759,8 @@
                       <connections>
                         <connection
                           refId="Package\Mandate Amend\RMS Mandate Amend\Move the DOMandateRMS table to history\History DOMandateAmendNaedo.Connections[ODBCConnection]"
-                          connectionManagerID="Package.ConnectionManagers[Local-DebitOrderHistory]"
-                          connectionManagerRefId="Package.ConnectionManagers[Local-DebitOrderHistory]"
+                          connectionManagerID="Package.ConnectionManagers[Stage-DebitOrderHistory]"
+                          connectionManagerRefId="Package.ConnectionManagers[Stage-DebitOrderHistory]"
                           description="The ODBC runtime connection used to access the database."
                           name="ODBCConnection" />
                       </connections>
@@ -11977,7 +11962,7 @@
   CreateUser,
   current_date() as SnapshotDate,  
   0 as ExportStatus
-from hcdebitorder_dev.DebitOrder
+from DebitOrder
  where
   DebitOrderId &gt; (SELECT DebitOrderId 
 	FROM DebitOrderFileExportAudit 
@@ -12014,8 +11999,8 @@ from hcdebitorder_dev.DebitOrder
                   <connections>
                     <connection
                       refId="Package\Mandate Create\Get the Debit Orders Created after last export\MySQL DebitOrder.Connections[IDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[DEV-DebitOrder ADO.NET]"
-                      connectionManagerRefId="Package.ConnectionManagers[DEV-DebitOrder ADO.NET]"
+                      connectionManagerID="Package.ConnectionManagers[Stage-DebitOrder ADO.NET]"
+                      connectionManagerRefId="Package.ConnectionManagers[Stage-DebitOrder ADO.NET]"
                       description="Managed connection manager"
                       name="IDbConnection" />
                   </connections>
@@ -12707,8 +12692,8 @@ from hcdebitorder_dev.DebitOrder
                   <connections>
                     <connection
                       refId="Package\Mandate Create\Get the Debit Orders Created after last export\Omega DOMandateCreate.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[SQL-DEV]"
-                      connectionManagerRefId="Package.ConnectionManagers[SQL-DEV]"
+                      connectionManagerID="Package.ConnectionManagers[Stage-Omega]"
+                      connectionManagerRefId="Package.ConnectionManagers[Stage-Omega]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -13187,11 +13172,11 @@ from hcdebitorder_dev.DebitOrder
               version="1">
               <components>
                 <component
-                  refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination"
+                  refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate"
                   componentClassID="Microsoft.SSISODBCDst"
                   contactInfo="ODBC Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
                   description="ODBC Destination"
-                  name="ODBC Destination"
+                  name="MySQL DOMandateCreate"
                   usesDispositions="true"
                   version="1">
                   <properties>
@@ -13243,15 +13228,15 @@ from hcdebitorder_dev.DebitOrder
                   </properties>
                   <connections>
                     <connection
-                      refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Connections[ODBCConnection]"
-                      connectionManagerID="Package.ConnectionManagers[DEV-DebitOrder ODBC]"
-                      connectionManagerRefId="Package.ConnectionManagers[DEV-DebitOrder ODBC]"
+                      refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Connections[ODBCConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Stage-DebitOrder ODBC]"
+                      connectionManagerRefId="Package.ConnectionManagers[Stage-DebitOrder ODBC]"
                       description="The ODBC runtime connection used to access the database."
                       name="ODBCConnection" />
                   </connections>
                   <inputs>
                     <input
-                      refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input]"
+                      refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input]"
                       errorOrTruncationOperation="Insert"
                       errorRowDisposition="FailComponent"
                       hasSideEffects="true"
@@ -13259,494 +13244,501 @@ from hcdebitorder_dev.DebitOrder
                       truncationRowDisposition="FailComponent">
                       <inputColumns>
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[DebitOrderId]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[DebitOrderId]"
                           cachedDataType="i4"
                           cachedName="DebitOrderId"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[DebitOrderId]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[DebitOrderId]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[DebitOrderId]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[PersonNo]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[PersonNo]"
                           cachedDataType="i4"
                           cachedName="PersonNo"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[PersonNo]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[PersonNo]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[PersonNo]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[BankAccountHolder]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[BankAccountHolder]"
                           cachedDataType="wstr"
                           cachedLength="150"
                           cachedName="BankAccountHolder"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[BankAccountHolder]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[BankAccountHolder]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[BankAccountHolder]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[BankId]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[BankId]"
                           cachedDataType="i4"
                           cachedName="BankId"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[BankId]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[BankId]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[BankId]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[BankAccountNumber]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[BankAccountNumber]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="BankAccountNumber"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[BankAccountNumber]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[BankAccountNumber]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[BankAccountNumber]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[BankBranchCode]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[BankBranchCode]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="BankBranchCode"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[BankBranchCode]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[BankBranchCode]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[BankBranchCode]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[DeductionAmount]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[DeductionAmount]"
                           cachedDataType="numeric"
                           cachedName="DeductionAmount"
                           cachedPrecision="10"
                           cachedScale="4"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[DeductionAmount]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[DeductionAmount]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[DeductionAmount]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[StartYear]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[StartYear]"
                           cachedDataType="i4"
                           cachedName="StartYear"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[StartYear]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[StartYear]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[StartYear]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[StartMonth]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[StartMonth]"
                           cachedDataType="i4"
                           cachedName="StartMonth"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[StartMonth]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[StartMonth]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[StartMonth]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[DeductionDay]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[DeductionDay]"
                           cachedDataType="i4"
                           cachedName="DeductionDay"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[DeductionDay]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[DeductionDay]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[DeductionDay]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[DeductionDate]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[DeductionDate]"
                           cachedDataType="dbTimeStamp"
                           cachedName="DeductionDate"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[DeductionDate]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[DeductionDate]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[DeductionDate]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[MandateReceived]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[MandateReceived]"
                           cachedDataType="bool"
                           cachedName="MandateReceived"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[MandateReceived]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[MandateReceived]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[MandateReceived]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[Status]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[Status]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="Status"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[Status]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[Status]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[Status]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[BankAccountType]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[BankAccountType]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="BankAccountType"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[BankAccountType]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[BankAccountType]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[BankAccountType]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[DeductionOccurrence]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[DeductionOccurrence]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="DeductionOccurrence"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[DeductionOccurrence]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[DeductionOccurrence]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[DeductionOccurrence]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[DeductionFrequency]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[DeductionFrequency]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="DeductionFrequency"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[DeductionFrequency]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[DeductionFrequency]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[DeductionFrequency]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[PaymentAccountType]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[PaymentAccountType]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="PaymentAccountType"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[PaymentAccountType]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[PaymentAccountType]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[PaymentAccountType]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[NaedoType]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[NaedoType]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="NaedoType"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[NaedoType]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[NaedoType]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[NaedoType]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[NowDueFlag]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[NowDueFlag]"
                           cachedDataType="bool"
                           cachedName="NowDueFlag"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[NowDueFlag]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[NowDueFlag]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[NowDueFlag]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[PhoneNumber]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[PhoneNumber]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="PhoneNumber"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[PhoneNumber]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[PhoneNumber]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[PhoneNumber]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[Identification]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[Identification]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="Identification"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[Identification]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[Identification]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[Identification]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[IdentificationType]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[IdentificationType]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="IdentificationType"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[IdentificationType]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[IdentificationType]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[IdentificationType]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[AuditUser]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[AuditUser]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="AuditUser"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[AuditUser]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[AuditUser]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[AuditUser]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[Department]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[Department]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="Department"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[Department]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[Department]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[Department]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[CreateDate]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[CreateDate]"
                           cachedDataType="dbTimeStamp"
                           cachedName="CreateDate"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[CreateDate]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[CreateDate]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[CreateDate]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[AuthCode]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[AuthCode]"
                           cachedDataType="wstr"
                           cachedLength="150"
                           cachedName="AuthCode"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[AuthCode]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[AuthCode]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[AuthCode]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[DebiCheckStatus]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[DebiCheckStatus]"
                           cachedCodepage="1252"
                           cachedDataType="str"
                           cachedLength="20"
                           cachedName="DebiCheckStatus"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[DebiCheckStatus]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[DebiCheckStatus]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[DebiCheckStatus]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[DebitOrderType]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[DebitOrderType]"
                           cachedCodepage="1252"
                           cachedDataType="str"
                           cachedLength="20"
                           cachedName="DebitOrderType"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[DebitOrderType]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[DebitOrderType]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[DebitOrderType]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[AuditDate]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[AuditDate]"
                           cachedDataType="dbTimeStamp"
                           cachedName="AuditDate"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[AuditDate]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[AuditDate]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[AuditDate]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[CreateUser]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[CreateUser]"
                           cachedCodepage="1252"
                           cachedDataType="str"
                           cachedLength="20"
                           cachedName="CreateUser"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[CreateUser]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[CreateUser]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[CreateUser]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[SnapshotDate]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[SnapshotDate]"
                           cachedDataType="dbTimeStamp"
                           cachedName="SnapshotDate"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[SnapshotDate]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[SnapshotDate]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[SnapshotDate]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[FileExportName]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[FileExportName]"
                           cachedCodepage="1252"
                           cachedDataType="str"
                           cachedLength="20"
                           cachedName="FileExportName"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[FileExportName]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[FileExportName]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[FileExportName]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[ExportStatus]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[ExportStatus]"
                           cachedDataType="i4"
                           cachedName="ExportStatus"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[ExportStatus]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[ExportStatus]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[ExportStatus]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[MinCollAmt]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[MinCollAmt]"
                           cachedDataType="numeric"
                           cachedName="MinCollAmt"
                           cachedPrecision="10"
                           cachedScale="4"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[MinCollAmt]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[MinCollAmt]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[MinCollAmt]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[MaxCollAmt]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[MaxCollAmt]"
                           cachedDataType="numeric"
                           cachedName="MaxCollAmt"
                           cachedPrecision="10"
                           cachedScale="4"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[MaxCollAmt]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[MaxCollAmt]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[MaxCollAmt]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[MinMaxCalcStatus]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[MinMaxCalcStatus]"
                           cachedDataType="i4"
                           cachedName="MinMaxCalcStatus"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[MinMaxCalcStatus]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[MinMaxCalcStatus]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[MinMaxCalcStatus]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[EmailAddr]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[EmailAddr]"
                           cachedCodepage="1252"
                           cachedDataType="str"
                           cachedLength="150"
                           cachedName="EmailAddr"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[EmailAddr]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[EmailAddr]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[EmailAddr]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[CalcDeductionDay]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[CalcDeductionDay]"
                           cachedDataType="i4"
                           cachedName="CalcDeductionDay"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[CalcDeductionDay]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[CalcDeductionDay]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[CalcDeductionDay]" />
                         <inputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].Columns[ExportErrorMessage]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].Columns[ExportErrorMessage]"
                           cachedCodepage="1252"
                           cachedDataType="str"
                           cachedLength="150"
                           cachedName="ExportErrorMessage"
-                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[ExportErrorMessage]"
+                          externalMetadataColumnId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[ExportErrorMessage]"
                           lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output].Columns[ExportErrorMessage]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[DebitOrderId]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[DebitOrderId]"
                           dataType="i4"
                           name="DebitOrderId" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[PersonNo]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[PersonNo]"
                           dataType="i4"
                           name="PersonNo" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[BankAccountHolder]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[BankAccountHolder]"
                           codePage="1252"
                           dataType="text"
                           name="BankAccountHolder" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[BankId]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[BankId]"
                           dataType="i4"
                           name="BankId" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[BankAccountNumber]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[BankAccountNumber]"
                           codePage="1252"
                           dataType="text"
                           name="BankAccountNumber" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[BankBranchCode]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[BankBranchCode]"
                           codePage="1252"
                           dataType="text"
                           name="BankBranchCode" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[DeductionAmount]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[DeductionAmount]"
                           dataType="numeric"
                           name="DeductionAmount"
                           precision="18"
                           scale="4" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[StartYear]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[StartYear]"
                           dataType="i4"
                           name="StartYear" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[StartMonth]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[StartMonth]"
                           dataType="i4"
                           name="StartMonth" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[DeductionDay]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[DeductionDay]"
                           dataType="i4"
                           name="DeductionDay" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[DeductionDate]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[DeductionDate]"
                           dataType="dbTimeStamp"
                           name="DeductionDate" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[MandateReceived]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[MandateReceived]"
                           dataType="bool"
                           name="MandateReceived" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[Status]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[Status]"
                           codePage="1252"
                           dataType="text"
                           name="Status" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[BankAccountType]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[BankAccountType]"
                           codePage="1252"
                           dataType="text"
                           name="BankAccountType" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[DeductionOccurrence]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[DeductionOccurrence]"
                           codePage="1252"
                           dataType="text"
                           name="DeductionOccurrence" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[DeductionFrequency]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[DeductionFrequency]"
                           codePage="1252"
                           dataType="text"
                           name="DeductionFrequency" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[PaymentAccountType]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[PaymentAccountType]"
                           codePage="1252"
                           dataType="text"
                           name="PaymentAccountType" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[NaedoType]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[NaedoType]"
                           codePage="1252"
                           dataType="text"
                           name="NaedoType" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[NowDueFlag]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[NowDueFlag]"
                           dataType="bool"
                           name="NowDueFlag" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[PhoneNumber]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[PhoneNumber]"
                           codePage="1252"
                           dataType="text"
                           name="PhoneNumber" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[Identification]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[Identification]"
                           codePage="1252"
                           dataType="text"
                           name="Identification" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[IdentificationType]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[IdentificationType]"
                           codePage="1252"
                           dataType="text"
                           name="IdentificationType" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[AuditUser]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[AuditUser]"
                           codePage="1252"
                           dataType="text"
                           name="AuditUser" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[Department]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[Department]"
                           codePage="1252"
                           dataType="text"
                           name="Department" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[CreateDate]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[CreateDate]"
                           dataType="dbTimeStamp"
                           name="CreateDate" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[AuthCode]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[AuthCode]"
                           codePage="1252"
-                          dataType="str"
-                          length="200"
+                          dataType="text"
                           name="AuthCode" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[DebiCheckStatus]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[DebiCheckStatus]"
                           codePage="1252"
                           dataType="str"
                           length="20"
                           name="DebiCheckStatus" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[DebitOrderType]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[DebitOrderType]"
                           codePage="1252"
                           dataType="str"
                           length="20"
                           name="DebitOrderType" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[AuditDate]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[AuditDate]"
                           dataType="dbTimeStamp"
                           name="AuditDate" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[CreateUser]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[CreateUser]"
                           codePage="1252"
                           dataType="str"
                           length="20"
                           name="CreateUser" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[SnapshotDate]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[SnapshotDate]"
                           dataType="dbTimeStamp"
                           name="SnapshotDate" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[FileExportName]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[FileExportName]"
                           codePage="1252"
                           dataType="str"
                           length="200"
                           name="FileExportName" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[ExportStatus]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[ExportStatus]"
                           dataType="i4"
                           name="ExportStatus" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[MinCollAmt]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[MinCollAmt]"
                           dataType="numeric"
                           name="MinCollAmt"
                           precision="10"
                           scale="4" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[MaxCollAmt]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[MaxCollAmt]"
                           dataType="numeric"
                           name="MaxCollAmt"
                           precision="10"
                           scale="4" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[MinMaxCalcStatus]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[MinMaxCalcStatus]"
                           dataType="i4"
                           name="MinMaxCalcStatus" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[EmailAddr]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[EmailAddr]"
                           codePage="1252"
                           dataType="str"
                           length="150"
                           name="EmailAddr" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[CalcDeductionDay]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[CalcDeductionDay]"
                           dataType="i4"
                           name="CalcDeductionDay" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[ExportErrorMessage]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[ExportErrorMessage]"
                           codePage="1252"
                           dataType="str"
                           length="150"
                           name="ExportErrorMessage" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[AppExport]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[AppExport]"
                           dataType="i4"
                           name="AppExport" />
                         <externalMetadataColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[AppExportDate]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[AppExportDate]"
                           dataType="dbTimeStamp"
                           name="AppExportDate" />
+                        <externalMetadataColumn
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[AppProcessed]"
+                          dataType="i4"
+                          name="AppProcessed" />
+                        <externalMetadataColumn
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[AppProcessedDate]"
+                          dataType="dbTimeStamp"
+                          name="AppProcessedDate" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
                   <outputs>
                     <output
-                      refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Outputs[ODBC Destination Error Output]"
+                      refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Outputs[ODBC Destination Error Output]"
                       exclusionGroup="1"
                       isErrorOut="true"
                       name="ODBC Destination Error Output"
-                      synchronousInputId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input]">
+                      synchronousInputId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input]">
                       <outputColumns>
                         <outputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Outputs[ODBC Destination Error Output].Columns[ErrorCode]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Outputs[ODBC Destination Error Output].Columns[ErrorCode]"
                           dataType="i4"
-                          lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Outputs[ODBC Destination Error Output].Columns[ErrorCode]"
+                          lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Outputs[ODBC Destination Error Output].Columns[ErrorCode]"
                           name="ErrorCode"
                           specialFlags="1" />
                         <outputColumn
-                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Outputs[ODBC Destination Error Output].Columns[ErrorColumn]"
+                          refId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Outputs[ODBC Destination Error Output].Columns[ErrorColumn]"
                           dataType="i4"
-                          lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Outputs[ODBC Destination Error Output].Columns[ErrorColumn]"
+                          lineageId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Outputs[ODBC Destination Error Output].Columns[ErrorColumn]"
                           name="ErrorColumn"
                           specialFlags="2" />
                       </outputColumns>
@@ -13796,7 +13788,7 @@ from hcdebitorder_dev.DebitOrder
                       dataType="System.Int32"
                       description="Specifies the mode used to access the database."
                       name="AccessMode"
-                      typeConverter="AccessMode">2</property>
+                      typeConverter="AccessMode">0</property>
                     <property
                       dataType="System.String"
                       description="The mappings between the parameters in the SQL command and variables."
@@ -13805,8 +13797,8 @@ from hcdebitorder_dev.DebitOrder
                   <connections>
                     <connection
                       refId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[SQL-DEV]"
-                      connectionManagerRefId="Package.ConnectionManagers[SQL-DEV]"
+                      connectionManagerID="Package.ConnectionManagers[Stage-Omega]"
+                      connectionManagerRefId="Package.ConnectionManagers[Stage-Omega]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -14647,7 +14639,7 @@ from hcdebitorder_dev.DebitOrder
               <paths>
                 <path
                   refId="Package\Mandate Create\Import DOMandateCreate to MySQL.Paths[OLE DB Source Output]"
-                  endId="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination.Inputs[ODBC Destination Input]"
+                  endId="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate.Inputs[ODBC Destination Input]"
                   name="OLE DB Source Output"
                   startId="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate.Outputs[OLE DB Source Output]" />
               </paths>
@@ -14668,14 +14660,7 @@ from hcdebitorder_dev.DebitOrder
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
               SQLTask:Connection="{A832587D-59F1-4BE3-A979-DF99027CB7AA}"
-              SQLTask:SqlStatementSource="insert into DebitOrderFileExportAudit(ExportDate, ExportAction, DebitOrderId)&#xA;select current_timestamp(), 'Create', max(DebitOrderId) &#xA;FROM hcdebitorder_dev.DOMandateCreate;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
-              <SQLTask:ParameterBinding
-                SQLTask:ParameterName="1"
-                SQLTask:DtsVariableName="User::CreateRange"
-                SQLTask:ParameterDirection="Input"
-                SQLTask:DataType="4"
-                SQLTask:ParameterSize="-1" />
-            </SQLTask:SqlTaskData>
+              SQLTask:SqlStatementSource="CALL `proc_log_create_export`();&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
@@ -14762,8 +14747,8 @@ from hcdebitorder_dev.DebitOrder
                   <connections>
                     <connection
                       refId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Connections[ODBCConnection]"
-                      connectionManagerID="Package.ConnectionManagers[DEV-DebitOrder ODBC]"
-                      connectionManagerRefId="Package.ConnectionManagers[DEV-DebitOrder ODBC]"
+                      connectionManagerID="Package.ConnectionManagers[Stage-DebitOrder ODBC]"
+                      connectionManagerRefId="Package.ConnectionManagers[Stage-DebitOrder ODBC]"
                       description="The ODBC runtime connection used to access the database."
                       name="ODBCConnection" />
                   </connections>
@@ -14943,9 +14928,8 @@ from hcdebitorder_dev.DebitOrder
                         <outputColumn
                           refId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].Columns[AuthCode]"
                           codePage="1252"
-                          dataType="str"
+                          dataType="text"
                           externalMetadataColumnId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].ExternalColumns[AuthCode]"
-                          length="200"
                           lineageId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].Columns[AuthCode]"
                           name="AuthCode" />
                         <outputColumn
@@ -15054,6 +15038,18 @@ from hcdebitorder_dev.DebitOrder
                           externalMetadataColumnId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].ExternalColumns[AppExportDate]"
                           lineageId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].Columns[AppExportDate]"
                           name="AppExportDate" />
+                        <outputColumn
+                          refId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].Columns[AppProcessed]"
+                          dataType="i4"
+                          externalMetadataColumnId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].ExternalColumns[AppProcessed]"
+                          lineageId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].Columns[AppProcessed]"
+                          name="AppProcessed" />
+                        <outputColumn
+                          refId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].Columns[AppProcessedDate]"
+                          dataType="dbTimeStamp"
+                          externalMetadataColumnId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].ExternalColumns[AppProcessedDate]"
+                          lineageId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].Columns[AppProcessedDate]"
+                          name="AppProcessedDate" />
                       </outputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -15176,8 +15172,7 @@ from hcdebitorder_dev.DebitOrder
                         <externalMetadataColumn
                           refId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].ExternalColumns[AuthCode]"
                           codePage="1252"
-                          dataType="str"
-                          length="200"
+                          dataType="text"
                           name="AuthCode" />
                         <externalMetadataColumn
                           refId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].ExternalColumns[DebiCheckStatus]"
@@ -15255,6 +15250,14 @@ from hcdebitorder_dev.DebitOrder
                           refId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].ExternalColumns[AppExportDate]"
                           dataType="dbTimeStamp"
                           name="AppExportDate" />
+                        <externalMetadataColumn
+                          refId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].ExternalColumns[AppProcessed]"
+                          dataType="i4"
+                          name="AppProcessed" />
+                        <externalMetadataColumn
+                          refId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].ExternalColumns[AppProcessedDate]"
+                          dataType="dbTimeStamp"
+                          name="AppProcessedDate" />
                       </externalMetadataColumns>
                     </output>
                     <output
@@ -15431,9 +15434,8 @@ from hcdebitorder_dev.DebitOrder
                         <outputColumn
                           refId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Error Output].Columns[AuthCode]"
                           codePage="1252"
-                          dataType="str"
+                          dataType="text"
                           externalMetadataColumnId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].ExternalColumns[AuthCode]"
-                          length="200"
                           lineageId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Error Output].Columns[AuthCode]"
                           name="AuthCode" />
                         <outputColumn
@@ -15543,6 +15545,18 @@ from hcdebitorder_dev.DebitOrder
                           lineageId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Error Output].Columns[AppExportDate]"
                           name="AppExportDate" />
                         <outputColumn
+                          refId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Error Output].Columns[AppProcessed]"
+                          dataType="i4"
+                          externalMetadataColumnId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].ExternalColumns[AppProcessed]"
+                          lineageId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Error Output].Columns[AppProcessed]"
+                          name="AppProcessed" />
+                        <outputColumn
+                          refId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Error Output].Columns[AppProcessedDate]"
+                          dataType="dbTimeStamp"
+                          externalMetadataColumnId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].ExternalColumns[AppProcessedDate]"
+                          lineageId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Error Output].Columns[AppProcessedDate]"
+                          name="AppProcessedDate" />
+                        <outputColumn
                           refId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Error Output].Columns[ErrorCode]"
                           dataType="i4"
                           lineageId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Error Output].Columns[ErrorCode]"
@@ -15572,12 +15586,12 @@ from hcdebitorder_dev.DebitOrder
                       dataType="System.String"
                       description="The name of the table to be fetched."
                       expressionType="Notify"
-                      name="TableName">domandatecreate</property>
+                      name="TableName">DOMandateCreate</property>
                     <property
                       dataType="System.Int32"
                       description="Specify the number of rows fetched per batch."
                       expressionType="Notify"
-                      name="BatchSize">10000</property>
+                      name="BatchSize">1000</property>
                     <property
                       dataType="System.Int32"
                       description="The number of rows inserted under the same transaction."
@@ -15617,8 +15631,8 @@ from hcdebitorder_dev.DebitOrder
                   <connections>
                     <connection
                       refId="Package\Mandate Create\Move the DOMandateCreate table to history\History DOMandateCreate.Connections[ODBCConnection]"
-                      connectionManagerID="Package.ConnectionManagers[Local-DebitOrderHistory]"
-                      connectionManagerRefId="Package.ConnectionManagers[Local-DebitOrderHistory]"
+                      connectionManagerID="Package.ConnectionManagers[Stage-DebitOrderHistory]"
+                      connectionManagerRefId="Package.ConnectionManagers[Stage-DebitOrderHistory]"
                       description="The ODBC runtime connection used to access the database."
                       name="ODBCConnection" />
                   </connections>
@@ -15800,8 +15814,7 @@ from hcdebitorder_dev.DebitOrder
                         <inputColumn
                           refId="Package\Mandate Create\Move the DOMandateCreate table to history\History DOMandateCreate.Inputs[ODBC Destination Input].Columns[AuthCode]"
                           cachedCodepage="1252"
-                          cachedDataType="str"
-                          cachedLength="200"
+                          cachedDataType="text"
                           cachedName="AuthCode"
                           externalMetadataColumnId="Package\Mandate Create\Move the DOMandateCreate table to history\History DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[AuthCode]"
                           lineageId="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate.Outputs[ODBC Source Output].Columns[AuthCode]" />
@@ -16033,8 +16046,7 @@ from hcdebitorder_dev.DebitOrder
                         <externalMetadataColumn
                           refId="Package\Mandate Create\Move the DOMandateCreate table to history\History DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[AuthCode]"
                           codePage="1252"
-                          dataType="str"
-                          length="200"
+                          dataType="text"
                           name="AuthCode" />
                         <externalMetadataColumn
                           refId="Package\Mandate Create\Move the DOMandateCreate table to history\History DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[DebiCheckStatus]"
@@ -16112,6 +16124,14 @@ from hcdebitorder_dev.DebitOrder
                           refId="Package\Mandate Create\Move the DOMandateCreate table to history\History DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[AppExportDate]"
                           dataType="dbTimeStamp"
                           name="AppExportDate" />
+                        <externalMetadataColumn
+                          refId="Package\Mandate Create\Move the DOMandateCreate table to history\History DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[AppProcessed]"
+                          dataType="i4"
+                          name="AppProcessed" />
+                        <externalMetadataColumn
+                          refId="Package\Mandate Create\Move the DOMandateCreate table to history\History DOMandateCreate.Inputs[ODBC Destination Input].ExternalColumns[AppProcessedDate]"
+                          dataType="dbTimeStamp"
+                          name="AppProcessedDate" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -16476,14 +16496,14 @@ from hcdebitorder_dev.DebitOrder
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,46.3521317378586"
+              EndConnector="0,46.3521317378594"
               Start="0,0"
-              End="0,38.8521317378586">
+              End="0,38.8521317378594">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,38.8521317378586" />
+                    End="0,38.8521317378594" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -16496,7 +16516,7 @@ from hcdebitorder_dev.DebitOrder
           HeaderHeight="43"
           IsExpanded="True"
           PanelSize="390.666666666667,626"
-          Size="390.666666666667,668.666666666667"
+          Size="390.666666666667,669.333333333334"
           Id="Package\Mandate Amend\DebiCheck Mandate Amend"
           TopLeft="16.8749956134725,25.4166680736495" />
         <NodeLayout
@@ -16662,7 +16682,7 @@ from hcdebitorder_dev.DebitOrder
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="390.666666666667,625.333333333334"
+          PanelSize="390.666666666667,626"
           Size="390.666666666667,668.666666666667"
           Id="Package\Mandate Amend\Naedo Mandate Amend"
           TopLeft="988.754612446727,27.3480938158261" />
@@ -16752,23 +16772,23 @@ from hcdebitorder_dev.DebitOrder
           HeaderHeight="43"
           IsExpanded="True"
           PanelSize="373.333333333334,482.666666666667"
-          Size="373.333333333334,525.333333333334"
+          Size="373.333333333334,526"
           Id="Package\Mandate Amend\RMS Mandate Amend"
           TopLeft="513.095731686734,94.6213360782784" />
         <EdgeLayout
           Id="Package\Mandate Amend.PrecedenceConstraints[Constraint]"
-          TopLeft="407.541662280139,358.519002075964">
+          TopLeft="407.541662280139,358.852335409297">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
               EndConnector="105.554069406595,0"
               Start="0,0"
-              End="98.0540694065949,0">
+              End="98.0540694065948,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="98.0540694065949,0" />
+                    End="98.0540694065948,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -16779,7 +16799,7 @@ from hcdebitorder_dev.DebitOrder
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Mandate Amend.PrecedenceConstraints[Constraint 1]"
-          TopLeft="886.429065020067,359.484714947052">
+          TopLeft="886.429065020067,359.651381613719">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -16803,7 +16823,7 @@ from hcdebitorder_dev.DebitOrder
           HeaderHeight="43"
           IsExpanded="True"
           PanelSize="1404,751.333333333334"
-          Size="1404,794"
+          Size="1404,794.666666666667"
           Id="Package\Mandate Amend"
           TopLeft="532.812492060475,28.378446649442" />
         <NodeLayout
@@ -16817,7 +16837,7 @@ from hcdebitorder_dev.DebitOrder
         <NodeLayout
           Size="252,42.6666666666667"
           Id="Package\Mandate Create\Import DOMandateCreate to MySQL"
-          TopLeft="50.5833318245902,542.218056598621" />
+          TopLeft="52.4583317966505,541.533846059427" />
         <NodeLayout
           Size="238.666666666667,42.6666666666667"
           Id="Package\Mandate Create\Log the last Debit Order Exported"
@@ -16880,18 +16900,18 @@ from hcdebitorder_dev.DebitOrder
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Mandate Create.PrecedenceConstraints[Constraint 2]"
-          TopLeft="175.999998658895,475.508781356935">
+          TopLeft="176.937498644925,475.508781356935">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,66.7092752416863"
+              EndConnector="0,66.025064702492"
               Start="0,0"
-              End="0,59.2092752416863">
+              End="0,58.525064702492">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,59.2092752416863" />
+                    End="0,58.525064702492" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -16924,18 +16944,18 @@ from hcdebitorder_dev.DebitOrder
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Mandate Create.PrecedenceConstraints[Constraint 4]"
-          TopLeft="177.770830152867,584.884723265288">
+          TopLeft="178.708330138897,584.200512726093">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,73.378448036035"
+              EndConnector="0,74.0626585752298"
               Start="0,0"
-              End="0,65.878448036035">
+              End="0,66.5626585752298">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,65.878448036035" />
+                    End="0,66.5626585752298" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -16969,13 +16989,13 @@ from hcdebitorder_dev.DebitOrder
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="375.333333333334,744.666666666667"
-          Size="375.333333333334,787.333333333334"
+          PanelSize="375.333333333334,756"
+          Size="375.333333333334,798.666666666667"
           Id="Package\Mandate Create"
           TopLeft="13.3482140868102,33.5125198719156" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="388.681547420143,426.278816594012">
+          TopLeft="388.681547420143,429.278816594012">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -16997,7 +17017,7 @@ from hcdebitorder_dev.DebitOrder
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="1936.81249206048,423.341479227063">
+          TopLeft="1936.81249206048,423.508145893729">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -17026,10 +17046,6 @@ from hcdebitorder_dev.DebitOrder
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="170.666666666667,42.6666666666667"
-          Id="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\MySQL DebitOrder"
-          TopLeft="103.299998472631,24.8736850476331" />
-        <NodeLayout
           Size="158.666666666667,42.6666666666667"
           Id="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Data Conversion"
           TopLeft="112.8,162.8" />
@@ -17037,6 +17053,10 @@ from hcdebitorder_dev.DebitOrder
           Size="208,42.6666666666667"
           Id="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Omega DOMandateAmend"
           TopLeft="86.8000000000001,313.6" />
+        <NodeLayout
+          Size="170.666666666667,42.6666666666667"
+          Id="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\MySQL DebitOrder"
+          TopLeft="103.299998472631,24.8736850476331" />
         <EdgeLayout
           Id="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export.Paths[Data Conversion Output]"
           TopLeft="191.466666666667,205.466666666667">
@@ -17085,14 +17105,6 @@ from hcdebitorder_dev.DebitOrder
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\MySQL DebitOrder">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\Omega DOMandateAmend">
     <Properties>
       <Property>
@@ -17102,6 +17114,14 @@ from hcdebitorder_dev.DebitOrder
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Mandate Amend\DebiCheck Mandate Amend\Get the Debit Orders Amended after last export\MySQL DebitOrder">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -17346,7 +17366,7 @@ from hcdebitorder_dev.DebitOrder
     design-time-name="Package\Mandate Amend\Naedo Mandate Amend\Import DOMandateAmendNaedo to MySQL">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="240,42.6666666666667"
           Id="Package\Mandate Amend\Naedo Mandate Amend\Import DOMandateAmendNaedo to MySQL\Omega DOMandateAmendNaedo"
@@ -17386,9 +17406,7 @@ from hcdebitorder_dev.DebitOrder
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -17576,7 +17594,7 @@ from hcdebitorder_dev.DebitOrder
     design-time-name="Package\Mandate Create\Get the Debit Orders Created after last export">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="206.666666666667,42.6666666666667"
           Id="Package\Mandate Create\Get the Debit Orders Created after last export\Omega DOMandateCreate"
@@ -17608,9 +17626,7 @@ from hcdebitorder_dev.DebitOrder
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -17632,9 +17648,7 @@ from hcdebitorder_dev.DebitOrder
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -17665,14 +17679,14 @@ from hcdebitorder_dev.DebitOrder
     design-time-name="Package\Mandate Create\Import DOMandateCreate to MySQL">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="206.666666666667,42.6666666666667"
           Id="Package\Mandate Create\Import DOMandateCreate to MySQL\Omega DOMandateCreate"
           TopLeft="32.5,15" />
         <NodeLayout
-          Size="166.666666666667,42.6666666666667"
-          Id="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination"
+          Size="208,42.6666666666667"
+          Id="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate"
           TopLeft="245,184" />
         <EdgeLayout
           Id="Package\Mandate Create\Import DOMandateCreate to MySQL.Paths[OLE DB Source Output]"
@@ -17680,9 +17694,9 @@ from hcdebitorder_dev.DebitOrder
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="192.5,126.333333333333"
+              EndConnector="213.166666666667,126.333333333333"
               Start="0,0"
-              End="192.5,118.833333333333">
+              End="213.166666666667,118.833333333333">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -17693,28 +17707,26 @@ from hcdebitorder_dev.DebitOrder
                     Point2="0,63.1666666666667"
                     Point3="4,63.1666666666667" />
                   <mssgle:LineSegment
-                    End="188.5,63.1666666666667" />
+                    End="209.166666666667,63.1666666666667" />
                   <mssgle:CubicBezierSegment
-                    Point1="188.5,63.1666666666667"
-                    Point2="192.5,63.1666666666667"
-                    Point3="192.5,67.1666666666667" />
+                    Point1="209.166666666667,63.1666666666667"
+                    Point2="213.166666666667,63.1666666666667"
+                    Point3="213.166666666667,67.1666666666667" />
                   <mssgle:LineSegment
-                    End="192.5,118.833333333333" />
+                    End="213.166666666667,118.833333333333" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Mandate Create\Import DOMandateCreate to MySQL\ODBC Destination">
+    design-time-name="Package\Mandate Create\Import DOMandateCreate to MySQL\MySQL DOMandateCreate">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -17743,11 +17755,11 @@ from hcdebitorder_dev.DebitOrder
     design-time-name="Package\Mandate Create\Move the DOMandateCreate table to history">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="205.333333333334,42.6666666666667"
           Id="Package\Mandate Create\Move the DOMandateCreate table to history\History DOMandateCreate"
-          TopLeft="192.499997131526,168.315792641811" />
+          TopLeft="206.099997131526,195.115792641811" />
         <NodeLayout
           Size="169.333333333334,42.6666666666667"
           Id="Package\Mandate Create\Move the DOMandateCreate table to history\DOMandateCreate"
@@ -17758,34 +17770,32 @@ from hcdebitorder_dev.DebitOrder
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="156.749997932464,89.385967397844"
+              EndConnector="170.349997932463,116.185967397844"
               Start="0,0"
-              End="156.749997932464,81.885967397844">
+              End="170.349997932463,108.685967397844">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,40.692983698922" />
+                    End="0,54.0929836989218" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,40.692983698922"
-                    Point2="0,44.692983698922"
-                    Point3="4,44.692983698922" />
+                    Point1="0,54.0929836989218"
+                    Point2="0,58.0929836989218"
+                    Point3="4,58.0929836989218" />
                   <mssgle:LineSegment
-                    End="152.749997932464,44.692983698922" />
+                    End="166.349997932463,58.0929836989218" />
                   <mssgle:CubicBezierSegment
-                    Point1="152.749997932464,44.692983698922"
-                    Point2="156.749997932464,44.692983698922"
-                    Point3="156.749997932464,48.692983698922" />
+                    Point1="166.349997932463,58.0929836989218"
+                    Point2="170.349997932463,58.0929836989218"
+                    Point3="170.349997932463,62.0929836989218" />
                   <mssgle:LineSegment
-                    End="156.749997932464,81.885967397844" />
+                    End="170.349997932463,108.685967397844" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
